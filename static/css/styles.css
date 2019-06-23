@@ -1,0 +1,47 @@
+.bg-image-login {
+    background-image: url('../img/bkg3.png') !important;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-side-login {
+    background-color: #ffffff;
+}
+
+.form-label-group>input, .form-label-group>label {
+    height: 2.5em;
+    padding-left: 1em;
+    padding-top: 0.4em;
+}
+
+.cando li {
+    list-style: none;
+    background: url('../img/tick2.png') no-repeat left top;
+    height: 80px;
+    padding-left: 70px;
+    padding-top: 50px;
+}
+
+.bg-navbar {
+    background-color: #a9a9a9;
+}
+
+.btn-block {
+    width: 62%;
+    margin: auto;
+    color: #fff;
+    background-color: #ff9907;
+    border-color: #ff9907;
+}
+
+.btn-block:hover {
+    background-color: #e68f16;
+    border-color: #e68f16;
+}
+
+.form-control:focus {
+    border-color: #ff9907;
+    box-shadow: 0 0 0 0.2rem rgba(255, 204, 65, 0.603);
+    .sentence {
+        margin-bottom: 150px;
+    }

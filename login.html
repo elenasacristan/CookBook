@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="static/css/Bootstrap.min.css" type="text/css" />
+
+    <!-- styles from https://startbootstrap.com/snippets/sign-in-split/ -->
+    <link rel="stylesheet" href="static/css/login.css" type="text/css" />
+
+    <!-- my styles -->
+    <link rel="stylesheet" href="static/css/styles.css" type="text/css" />
+
+
+    <title>Time2Eat</title>
+</head>
+
+<body>
+    <header>
+        <nav role="navigation" class="navbar navbar-default fixed-top bg-navbar">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">
+                        <img src="static/img/logo2.png" width="250" alt="time2eat logo"></a>
+                </div>
+                <!-- Collection of nav links and other content for toggling -->
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            <div class="d-none d-md-flex col-md-7 col-lg-7 bg-image-login"></div>
+            <div class="col-md-5 col-lg-5">
+                <div class="login d-flex align-items-center py-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-9 col-lg-8 mx-auto">
+                                <h3 class="login-heading mb-4 text-center">Your online cookbook!</h3>
+                                <form>
+                                    <div class="form-label-group">
+                                        <input type="email" id="inputEmail" class="form-control"
+                                            placeholder="Email address" required autofocus>
+                                        <label for="inputEmail">Email address</label>
+                                    </div>
+
+                                    <div class="form-label-group">
+                                        <input type="password" id="inputPassword" class="form-control"
+                                            placeholder="Password" required>
+                                        <label for="inputPassword">Password</label>
+                                    </div>
+
+                                    <button
+                                        class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"
+                                        type="submit">Sign in</button>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="static/js/jquery.slim.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
