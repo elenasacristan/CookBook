@@ -1,2 +1,5 @@
 
 notes.txt
+.venv
+__pycache__
+.vscode
