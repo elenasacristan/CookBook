@@ -82,6 +82,18 @@ nav img {
 
 /* base.html */
 
+/* Sticky Footer */
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
 @media only screen and (min-width: 601px) {
   nav {
     height: 60px;
@@ -91,12 +103,28 @@ nav img {
 
 nav .brand-logo {
   left: 50%;
-  /* -webkit-transform: translateX(-50%); */
   transform: translateX(-50%);
 }
 
-/* footer */
+nav i,
+nav [class^="mdi-"],
+nav [class*="mdi-"],
+nav i.material-icons {
+  font-size: 30px;
+}
 
+nav ul a:hover {
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  color: #ffbf00;
+}
+
+/* footer */
+footer .container {
+  width: 90%;
+}
 .social-item {
   display: inline-block;
 }
@@ -107,6 +135,7 @@ nav .brand-logo {
   border-radius: 25px;
   width: 40px;
   height: 40px;
+  margin-left: 5px;
   background-color: #ffffff4d;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
@@ -130,10 +159,37 @@ nav .brand-logo {
   left: 10px;
 }
 
-footer .col {
-  display: flex;
+.page-footer {
+  padding: 0px;
+  background-color: #a63636;
 }
 
-.page-footer {
-    padding-top: 10px;
-    background-color: #4f4f4f;
+footer p {
+  padding-top: 10px;
+  margin-bottom: 0px;
+}
+
+footer ul {
+  padding-top: 15px;
+}
+
+footer .row {
+  margin: 0px;
+}
+
+hr {
+  margin-top: 20px;
+  background-color: #ffbf00;
+  height: 0.4px;
+  width: 100%;
+}
+
+/* get recipies */
+
+.title {
+  margin-top: 80px;
+}
+
+.carousel {
+  margin-top: -60px;
+}
