@@ -12,19 +12,37 @@
         <div class="row">
             <div class="col s12">
                 <div class="carousel">
-                    <a class="carousel-item" href="#one!"><img
-                            src="{{url_for('static', filename='img/desayuno1.jpg')}}"></a>
-                    <a class="carousel-item" href="#two!"><img
-                            src="{{url_for('static', filename='img/CookBook.jpg')}}"></a>
-                    <a class="carousel-item" href="#three!"><img
-                            src="{{url_for('static', filename='img/pollo.jpg')}}"></a>
-                    <a class="carousel-item" href="#four!"><img
-                            src="{{url_for('static', filename='img/sweet.jpg')}}"></a>
-                    <a class="carousel-item" href="#five!"><img
-                            src="{{url_for('static', filename='img/salad.jpg')}}"></a>
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col s12">
+                                <a href="#">
+                                    <img src="{{url_for('static', filename='img/desayuno1.jpg')}}">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s6">
+                                <h6>N votes</h6>
+                            </div>
+                            <div class="col s6 right-align">
+                                <a href="#">
+                                    <h6>View</h6>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 center-align">
+                                <h4>Recipe name</h4>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        {% for recipe in recipes%}
+        {{recipe.recipe_name}}
+        {% endfor %}
 
     </div>
     {% endblock %}

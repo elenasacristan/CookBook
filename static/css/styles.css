@@ -16,8 +16,7 @@
   background-color: #ffffff;
 }
 
-.form-label-group > input,
-.form-label-group > label {
+.form-label-group>input, .form-label-group>label {
   height: 2.5em;
   padding-left: 1em;
   padding-top: 0.4em;
@@ -59,23 +58,18 @@ nav img {
   border-color: #ff9907;
 }
 
-.btn-block:hover,
-.btn-block:active {
+.btn-block:hover, .btn-block:active {
   background-color: #e68f16;
   border-color: #e68f16;
 }
 
-.btn-primary:not(:disabled):not(.disabled).active,
-.btn-primary:not(:disabled):not(.disabled):active,
-.show > .btn-primary.dropdown-toggle {
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
   color: #fff;
   background-color: #e68f16;
   border-color: #e68f16;
 }
 
-.form-control:focus,
-.btn-primary.focus,
-.btn-primary:focus {
+.form-control:focus, .btn-primary.focus, .btn-primary:focus {
   border-color: #ff9907;
   box-shadow: 0 0 0 0.2rem rgba(255, 204, 65, 0.603);
 }
@@ -106,10 +100,7 @@ nav .brand-logo {
   transform: translateX(-50%);
 }
 
-nav i,
-nav [class^="mdi-"],
-nav [class*="mdi-"],
-nav i.material-icons {
+nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
   font-size: 30px;
 }
 
@@ -122,9 +113,11 @@ nav ul a:hover {
 }
 
 /* footer */
+
 footer .container {
   width: 90%;
 }
+
 .social-item {
   display: inline-block;
 }
@@ -161,7 +154,7 @@ footer .container {
 
 .page-footer {
   padding: 0px;
-  background-color: #a63636;
+  background-color: #a65d03;
 }
 
 footer p {
@@ -190,6 +183,12 @@ hr {
   margin-top: 80px;
 }
 
-.carousel {
-  margin-top: -60px;
+/* .carousel .carousel-item {
+  width: 350px;
+  height: 350px;
+} */
+
+.carousel .carousel-item {
+  width: auto;
+  height: auto;
 }
