@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col s12 m8">
+        <h4>{{recipe.recipe_name}}</h4>
+    </div>
+    <div class="col offset-s7 s6 m4 right-align">
+        <div class="row">
+            <div class="col m8 right-align">
+                <h5>{{recipe.upvotes}} votes</h5>
+            </div>
+            <div class="col m4 right-align">
+                <a class="button-like waves-effect waves-light btn-large"><i class="fa fa-thumbs-up"></i></a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col m12 l7">
+        <img class="img_view_recipe" src="{{recipe.image_url}}">
+    </div>
+
+    <div class="col m12 l5">
+        <div class="row details-item">
+            <div class="col s6 right-align">
+                <i class="fa fa-clock-o"></i>
+            </div>
+            <div class="col s6 ">
+                <h5><strong>Cooking time</strong></h5>
+                <p>15 min</p>
+            </div>
+        </div>
+        <div class="row details-item">
+            <div class="col s6 right-align">
+                <i class="fa fa-users"></i>
+            </div>
+            <div class="col s6">
+                <h5><strong>Servings</strong></h5>
+                <p>{{recipe.serves}}</p>
+            </div>
+        </div>
+        <div class="row details-item">
+            <div class="col s6 right-align">
+                <i class="fa fa-puzzle-piece"></i>
+            </div>
+            <div class="col s6">
+                <h5><strong>Difficulty</strong></h5>
+                <p>{{recipe.difficulty}}</p>
+            </div>
+        </div>
+        <div class="row details-item">
+            <div class="col s6 right-align">
+                <i class="fa fa-heart"></i>
+            </div>
+            <div class="col s6">
+                <h5><strong>Calories</strong> (per serving)</h5>
+                <p>{{recipe.calories}}</p>
+            </div>
+        </div>
+        <div class="row details-item">
+            <div class="col s6 right-align">
+                <i class="fa fa-globe"></i>
+            </div>
+            <div class="col s6">
+                <h5><strong>Cuisine</strong></h5>
+                <p>{{recipe.cuisine}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{{recipe.recipe_name}}
+
+
+
+{% endblock %}

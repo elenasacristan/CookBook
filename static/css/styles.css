@@ -4,6 +4,16 @@
   border: 0;
 }
 
+.container-fluid {
+  width: 80%;
+  margin: auto;
+}
+
+.container .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 /* login page */
 
 .bg-image-login {
@@ -206,4 +216,30 @@ hr {
   .img-carousel {
     width: 400px;
   }
+}
+
+/* view recipe */
+
+.img_view_recipe {
+  width: 100%;
+}
+
+.button-like {
+  margin-top: 10px;
+}
+
+.details-item .fa {
+  margin-top: 17px;
+  padding-right: 20px;
+  font-size: 50px;
+}
+
+.details-item .fa {
+  margin-top: 17px;
+  padding-right: 20px;
+  font-size: 50px;
+}
+
+.details-item {
+  margin-bottom: 30px;
 }
