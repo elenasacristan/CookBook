@@ -46,8 +46,6 @@ def get_recipies():
     username = getusername()
     return render_template('get_recipies.html', username=username, recipes = mongo.db.Recipes.find())
 
-
-
 @app.route('/view_recipe/<recipe_id>')
 def view_recipe(recipe_id):
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
