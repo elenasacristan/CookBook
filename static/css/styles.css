@@ -4,11 +4,6 @@
   border: 0;
 }
 
-.container-fluid {
-  width: 80%;
-  margin: auto;
-}
-
 .container .row {
   margin-left: 0px;
   margin-right: 0px;
@@ -242,4 +237,8 @@ hr {
 
 .details-item {
   margin-bottom: 30px;
+}
+
+.instructions {
+  background-color: #e8e8e8;
 }
