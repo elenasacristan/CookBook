@@ -9,10 +9,10 @@
   margin-right: 0px;
 }
 
-.row .col {
+/* .row .col {
   margin: 0px;
   padding: 0px;
-}
+} */
 
 /* login page */
 
@@ -230,7 +230,10 @@ hr {
 .details-item .fa {
   margin-top: 17px;
   padding-right: 20px;
-  /* font-size: 2em; */
+}
+
+.small, .img-details p {
+  white-space: nowrap;
 }
 
 @media only screen and (max-width: 400px) {
@@ -244,6 +247,12 @@ hr {
   .details-item p {
     font-size: 0.6em;
   }
+  .small {
+    font-size: 0.7em;
+  }
+  .details-item {
+    margin-bottom: 0px;
+  }
 }
 
 @media only screen and (min-width: 401px) {
@@ -255,6 +264,12 @@ hr {
     font-size: 0.9em;
   }
   .details-item p {
+    font-size: 0.7em;
+  }
+  .details-item {
+    margin-bottom: 0px;
+  }
+  .small {
     font-size: 0.7em;
   }
 }
@@ -270,7 +285,10 @@ hr {
     font-size: 0.9em;
   }
   .details-item {
-    margin-bottom: 40px;
+    margin-bottom: 18px;
+  }
+  .small {
+    font-size: 0.7em;
   }
 }
 
@@ -285,22 +303,25 @@ hr {
     font-size: 1em;
   }
   .details-item {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+  }
+  .small {
+    font-size: 0.7em;
   }
 }
-
-/* .details-item {
-  margin-bottom: 30px;
-} */
 
 .instructions {
   background-color: #e8e8e8;
 }
 
-.small {
-  font-size: 0.8em;
+.img-details {
+  margin-bottom: 40px;
 }
 
-.img-details {
-  margin-bottom: 50px;
+.ingredients {
+  margin-bottom: 30px;
+}
+
+.instructions ol {
+  padding-left: 50px;
 }
