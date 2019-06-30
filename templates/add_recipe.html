@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form class="container">
+<form action="{{url_for('insert_recipe')}}" method="POST" class="container">
     <div class="row">
         <div class="input-field col s12 m6">
             <h6><strong>Recipe name:</strong></h6>
@@ -14,6 +14,13 @@
             <!-- Modal Trigger -->
             <a class="modal-trigger" href="#modal1"><img class="img-recipe"
                     src="{{url_for('static', filename='img/add_image.png')}}"></a>
+            <!-- Modal Structure -->
+            <div id="modal1" class="modal">
+                <h6><strong>Recipe image url</strong></h6>
+                <input type="url" id="image_url" name="image_url" required=required
+                    placeholder="Copy here the url for the recipe image">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn ">Add url</a>
+            </div>
         </div>
         <div class="col s12 m6">
             <div class="row">
@@ -49,9 +56,11 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Difficulty:</strong></h6>
-                            <select id="difficulty" name="difficulty">
+                            <select id="difficulty_level" name="difficulty_level">
                                 <option value="" disabled selected>Select one</option>
-                                <option value="1">Option 1</option>
+                                {% for level in difficulty%}
+                                <option value="{{level.difficulty_level}}">{{level.difficulty_level}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -65,7 +74,9 @@
                             <h6><strong>Category:</strong></h6>
                             <select id="category" name="category">
                                 <option value="" disabled selected>Select one</option>
-                                <option value="1">Option 1</option>
+                                {% for category in categories%}
+                                <option value="{{category.category}}">{{category.category}}</option>
+                                {% endfor %}
                                 <option value="3"><a href="#">Add new</a></option>
                             </select>
                         </div>
@@ -82,7 +93,9 @@
                             <h6><strong>Cuisine:</strong></h6>
                             <select id="cuisine" name="cuisine">
                                 <option value="" disabled selected>Select one</option>
-                                <option value="1">Option 1</option>
+                                {% for cuisine in cuisines%}
+                                <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
+                                {% endfor %}
                                 <option value="3"><a href="#">Add new</a></option>
                             </select>
                         </div>
@@ -119,13 +132,13 @@
                 </div>
             </div>
             <div class="row">
-
                 <div class="col s12 m5 input-field">
-                    <input placeholder="ingredient" name="ingredient" type="text" class="validate">
+                    <input placeholder="ingredient" id="ingredient_name" name="ingredient_name" type="text"
+                        class="validate">
                     <label for="ingredient">Ingredient</label>
                 </div>
                 <div class="col s12 offset-m2 m3 input-field">
-                    <input placeholder="amount" name="amount" type="text" class="validate">
+                    <input placeholder="amount" id="amount" name="amount" type="text" class="validate">
                     <label for="amount">Amount</label>
                 </div>
                 <div class="col s12 offset-m1 m1 right-align">
@@ -141,31 +154,17 @@
         </div>
     </div>
 
-
-
-    </div>
-    </div>
     <div class="row">
         <div class="col s12 right-align">
             <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
-                    class="fa fa-insert"></i>Add recipe
-            </button>
+                    class="fa fa-insert"></i>Add recipe</button>
 
         </div>
     </div>
 </form>
 
 
-<!-- Modal Structure -->
-<div id="modal1" class="modal">
-    <form>
-        <h6><strong>Recipe image url</strong></h6>
-        <input type="url" id="image_url" name="image_url" required=required
-            placeholder="Copy here the url for the recipe image">
-        <button class="btn waves-effect waves-light" type="submit" name="action">add url
-        </button>
-    </form>
-</div>
+
 
 
 {% endblock %}

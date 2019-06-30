@@ -27,19 +27,19 @@
     <header>
         <nav>
             <div class="nav-wrapper">
-                <a href="{{url_for('get_recipies')}}"" class=" brand-logo"> <img
+                <a href="{{url_for('get_recipes')}}"" class=" brand-logo"> <img
                         src="{{url_for('static', filename='img/logo2.png')}}" width="220" alt="time2eat logo"></a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse hide-on-med-and-up"><i
                         class="material-icons">menu</i></a>
                 <!-- <ul class="right hide-on-med-and-down"> -->
                 <ul class="right hide-on-small-only	">
 
-                    <li><a href="{{url_for('get_recipies')}}"><i class="material-icons">home</i></a></li>
+                    <li><a href="{{url_for('get_recipes')}}"><i class="material-icons">home</i></a></li>
                     <li><a href="{{url_for('add_recipe')}}"><i class="material-icons">add_box</i></a></li>
                     <li><a href="{{url_for('logout')}}"><i class="material-icons">exit_to_app</i></a></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
-                    <li><a href="{{url_for('get_recipies')}}">Home</a></li>
+                    <li><a href="{{url_for('get_recipes')}}">Home</a></li>
                     <li><a href="{{url_for('add_recipe')}}">Add recipie</a></li>
                     <li><a href="{{url_for('logout')}}">Logout</a></li>
                 </ul>
@@ -93,6 +93,7 @@
             $('.carousel').carousel();
             $('.modal').modal();
             $('select').material_select();
+            // $('.modal-close').modal('close');
         })
     </script>
 

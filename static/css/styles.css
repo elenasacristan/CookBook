@@ -337,8 +337,8 @@ hr {
 
 /* modal */
 
-.modal form {
-  margin: 40px;
+.modal {
+  padding: 40px;
 }
 
 .input-field.col label {
