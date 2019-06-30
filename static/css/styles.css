@@ -4,6 +4,10 @@
   border: 0;
 }
 
+.container {
+  margin-top: 40px;
+}
+
 .container .row {
   margin-left: 0px;
   margin-right: 0px;
@@ -329,4 +333,10 @@ hr {
 
 .img-recipe {
   width: 100%;
+}
+
+/* modal */
+
+.modal form {
+  margin: 40px;
 }
