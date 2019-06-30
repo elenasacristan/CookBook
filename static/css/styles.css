@@ -9,10 +9,9 @@
   margin-right: 0px;
 }
 
-/* .row .col {
-  margin: 0px;
+.row .col {
   padding: 0px;
-} */
+}
 
 /* login page */
 
@@ -324,4 +323,10 @@ hr {
 
 .instructions ol {
   padding-left: 50px;
+}
+
+/* add recipe */
+
+.img-recipe {
+  width: 100%;
 }

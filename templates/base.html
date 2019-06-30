@@ -35,12 +35,12 @@
                 <ul class="right hide-on-small-only	">
 
                     <li><a href="{{url_for('get_recipies')}}"><i class="material-icons">home</i></a></li>
-                    <li><a href="collapsible.html"><i class="material-icons">add_box</i></a></li>
+                    <li><a href="{{url_for('add_recipe')}}"><i class="material-icons">add_box</i></a></li>
                     <li><a href="{{url_for('logout')}}"><i class="material-icons">exit_to_app</i></a></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <li><a href="{{url_for('get_recipies')}}">Home</a></li>
-                    <li><a href="collapsible.html">Add recipie</a></li>
+                    <li><a href="{{url_for('add_recipe')}}">Add recipie</a></li>
                     <li><a href="{{url_for('logout')}}">Logout</a></li>
                 </ul>
             </div>
@@ -83,7 +83,6 @@
         </div>
     </footer>
 
-
     <!-- jquery file -->
     <script type="text/javascript" src="{{url_for('static', filename='js/jqueryv3.4.5.js')}}"></script>
     <!-- materialize js file -->
@@ -92,6 +91,7 @@
         $(document).ready(function () {
             $(".button-collapse").sideNav();
             $('.carousel').carousel();
+            $('.modal').modal();
         })
     </script>
 

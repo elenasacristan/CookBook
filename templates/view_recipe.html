@@ -137,8 +137,17 @@
                         </li>
                         {% endfor %}
                     </ol>
+                    <h6 class="center-align">Recipe by {{recipe.author}} - {{recipe.date}}</h6>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 right-align">
+            <button class="btn waves-effect waves-light red" type="submit" name="action"><i class="fa fa-trash"></i>
+            </button>
+            <button class="btn waves-effect waves-light blue" type="submit" name="action"><i class="fa fa-edit"></i>
+            </button>
         </div>
     </div>
 </div>
