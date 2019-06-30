@@ -340,3 +340,7 @@ hr {
 .modal form {
   margin: 40px;
 }
+
+.input-field.col label {
+  left: 0px;
+}
