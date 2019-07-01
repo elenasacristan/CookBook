@@ -85,7 +85,7 @@ def insert_recipe():
 @app.route('/view_recipe/<recipe_id>')
 def view_recipe(recipe_id):
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
-    return render_template('view_recipe.html', recipe = recipe)
+    return render_template('view_recipe.html', recipe = recipe, username = getusername())
 
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):

@@ -6,6 +6,7 @@
         <div class="col s12 m8">
             <h4>{{recipe.recipe_name}}</h4>
         </div>
+        {% if recipe.author != username %}
         <div class="col offset-s7 s6 m4 right-align">
             <div class="row">
                 <div class="col m8 right-align">
@@ -16,6 +17,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 
     <div class="row img-details">
@@ -142,14 +144,15 @@
             </div>
         </div>
     </div>
+    {% if recipe.author == username %}
     <div class="row">
         <div class="col s12 right-align">
             <a href="{{url_for('delete_recipe', recipe_id=recipe._id)}}" class="btn waves-effect waves-light red"><i
                     class="fa fa-trash"></i></a>
             <a href="" class="btn waves-effect waves-light blue"><i class="fa fa-edit"></i></a>
-
         </div>
     </div>
+    {% endif %}
 </div>
 
 
