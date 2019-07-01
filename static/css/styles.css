@@ -226,6 +226,16 @@ hr {
   width: 100%;
 }
 
+.votes {
+  white-space: nowrap;
+}
+
+.fa-star {
+  font-size: 3em;
+  color: #ffbf00;
+  text-shadow: 2px 2px 2px #777777;
+}
+
 .button-like {
   margin-top: 10px;
 }
