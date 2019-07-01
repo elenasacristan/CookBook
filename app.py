@@ -46,6 +46,12 @@ def string_to_array(string):
     array = string.split(",")
     return array
 
+# function to vote the recipes
+@app.route('/view_recipe/vote/<recipe_id>')
+def vote(recipe_id):
+    mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'upvotes': 1}})
+    return redirect(url_for("view_recipe", recipe_id=recipe_id))
+
 
 @app.route('/get_recipes')
 def get_recipes():
