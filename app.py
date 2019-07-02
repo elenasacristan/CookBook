@@ -101,6 +101,15 @@ def vote(recipe_id):
     mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'upvotes': 1}})
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
+@app.route('/edit_recipe/<recipe_id>')
+def edit_recipe(recipe_id):
+    recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
+    categories = mongo.db.Categories.find()
+    cuisines = mongo.db.Cuisines.find()
+    difficulty = mongo.db.Difficulty.find()
+    return render_template('edit_recipe.html', recipe=recipe, categories=categories, cuisines=cuisines, difficulty=difficulty)
+
+
 # function to remove a recipe (only the author can remove a recipe)
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):

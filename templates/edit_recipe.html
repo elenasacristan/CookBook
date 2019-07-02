@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="{{url_for('insert_recipe')}}" method="POST" class="container">
+
+<form action="" method="POST" class="container">
     <div class="row">
         <div class="input-field col s12 m6">
             <h6><strong>Recipe name:</strong></h6>
-            <input placeholder="Recipe name" id="recipe_name" name="recipe_name" type="text" class="validate">
+            <input id="recipe_name" name="recipe_name" type="text" class="validate" value="testing">
         </div>
     </div>
 
     <div class="row img-details">
         <div class="col s12 m6">
             <!-- Modal Trigger -->
-            <a class="modal-trigger" href="#modal1"><img class="img-recipe"
-                    src="{{url_for('static', filename='img/add_image.png')}}"></a>
+            <a class="modal-trigger" href="#modal1"><img class="img-recipe" src="{{recipe.image_url}}"></a>
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
                 <h6><strong>Recipe image url</strong></h6>
                 <input type="url" id="image_url" name="image_url" required=required
-                    placeholder="Copy here the url for the recipe image">
+                    placeholder="Copy here the url for the recipe image" value="{{recipe.image_url}}">
                 <a href="#!" class="modal-action modal-close waves-effect waves-green btn ">Add url</a>
             </div>
         </div>
@@ -31,8 +31,8 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Cooking time:</strong></h6>
-                            <input placeholder="Cooking time" id="cooking_time" name="cooking_time" type="text"
-                                class="validate">
+                            <input id="cooking_time" name="cooking_time" type="text" class="validate"
+                                value="{{recipe.cooking_time}}">
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,8 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Calories:</strong></h6>
-                            <input placeholder="Calories" id="calories" name="calories" type="text" class="validate">
+                            <input id="calories" name="calories" type="text" class="validate"
+                                value="{{recipe.calories}}">
                         </div>
                     </div>
                 </div>
@@ -111,7 +112,8 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Serves:</strong></h6>
-                            <input placeholder="Serves" id="serves" name="serves" type="text" class="validate">
+                            <input placeholder="Serves" id="serves" name="serves" type="text" class="validate"
+                                value="{{recipe.serves}}">
                         </div>
                     </div>
                 </div>
@@ -126,7 +128,8 @@
                 <div class="col s12">
                     <h5>Cooking instructions:</h5>
                     <p>* Enter the steps in order separated by comma</p>
-                    <textarea id="instructions" name="instructions" class="materialize-textarea"></textarea>
+                    <textarea id="instructions" name="instructions" class="materialize-textarea">
+                        {{recipe.instructions}} </textarea>
                 </div>
             </div>
 
@@ -136,7 +139,8 @@
                     <p>* Enter the ingredient below separated by comma <br><span class="small">(example 2 kg - potatoes,
                             1
                             tsp - oil...)</span></p>
-                    <textarea id="ingredients" name="ingredients" class="materialize-textarea"></textarea>
+                    <textarea id="ingredient" name="ingredient"
+                        class="materialize-textarea">{{recipe.ingredients}}</textarea>
                 </div>
             </div>
 
@@ -144,14 +148,14 @@
         <div class=" col s12">
             <h5>Allergens:</h5>
             <p>* Enter the allergens below separated by comma</p>
-            <textarea id="allergens" name="allergens" class="materialize-textarea"></textarea>
+            <textarea id="allergens" name="allergens" class="materialize-textarea">{{recipe.allergens}}</textarea>
         </div>
     </div>
 
     <div class="row">
         <div class="col s12 right-align">
             <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
-                    class="fa fa-insert"></i>Add recipe</button>
+                    class="fa fa-insert"></i>Edit recipe</button>
 
         </div>
     </div>
