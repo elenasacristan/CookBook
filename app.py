@@ -22,7 +22,7 @@ app.secret_key = "randomString123"
 @app.route('/', methods = ['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        session["username"] = request.form["username"]
+        session["username"] = request.form["username"].capitalize()
 
     # if the cookie for the user already exist the login page is skipped
     if "username" in session:
@@ -33,11 +33,11 @@ def login():
 #function to get the username at anytime when the user is logged in
 def getusername():
     username = session['username']
-    return username.capitalize()
+    return username
 
 #function use to convert strings separated by commas to arrays
 def string_to_array(string):
-    array = string.split(",")
+    array = string.split("\n")
     return array
 
 #home page
@@ -78,7 +78,7 @@ def manage_categories():
 def insert_recipe():
     recipes = mongo.db.Recipes  
     recipes.insert_one({
-            'recipe_name':request.form['recipe_name'],
+            'recipe_name':request.form['recipe_name'].capitalize(),
             'instructions':string_to_array(request.form['instructions']),
             'serves':request.form['serves'],
             'calories':request.form['calories'],
@@ -113,9 +113,9 @@ def edit_recipe(recipe_id):
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
     difficulty = mongo.db.Difficulty.find()
-    list_ingredients = ','.join(recipe['ingredients'])
-    list_allergens = ','.join(recipe['allergens'])
-    list_instructions = ','.join(recipe['instructions'])
+    list_ingredients = '\n'.join(recipe['ingredients'])
+    list_allergens = '\n'.join(recipe['allergens'])
+    list_instructions = '\n'.join(recipe['instructions'])
 
     return render_template('edit_recipe.html', recipe=recipe, categories=categories, cuisines=cuisines, difficulty=difficulty, list_ingredients=list_ingredients, list_allergens=list_allergens,list_instructions=list_instructions)
 
