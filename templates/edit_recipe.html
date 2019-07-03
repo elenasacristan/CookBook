@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<form action="" method="POST" class="container">
+<form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" class="container">
     <div class="row">
         <div class="input-field col s12 m6">
             <h6><strong>Recipe name:</strong></h6>
-            <input id="recipe_name" name="recipe_name" type="text" class="validate" value="testing">
+            <input id="recipe_name" name="recipe_name" type="text" class="validate" value="{{recipe.recipe_name}}">
         </div>
     </div>
 
@@ -128,8 +127,8 @@
                 <div class="col s12">
                     <h5>Cooking instructions:</h5>
                     <p>* Enter the steps in order separated by comma</p>
-                    <textarea id="instructions" name="instructions" class="materialize-textarea">
-                        {{recipe.instructions}} </textarea>
+                    <textarea id="instructions" name="instructions"
+                        class="materialize-textarea">{{list_instructions}}</textarea>
                 </div>
             </div>
 
@@ -140,7 +139,7 @@
                             1
                             tsp - oil...)</span></p>
                     <textarea id="ingredient" name="ingredient"
-                        class="materialize-textarea">{{recipe.ingredients}}</textarea>
+                        class="materialize-textarea">{{list_ingredients}}</textarea>
                 </div>
             </div>
 
@@ -148,7 +147,7 @@
         <div class=" col s12">
             <h5>Allergens:</h5>
             <p>* Enter the allergens below separated by comma</p>
-            <textarea id="allergens" name="allergens" class="materialize-textarea">{{recipe.allergens}}</textarea>
+            <textarea id="allergens" name="allergens" class="materialize-textarea">{{list_allergens}}</textarea>
         </div>
     </div>
 

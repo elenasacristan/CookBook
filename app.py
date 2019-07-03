@@ -107,7 +107,31 @@ def edit_recipe(recipe_id):
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
     difficulty = mongo.db.Difficulty.find()
-    return render_template('edit_recipe.html', recipe=recipe, categories=categories, cuisines=cuisines, difficulty=difficulty)
+    list_ingredients = ','.join(recipe['ingredients'])
+    list_allergens = ','.join(recipe['allergens'])
+    list_instructions = ','.join(recipe['instructions'])
+
+    return render_template('edit_recipe.html', recipe=recipe, categories=categories, cuisines=cuisines, difficulty=difficulty, list_ingredients=list_ingredients, list_allergens=list_allergens,list_instructions=list_instructions)
+
+@app.route('/update_recipe/<recipe_id>' , methods=['GET', 'POST'])
+def update_recipe(recipe_id):
+    recipes = mongo.db.Recipes
+    recipes.update({"_id":ObjectId(recipe_id)},
+        {
+            'recipe_name':request.form['recipe_name'],
+            'instructions':string_to_array(request.form['instructions']),
+            'serves':request.form['serves'],
+            'calories':request.form['calories'],
+            'difficulty_level':request.form['difficulty_level'],
+            'cooking_time':request.form['cooking_time'],
+            'cuisine':request.form['cuisine'],
+            'allergens':string_to_array(request.form['allergens']),
+            'ingredients':string_to_array(request.form['ingredients']),
+            'image_url':request.form['image_url'],
+            'category':request.form['category']
+        })
+    return redirect(url_for('get_recipes'))
+
 
 
 # function to remove a recipe (only the author can remove a recipe)
