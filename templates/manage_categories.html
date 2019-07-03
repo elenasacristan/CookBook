@@ -9,7 +9,14 @@
             <ul>
                 {% for category in categories %}
                 <li>
-                    {{category.category}} - ({{category.count_recipes_category}} recipes)
+                    {{category.category}}
+                    {% if category.count_recipes_category > 0 %}
+                    - ({{category.count_recipes_category}} recipes)
+                    {% else %}
+                    <a href="{{url_for('delete_category', category_id=category.category_id)}}"
+                        class="btn waves-effect waves-light red">Delete
+                        category</a>
+                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>
@@ -20,7 +27,14 @@
             <ul>
                 {% for cuisine in cuisines %}
                 <li>
-                    {{cuisine.cuisine}} - ({{cuisine.count_recipes_cuisine}} recipes)
+                    {{cuisine.cuisine}}
+                    {% if cuisine.count_recipes_cuisine > 0 %}
+                    - ({{cuisine.count_recipes_cuisine}} recipes)
+                    {% else %}
+                    <a href="{{url_for('delete_cuisine', cuisine_id=cuisine.cuisine_id)}}"
+                        class="btn waves-effect waves-light red">Delete
+                        cuisine</a>
+                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>

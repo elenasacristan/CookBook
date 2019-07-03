@@ -5,8 +5,6 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from datetime import datetime
 
-
-
 # create an instance of Flask
 app = Flask(__name__)
 
@@ -19,8 +17,6 @@ mongo = PyMongo(app)
 
 # secret key needed to create session cookies / before deploying convert to enviroment variable
 app.secret_key = "randomString123"
-
-
 
 # landing page for the website for new users. 
 @app.route('/', methods = ['GET', 'POST'])
@@ -68,14 +64,14 @@ def manage_categories():
     cuisine_object=[]
 
     for category in categories:
-	    count_recipes_category = mongo.db.Recipes.find({'category':category}).count()
-	    category_object.append({"category" : category, "count_recipes_category" : count_recipes_category} )
+	    count_recipes_category = mongo.db.Recipes.find({'category':category['category']}).count()
+	    category_object.append({"category_id" : category['_id'] ,"category" : category['category'], "count_recipes_category" : count_recipes_category})
         
     for cuisine in cuisines:
-	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine}).count()
-	    cuisine_object.append({"cuisine" : cuisine, "count_recipes_cuisine" : count_recipes_cuisine} )
+	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine['cuisine']}).count()
+	    cuisine_object.append({"cuisine_id" : cuisine['_id'], "cuisine" : cuisine['cuisine'], "count_recipes_cuisine" : count_recipes_cuisine} )
 
-    return render_template('manage_categories.html', categories = category_object, cuisines=cuisine_object)
+    return render_template('manage_categories.html', categories = category_object, cuisines = cuisine_object)
 
 # funtion to insert into the database the new recipe
 @app.route('/insert_recipe', methods=['GET', 'POST'])
@@ -94,7 +90,7 @@ def insert_recipe():
             'image_url':request.form['image_url'],
             'author':getusername().capitalize(),
             'upvotes':0,
-            'date':datetime.now(),
+            'date':datetime.now().strftime("%d/%m/%Y"),
             'category':request.form['category']
         })
     return redirect(url_for('get_recipes'))
@@ -141,13 +137,24 @@ def update_recipe(recipe_id):
             'image_url':request.form['image_url'],
             'category':request.form['category']      
         }})
-    return redirect(url_for('get_recipes'))
+    return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
 # function to remove a recipe (only the author can remove a recipe)
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):
     mongo.db.Recipes.remove({"_id":ObjectId(recipe_id)})
     return redirect(url_for('get_recipes'))
+
+@app.route('/delete_category/<category_id>')
+def delete_category(category_id):
+    mongo.db.Categories.remove({"_id":ObjectId(category_id)})
+    return redirect(url_for('manage_categories'))
+
+@app.route('/delete_cuisine/<cuisine_id>')
+def delete_cuisine(cuisine_id):
+    mongo.db.Cuisines.remove({"_id":ObjectId(cuisine_id)})
+    return redirect(url_for('manage_categories'))
+
 
 # function to redirect to the page where the user can add a new category
 @app.route('/add_category')
@@ -185,8 +192,6 @@ def logout():
  # remove the username from the session if it is there
     session.pop('username', None)
     return redirect(url_for('login'))
-
-
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), port=int(os.environ.get('PORT')))
