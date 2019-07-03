@@ -9,7 +9,7 @@
             <ul>
                 {% for category in categories %}
                 <li>
-                    {{category.category}}
+                    {{category.category}} - ({{category.count_recipes_category}} recipes)
                 </li>
                 {% endfor %}
             </ul>
@@ -20,7 +20,7 @@
             <ul>
                 {% for cuisine in cuisines %}
                 <li>
-                    {{cuisine.cuisine}}
+                    {{cuisine.cuisine}} - ({{cuisine.count_recipes_cuisine}} recipes)
                 </li>
                 {% endfor %}
             </ul>

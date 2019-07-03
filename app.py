@@ -37,7 +37,7 @@ def login():
 #function to get the username at anytime when the user is logged in
 def getusername():
     username = session['username']
-    return username
+    return username.capitalize()
 
 #function use to convert strings separated by commas to arrays
 def string_to_array(string):
@@ -61,9 +61,21 @@ def add_recipe():
 # function to see and insert new categories or cuisines
 @app.route('/manage_categories')
 def manage_categories():
+    recipes = mongo.db.Recipes.find()
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
-    return render_template('manage_categories.html', categories = categories, cuisines=cuisines)
+    category_object=[]
+    cuisine_object=[]
+
+    for category in categories:
+	    count_recipes_category = mongo.db.Recipes.find({'category':category}).count()
+	    category_object.append({"category" : category, "count_recipes_category" : count_recipes_category} )
+        
+    for cuisine in cuisines:
+	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine}).count()
+	    cuisine_object.append({"cuisine" : cuisine, "count_recipes_cuisine" : count_recipes_cuisine} )
+
+    return render_template('manage_categories.html', categories = category_object, cuisines=cuisine_object)
 
 # funtion to insert into the database the new recipe
 @app.route('/insert_recipe', methods=['GET', 'POST'])
@@ -80,7 +92,7 @@ def insert_recipe():
             'allergens':string_to_array(request.form['allergens']),
             'ingredients':string_to_array(request.form['ingredients']),
             'image_url':request.form['image_url'],
-            'author':getusername(),
+            'author':getusername().capitalize(),
             'upvotes':0,
             'date':datetime.now(),
             'category':request.form['category']
