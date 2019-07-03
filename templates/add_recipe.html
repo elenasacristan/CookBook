@@ -77,10 +77,6 @@
                                 {% for category in categories%}
                                 <option value="{{category.category}}">{{category.category}}</option>
                                 {% endfor %}
-                                <option value="{{url_for('add_category')}}">Add new
-                                    category
-                                </option>
-
                             </select>
                         </div>
                     </div>
@@ -99,7 +95,6 @@
                                 {% for cuisine in cuisines%}
                                 <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
                                 {% endfor %}
-                                <option value="3"><a href="#">Add new</a></option>
                             </select>
                         </div>
                     </div>

@@ -34,8 +34,6 @@ def login():
     
     return render_template('login.html')
 
-
-
 #function to get the username at anytime when the user is logged in
 def getusername():
     username = session['username']
@@ -116,7 +114,8 @@ def edit_recipe(recipe_id):
 @app.route('/update_recipe/<recipe_id>' , methods=['GET', 'POST'])
 def update_recipe(recipe_id):
     recipes = mongo.db.Recipes
-    recipes.update({"_id":ObjectId(recipe_id)},
+    recipe = mongo.db.Recipes.find({"_id":ObjectId(recipe_id)})
+    recipes.update({"_id":ObjectId(recipe_id)},{ "$set":
         {
             'recipe_name':request.form['recipe_name'],
             'instructions':string_to_array(request.form['instructions']),
@@ -128,11 +127,9 @@ def update_recipe(recipe_id):
             'allergens':string_to_array(request.form['allergens']),
             'ingredients':string_to_array(request.form['ingredients']),
             'image_url':request.form['image_url'],
-            'category':request.form['category']
-        })
+            'category':request.form['category']      
+        }})
     return redirect(url_for('get_recipes'))
-
-
 
 # function to remove a recipe (only the author can remove a recipe)
 @app.route('/delete_recipe/<recipe_id>')

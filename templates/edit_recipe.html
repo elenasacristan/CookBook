@@ -59,7 +59,11 @@
                             <select id="difficulty_level" name="difficulty_level">
                                 <option value="" disabled selected>Select one</option>
                                 {% for level in difficulty%}
+                                {% if level.difficulty_level == recipe.difficulty_level %}
+                                <option value="{{level.difficulty_level}}" selected>{{level.difficulty_level}}</option>
+                                {% else %}
                                 <option value="{{level.difficulty_level}}">{{level.difficulty_level}}</option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -75,12 +79,12 @@
                             <select id="category" name="category">
                                 <option value="" disabled selected>Select one</option>
                                 {% for category in categories%}
+                                {% if category.category == recipe.category %}
+                                <option value="{{category.category}}" selected>{{category.category}}</option>
+                                {% else %}
                                 <option value="{{category.category}}">{{category.category}}</option>
+                                {% endif %}
                                 {% endfor %}
-                                <option value="{{url_for('add_category')}}">Add new
-                                    category
-                                </option>
-
                             </select>
                         </div>
                     </div>
@@ -96,8 +100,12 @@
                             <h6><strong>Cuisine:</strong></h6>
                             <select id="cuisine" name="cuisine">
                                 <option value="" disabled selected>Select one</option>
-                                {% for cuisine in cuisines%}
+                                {% for cuisine in cuisines %}
+                                {% if cuisine.cuisine == recipe.cuisine %}
+                                <option value="{{cuisine.cuisine}}" selected>{{cuisine.cuisine}}</option>
+                                {% else %}
                                 <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
+                                {% endif %}
                                 {% endfor %}
                                 <option value="3"><a href="#">Add new</a></option>
                             </select>
@@ -138,7 +146,7 @@
                     <p>* Enter the ingredient below separated by comma <br><span class="small">(example 2 kg - potatoes,
                             1
                             tsp - oil...)</span></p>
-                    <textarea id="ingredient" name="ingredient"
+                    <textarea id="ingredients" name="ingredients"
                         class="materialize-textarea">{{list_ingredients}}</textarea>
                 </div>
             </div>
