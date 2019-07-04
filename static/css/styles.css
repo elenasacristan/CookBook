@@ -185,7 +185,7 @@ footer .container {
 
 .page-footer {
   padding: 0px;
-  background-color: #a65d03;
+  background-color: #26a69acf;
 }
 
 footer p {
@@ -357,6 +357,10 @@ hr {
   padding-left: 50px;
 }
 
+.author-date {
+  margin-top: 25px;
+}
+
 /* add recipe */
 
 .img-recipe {
@@ -371,4 +375,15 @@ hr {
 
 .input-field.col label {
   left: 0px;
+}
+
+/* manage_categories.html */
+
+.add_category_cuisine {
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+.add_category_cuisine button {
+  margin-top: 25px;
 }

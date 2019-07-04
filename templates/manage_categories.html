@@ -4,75 +4,97 @@
 <div class="container">
 
     <div class="row">
-        <div class="col s6 center-align ingredients">
+        <div class="col m12 l5 center-align">
             <h5>Categories</h5>
-            <ul>
-                {% for category in categories %}
-                <li>
-                    {{category.category}}
-                    {% if category.count_recipes_category > 0 %}
-                    - ({{category.count_recipes_category}} recipes)
-                    {% else %}
-                    <a href="{{url_for('delete_category', category_id=category.category_id)}}"
-                        class="btn waves-effect waves-light red">Delete
-                        category</a>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-            <form action="{{url_for('insert_category')}}" method="POST" class="container">
-                <h5>Add Category</h5>
-                <div class="row">
-                    <div class="col s12 input-field">
-                        <input placeholder="Category" id="category" name="category" type="text" class="validate">
-                        <label for="category">Category</label>
-                    </div>
-                </div>
+            <table class="striped centered">
+                <thead>
+                    <tr>
+                        <th>Categories</th>
+                        <th>Recipes</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>{{category.category}}</td>
+                        <td>{{category.count_recipes_category}}</td>
+                        <td>{% if category.count_recipes_category == 0 %}
+                            <a href="{{url_for('delete_category', category_id=category.category_id)}}"
+                                class="btn waves-effect waves-light red right-align"><i class="fa fa-trash"></i></a>
+                            {% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <form action="{{url_for('insert_category')}}" method="POST" class="add_category_cuisine">
+                <h5 class="left-align">Add Category</h5>
                 <div class="row">
-                    <div class="col s12 right-align">
+                    <div class="col s9 input-field">
+                        <input placeholder="Category" id="category" name="category" type="text" class="validate">
+                    </div>
+
+                    <div class="col s3 right-align">
                         <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
-                                class="fa fa-insert"></i>Add category</button>
+                                class="material-icons">add_box</i></button>
 
                     </div>
                 </div>
             </form>
-        </div>
-        <div class=" col s6 center-align ingredients">
-            <h5>Cuisines</h5>
-            <ul>
-                {% for cuisine in cuisines %}
-                <li>
-                    {{cuisine.cuisine}}
-                    {% if cuisine.count_recipes_cuisine > 0 %}
-                    - ({{cuisine.count_recipes_cuisine}} recipes)
-                    {% else %}
-                    <a href="{{url_for('delete_cuisine', cuisine_id=cuisine.cuisine_id)}}"
-                        class="btn waves-effect waves-light red">Delete
-                        cuisine</a>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-            <form action="{{url_for('insert_cuisine')}}" method="POST" class="container">
-                <h5>Add Cuisine</h5>
-                <div class="row">
-                    <div class="col s12 input-field">
-                        <input placeholder="Cuisine" id="cuisine" name="cuisine" type="text" class="validate">
-                        <label for="category">Cuisine</label>
-                    </div>
-                </div>
 
+        </div>
+        <div class="col m12 offset-l2 l5 center-align">
+            <h5>Cuisines</h5>
+            <table class="striped centered">
+                <thead>
+                    <tr>
+                        <th>Cuisines</th>
+                        <th>Recipes</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for cuisine in cuisines %}
+                    <tr>
+                        <td>{{cuisine.cuisine}}</td>
+                        <td>{{cuisine.count_recipes_cuisine}}</td>
+                        <td>{% if cuisine.count_recipes_cuisine == 0 %}
+                            <a href="{{url_for('delete_cuisine', cuisine_id=cuisine.cuisine_id)}}"
+                                class="btn waves-effect waves-light red"><i class="fa fa-trash"></i></a>
+                            {% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <form action="{{url_for('insert_cuisine')}}" method="POST" class="add_category_cuisine">
+                <h5 class="left-align">Add Cuisine</h5>
                 <div class="row">
-                    <div class="col s12 right-align">
+                    <div class="col s9 input-field">
+                        <input placeholder="Cuisine" id="cuisine" name="cuisine" type="text" class="validate">
+                    </div>
+
+                    <div class="col s3 right-align">
                         <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
-                                class="fa fa-insert"></i>Add cuisine</button>
+                                class="material-icons">add_box</i></button>
 
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
 
 
 </div>
