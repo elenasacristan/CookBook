@@ -4,7 +4,6 @@ from flask import Flask, render_template, request, url_for, redirect, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from datetime import datetime
-import bcrypt
 
 # create an instance of Flask
 app = Flask(__name__)
@@ -41,8 +40,10 @@ def login():
         if request.form['password'] == user_login['password']:
             session["username"] = request.form["username"]
             return redirect(url_for('get_recipes'))
-        
-    return 'The username and/or password are not correct!'
+    
+    message = 'The login details are not correct'
+
+    return render_template('login.html', message=message)
 
 @app.route('/register', methods=['POST','GET'])
 def register():
@@ -55,7 +56,8 @@ def register():
             session['username'] = request.form['username']
             return redirect(url_for('get_recipes'))
 
-        return 'That username already exists, please try with a different one.'
+        message = "That username already exists, please choose a different one."
+        return render_template('register.html', message=message)
 
     return render_template('register.html')
 

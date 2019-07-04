@@ -87,6 +87,24 @@ nav img {
   box-shadow: 0 0 0 0.2rem rgba(255, 204, 65, 0.603);
 }
 
+.btn-login {
+  white-space: nowrap;
+}
+
+.register {
+  margin-top: 20px;
+  font-size: 0.7em;
+}
+
+.register_here {
+  font-size: 1.2em;
+}
+
+.error_message {
+  margin-top: 20px;
+  color: red;
+}
+
 /* base.html */
 
 /* Sticky Footer */
