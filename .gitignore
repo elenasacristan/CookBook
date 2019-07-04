@@ -5,3 +5,4 @@ __pycache__
 .vscode
 dudas.txt
 env.py
+app_backup.py

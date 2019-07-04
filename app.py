@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, url_for, redirect, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from datetime import datetime
+import bcrypt
 
 # create an instance of Flask
 app = Flask(__name__)
@@ -18,17 +19,45 @@ mongo = PyMongo(app)
 # secret key needed to create session cookies / before deploying convert to enviroment variable
 app.secret_key = "randomString123"
 
-# landing page for the website for new users. 
-@app.route('/', methods = ['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        session["username"] = request.form["username"].capitalize()
 
+
+# https://www.youtube.com/watch?v=vVx1737auSE
+# landing page for the website for new users. 
+@app.route('/')
+def index():
+   
     # if the cookie for the user already exist the login page is skipped
     if "username" in session:
         return redirect(url_for('get_recipes'))
     
     return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    users = mongo.db.Users
+    user_login = users.find_one({'author':request.form['username']})
+
+    if user_login:
+        if request.form['password'] == user_login['password']:
+            session["username"] = request.form["username"]
+            return redirect(url_for('get_recipes'))
+        
+    return 'The username and/or password are not correct!'
+
+@app.route('/register', methods=['POST','GET'])
+def register():
+    if request.method == 'POST':
+        users = mongo.db.Users
+        user_exists = users.find_one({'author':request.form['username']})
+
+        if user_exists is None:
+            users.insert({'author':request.form['username'], 'password':request.form['password']})
+            session['username'] = request.form['username']
+            return redirect(url_for('get_recipes'))
+
+        return 'That username already exists, please try with a different one.'
+
+    return render_template('register.html')
 
 #function to get the username at anytime when the user is logged in
 def getusername():
@@ -191,7 +220,7 @@ def insert_cuisine():
 def logout():
  # remove the username from the session if it is there
     session.pop('username', None)
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), port=int(os.environ.get('PORT')))
