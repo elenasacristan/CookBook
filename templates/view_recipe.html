@@ -20,7 +20,11 @@
 
     <div class="row img-details">
         <div class="col s12 m6">
-            <img class="img_view_recipe" src="{{recipe.image_url}}">
+            {% if recipe.recipe_image %}
+            <img class="img_view_recipe" src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}"">
+                {% else %}
+                <img class=" img_view_recipe" src="{{url_for('static', filename='img/default.jpg')}}">
+            {% endif %}
         </div>
         <div class="col s12 m6">
             <div class="row">
@@ -35,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s6">
+                <div class=" col s6">
                     <div class="row details-item">
                         <div class="col s6 right-align">
                             <i class="fa fa-heart"></i>

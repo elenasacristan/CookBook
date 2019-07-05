@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="{{url_for('insert_recipe')}}" method="POST" class="container">
+<form action="{{url_for('insert_recipe')}}" method="POST" class="container" enctype="multipart/form-data">
     <div class="row">
         <div class="input-field col s12 m6">
             <h6><strong>Recipe name:</strong></h6>
@@ -12,16 +12,16 @@
     <div class="row img-details">
         <div class="col s12 m6">
             <!-- Modal Trigger -->
-            <a class="modal-trigger" href="#modal1"><img class="img-recipe"
-                    src="{{url_for('static', filename='img/add_image.png')}}"></a>
+            <a class="modal-trigger" href="#modal1">Upload image<img class="img-recipe"
+                    src="{{url_for('static', filename='img/default.jpg')}}"></a>
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
-                <h6><strong>Recipe image url</strong></h6>
-                <input type="url" id="image_url" name="image_url" required=required
-                    placeholder="Copy here the url for the recipe image">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn ">Add url</a>
+                <h6><strong>Upload recipe image</strong></h6>
+                <input type="file" name="recipe_image">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn ">Done</a>
             </div>
         </div>
+
         <div class="col s12 m6">
             <div class="row">
                 <div class="col s6">
@@ -112,41 +112,39 @@
                 </div>
             </div>
         </div>
-    </div>
 
-
-    <div class="row">
-        <div class="col s12">
-            <div class="row">
-                <div class="col s12">
-                    <h5>Cooking instructions:</h5>
-                    <p>* Enter each step on a new line</p>
-                    <textarea id="instructions" name="instructions" class="materialize-textarea"></textarea>
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="col s12">
+                        <h5>Cooking instructions:</h5>
+                        <p>* Enter each step on a new line</p>
+                        <textarea id="instructions" name="instructions" class="materialize-textarea"></textarea>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row add_ingredients">
-                <div class="col s12">
-                    <h5>Ingredients:</h5>
-                    <p>* Enter each ingredient on a new line</p>
-                    <textarea id="ingredients" name="ingredients" class="materialize-textarea"></textarea>
+                <div class="row add_ingredients">
+                    <div class="col s12">
+                        <h5>Ingredients:</h5>
+                        <p>* Enter each ingredient on a new line</p>
+                        <textarea id="ingredients" name="ingredients" class="materialize-textarea"></textarea>
+                    </div>
                 </div>
+
             </div>
-
+            <div class=" col s12">
+                <h5>Allergens:</h5>
+                <p>* Enter each allergen on a new line</p>
+                <textarea id="allergens" name="allergens" class="materialize-textarea"></textarea>
+            </div>
         </div>
-        <div class=" col s12">
-            <h5>Allergens:</h5>
-            <p>* Enter each allergen on a new line</p>
-            <textarea id="allergens" name="allergens" class="materialize-textarea"></textarea>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col s12 right-align">
-            <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
-                    class="fa fa-insert"></i>Add recipe</button>
+        <div class="row">
+            <div class="col s12 right-align">
+                <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
+                        class="fa fa-insert"></i>Add recipe</button>
 
+            </div>
         </div>
-    </div>
 </form>
 {% endblock %}

@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" class="container">
+<form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" class="container"
+    enctype="multipart/form-data">
     <div class="row">
         <div class="input-field col s12 m6">
             <h6><strong>Recipe name:</strong></h6>
@@ -12,13 +13,18 @@
     <div class="row img-details">
         <div class="col s12 m6">
             <!-- Modal Trigger -->
-            <a class="modal-trigger" href="#modal1"><img class="img-recipe" src="{{recipe.image_url}}"></a>
+            <a class="modal-trigger" href="#modal1">Change image
+                {% if recipe.recipe_image %}
+                <img class="img_view_recipe" src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}"">
+                        {% else %}
+                        <img class=" img_view_recipe" src="{{url_for('static', filename='img/default.jpg')}}">
+                {% endif %}
+            </a>
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
-                <h6><strong>Recipe image url</strong></h6>
-                <input type="url" id="image_url" name="image_url" required=required
-                    placeholder="Copy here the url for the recipe image" value="{{recipe.image_url}}">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn ">Add url</a>
+                <h6><strong>Upload new recipe image</strong></h6>
+                <input type="file" name="recipe_image">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn ">Done</a>
             </div>
         </div>
         <div class="col s12 m6">

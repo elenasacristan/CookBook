@@ -21,12 +21,17 @@
                     <div class="row">
                         <div class="col s12">
                             <a href="{{url_for('view_recipe', recipe_id=recipe._id)}}">
-                                <img class="img-carousel" src="{{recipe.image_url}}">
+                                {% if recipe.recipe_image %}
+                                <img class="img-carousel"
+                                    src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}"">
+                                {% else %}
+                                <img class=" img-carousel" src="{{url_for('static', filename='img/default.jpg')}}">
+                                {% endif %}
                             </a>
                         </div>
                     </div>
-                    <div class="row ">
-                        <div class="col s6">
+                    <div class=" row ">
+                        <div class=" col s6">
                             <h6><strong>Likes: {{recipe.upvotes}}</strong></h6>
                         </div>
                         <div class="col s6 right-align">

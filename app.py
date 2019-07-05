@@ -107,24 +107,30 @@ def manage_categories():
 # funtion to insert into the database the new recipe
 @app.route('/insert_recipe', methods=['GET', 'POST'])
 def insert_recipe():
-    recipes = mongo.db.Recipes  
-    recipes.insert_one({
-            'recipe_name':request.form['recipe_name'].capitalize(),
-            'instructions':string_to_array(request.form['instructions']),
-            'serves':request.form['serves'],
-            'calories':request.form['calories'],
-            'difficulty_level':request.form['difficulty_level'],
-            'cooking_time':request.form['cooking_time'],
-            'cuisine':request.form['cuisine'],
-            'allergens':string_to_array(request.form['allergens']),
-            'ingredients':string_to_array(request.form['ingredients']),
-            'image_url':request.form['image_url'],
-            'author':getusername().capitalize(),
-            'upvotes':0,
-            'date':datetime.now().strftime("%d/%m/%Y"),
-            'category':request.form['category']
-        })
+    if 'recipe_image' in request.files:
+        recipe_image = request.files['recipe_image']
+        mongo.save_file(recipe_image.filename, recipe_image)
+        mongo.db.Recipes.insert({
+                'recipe_name':request.form['recipe_name'].capitalize(),
+                'instructions':string_to_array(request.form['instructions']),
+                'serves':request.form['serves'],
+                'calories':request.form['calories'],
+                'difficulty_level':request.form['difficulty_level'],
+                'cooking_time':request.form['cooking_time'],
+                'cuisine':request.form['cuisine'],
+                'allergens':string_to_array(request.form['allergens']),
+                'ingredients':string_to_array(request.form['ingredients']),
+                'recipe_image':recipe_image.filename,
+                'author':getusername().capitalize(),
+                'upvotes':0,
+                'date':datetime.now().strftime("%d/%m/%Y"),
+                'category':request.form['category']
+            })
     return redirect(url_for('get_recipes'))
+
+@app.route('/img_uploads/<filename>')
+def img_uploads(filename):
+    return mongo.send_file(filename)
 
 # function to see a recipe after clicking on its image or "view" link
 @app.route('/view_recipe/<recipe_id>')
@@ -154,20 +160,24 @@ def edit_recipe(recipe_id):
 def update_recipe(recipe_id):
     recipes = mongo.db.Recipes
     recipe = mongo.db.Recipes.find({"_id":ObjectId(recipe_id)})
-    recipes.update({"_id":ObjectId(recipe_id)},{ "$set":
-        {
-            'recipe_name':request.form['recipe_name'],
-            'instructions':string_to_array(request.form['instructions']),
-            'serves':request.form['serves'],
-            'calories':request.form['calories'],
-            'difficulty_level':request.form['difficulty_level'],
-            'cooking_time':request.form['cooking_time'],
-            'cuisine':request.form['cuisine'],
-            'allergens':string_to_array(request.form['allergens']),
-            'ingredients':string_to_array(request.form['ingredients']),
-            'image_url':request.form['image_url'],
-            'category':request.form['category']      
-        }})
+    if 'recipe_image' in request.files:
+            recipe_image = request.files['recipe_image']
+            mongo.save_file(recipe_image.filename, recipe_image)
+
+            recipes.update({"_id":ObjectId(recipe_id)},{ "$set":
+                {
+                    'recipe_name':request.form['recipe_name'],
+                    'instructions':string_to_array(request.form['instructions']),
+                    'serves':request.form['serves'],
+                    'calories':request.form['calories'],
+                    'difficulty_level':request.form['difficulty_level'],
+                    'cooking_time':request.form['cooking_time'],
+                    'cuisine':request.form['cuisine'],
+                    'allergens':string_to_array(request.form['allergens']),
+                    'ingredients':string_to_array(request.form['ingredients']),
+                    'recipe_image':recipe_image.filename,
+                    'category':request.form['category']      
+                }})
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
 # function to remove a recipe (only the author can remove a recipe)
