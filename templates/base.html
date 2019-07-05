@@ -29,11 +29,9 @@
             <div class="nav-wrapper">
                 <a href="{{url_for('get_recipes')}}"" class=" brand-logo"> <img
                         src="{{url_for('static', filename='img/logo2.png')}}" width="220" alt="time2eat logo"></a>
-                <a href="#" data-activates="mobile-demo" class="button-collapse hide-on-med-and-up"><i
-                        class="material-icons">menu</i></a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <!-- <ul class="right hide-on-med-and-down"> -->
-                <ul class="right hide-on-small-only	">
-
+                <ul class="right hide-on-med-and-down">
                     <li><a href="{{url_for('get_recipes')}}"><i class="material-icons">home</i></a></li>
                     <li><a class="tooltipped" data-position="bottom" data-delay="80" data-tooltip="Add recipe"
                             href="{{url_for('add_recipe')}}"><i class="material-icons">add_box</i></a></li>
