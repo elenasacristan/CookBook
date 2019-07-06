@@ -185,7 +185,7 @@ footer .container {
 
 .page-footer {
   padding: 0px;
-  background-color: #26a69acf;
+  background-color: #646262;
 }
 
 footer p {
@@ -242,6 +242,7 @@ hr {
 
 .img_view_recipe {
   width: 100%;
+  padding-bottom: 30px;
 }
 
 .votes {
@@ -258,6 +259,18 @@ hr {
   margin-top: 10px;
 }
 
+.btn-view a {
+  width: 120px;
+  height: 50px;
+  margin-top: 30px;
+  margin-left: 10px;
+}
+
+.btn-view i {
+  font-size: 30px;
+  padding-top: 6px;
+}
+
 .details-item .fa {
   margin-top: 17px;
   padding-right: 20px;
@@ -267,22 +280,29 @@ hr {
   white-space: nowrap;
 }
 
+.instructions h5 {
+  padding-top: 15px;
+}
+
 @media only screen and (max-width: 400px) {
   .details-item .fa {
     padding-right: 15px;
     font-size: 1.5em;
   }
   .details-item h6 {
-    font-size: 0.8em;
+    font-size: 0.9em;
   }
   .details-item p {
-    font-size: 0.6em;
+    font-size: 0.7em;
   }
   .small {
-    font-size: 0.7em;
+    font-size: 0.8em;
   }
   .details-item {
     margin-bottom: 0px;
+  }
+  .ingredients li, .instructions ol, .instructions p {
+    font-size: 0.8em;
   }
 }
 
@@ -303,6 +323,9 @@ hr {
   .small {
     font-size: 0.7em;
   }
+  .ingredients li, .instructions ol, .instructions p {
+    font-size: 0.9em;
+  }
 }
 
 @media only screen and (min-width: 993px) {
@@ -320,6 +343,9 @@ hr {
   }
   .small {
     font-size: 0.7em;
+  }
+  .ingredients li, .instructions ol, .instructions p {
+    font-size: 1em;
   }
 }
 
@@ -354,7 +380,15 @@ hr {
 }
 
 .instructions ol {
-  padding-left: 50px;
+  padding: 20px 60px;
+}
+
+.instructions ol li {
+  padding: 10px;
+}
+
+.ingredients li {
+  margin-top: 10px;
 }
 
 .author-date {
@@ -365,6 +399,10 @@ hr {
 
 .img-recipe {
   width: 100%;
+}
+
+.uploadText {
+  margin-bottom: 20px;
 }
 
 /* modal */

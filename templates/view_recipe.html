@@ -102,9 +102,8 @@
         </div>
     </div>
 
-
     <div class="row">
-        <div class="col s12 m4">
+        <div class="col s12 m3">
             <div class="row">
                 <div class="col s12 ingredients">
                     <h5>Ingredients</h5>
@@ -133,11 +132,10 @@
 
             </div>
         </div>
-        <div class="col s12 m8 instructions">
-
+        <div class="col s12 offset-m1 m8 instructions">
             <div class="row">
                 <div class="col s12">
-                    <h4 class="center-align">Cooking instructions</h4>
+                    <h5 class="center-align">Cooking instructions</h5>
                     <ol>
                         {% for instruction in recipe.instructions %}
                         <li>
@@ -153,7 +151,7 @@
     </div>
     {% if recipe.author == username %}
     <div class="row">
-        <div class="col s12 right-align">
+        <div class="col s12 right-align btn-view">
             <a href="{{url_for('delete_recipe', recipe_id=recipe._id)}}" class="btn waves-effect waves-light red"><i
                     class="fa fa-trash"></i></a>
             <a href="{{url_for('edit_recipe', recipe_id=recipe._id)}}" class="btn waves-effect waves-light blue"><i
@@ -162,7 +160,7 @@
     </div>
     {% else %}
     <div class="row">
-        <div class="col s12 right-align">
+        <div class="col s12 right-align btn-view">
             <a href="{{url_for('vote', recipe_id=recipe._id)}}" class="btn waves-effect waves-light"><i
                     class="fa fa-thumbs-up"></i></a>
         </div>
