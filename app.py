@@ -73,7 +73,12 @@ def string_to_array(string):
 def get_recipes():
     title = "View recipes"
     username = getusername()
-    return render_template('get_recipes.html', title=title, username=username, recipes = mongo.db.Recipes.find())
+    recipes = mongo.db.Recipes.find()
+    allergens = mongo.db.Allergens.find()
+    categories = mongo.db.Categories.find()
+    cuisines = mongo.db.Cuisines.find()
+    difficulty = mongo.db.Difficulty.find()
+    return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens)
 
 # function to add new recipe
 @app.route('/add_recipe')
