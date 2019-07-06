@@ -20,7 +20,8 @@
                     <tr>
                         <td>{{category.category}}</td>
                         <td>{{category.count_recipes_category}}</td>
-                        <td>{% if category.count_recipes_category == 0 %}
+                        <!-- we can only delete categories with 0 recipes and we can't remove "Not specified because it is the default value" -->
+                        <td>{% if category.count_recipes_category == 0 and category.category!="Not specified" %}
                             <a href="{{url_for('delete_category', category_id=category.category_id)}}"
                                 class="btn waves-effect waves-light red right-align"><i class="fa fa-trash"></i></a>
                             {% endif %}</td>
@@ -62,7 +63,8 @@
                     <tr>
                         <td>{{cuisine.cuisine}}</td>
                         <td>{{cuisine.count_recipes_cuisine}}</td>
-                        <td>{% if cuisine.count_recipes_cuisine == 0 %}
+                        <!-- we can only delete cuisines with 0 recipes and we can't remove "Not specified because it is the default value" -->
+                        <td>{% if cuisine.count_recipes_cuisine == 0 and cuisine.cuisine!="Not specified" %}
                             <a href="{{url_for('delete_cuisine', cuisine_id=cuisine.cuisine_id)}}"
                                 class="btn waves-effect waves-light red"><i class="fa fa-trash"></i></a>
                             {% endif %}</td>
