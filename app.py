@@ -18,8 +18,6 @@ mongo = PyMongo(app)
 # secret key needed to create session cookies / before deploying convert to enviroment variable
 app.secret_key = "randomString123"
 
-
-
 # https://www.youtube.com/watch?v=vVx1737auSE
 # landing page for the website for new users. 
 @app.route('/')
@@ -42,7 +40,6 @@ def login():
             return redirect(url_for('get_recipes'))
     
     message = 'The login details are not correct'
-
     return render_template('login.html', message=message)
 
 @app.route('/register', methods=['POST','GET'])
@@ -74,20 +71,24 @@ def string_to_array(string):
 #home page
 @app.route('/get_recipes')
 def get_recipes():
+    title = "View recipes"
     username = getusername()
-    return render_template('get_recipes.html', username=username, recipes = mongo.db.Recipes.find())
+    return render_template('get_recipes.html', title=title, username=username, recipes = mongo.db.Recipes.find())
 
 # function to add new recipe
 @app.route('/add_recipe')
 def add_recipe():
+    title = "Add recipe"
+    allergens = mongo.db.Allergens.find()
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
     difficulty = mongo.db.Difficulty.find()
-    return render_template('add_recipe.html', categories = categories, cuisines=cuisines, difficulty=difficulty)
+    return render_template('add_recipe.html', title=title, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens)
 
 # function to see and insert new categories or cuisines
 @app.route('/manage_categories')
 def manage_categories():
+    title = "Manage categories / cuisines"
     recipes = mongo.db.Recipes.find()
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
@@ -102,7 +103,7 @@ def manage_categories():
 	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine['cuisine']}).count()
 	    cuisine_object.append({"cuisine_id" : cuisine['_id'], "cuisine" : cuisine['cuisine'], "count_recipes_cuisine" : count_recipes_cuisine} )
 
-    return render_template('manage_categories.html', categories = category_object, cuisines = cuisine_object)
+    return render_template('manage_categories.html', title=title, categories = category_object, cuisines = cuisine_object)
 
 # funtion to insert into the database the new recipe
 @app.route('/insert_recipe', methods=['GET', 'POST'])
@@ -118,7 +119,7 @@ def insert_recipe():
                 'difficulty_level':request.form['difficulty_level'],
                 'cooking_time':request.form['cooking_time'],
                 'cuisine':request.form['cuisine'],
-                'allergens':string_to_array(request.form['allergens']),
+                'allergens':request.form.getlist('allergens'),
                 'ingredients':string_to_array(request.form['ingredients']),
                 'recipe_image':recipe_image.filename,
                 'author':getusername().capitalize(),
@@ -147,6 +148,7 @@ def vote(recipe_id):
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
+    allergens = mongo.db.Allergens.find()
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
     difficulty = mongo.db.Difficulty.find()
@@ -154,7 +156,7 @@ def edit_recipe(recipe_id):
     list_allergens = '\n'.join(recipe['allergens'])
     list_instructions = '\n'.join(recipe['instructions'])
 
-    return render_template('edit_recipe.html', recipe=recipe, categories=categories, cuisines=cuisines, difficulty=difficulty, list_ingredients=list_ingredients, list_allergens=list_allergens,list_instructions=list_instructions)
+    return render_template('edit_recipe.html', recipe=recipe, categories=categories, cuisines=cuisines, difficulty=difficulty, list_ingredients=list_ingredients, list_allergens=list_allergens,list_instructions=list_instructions, allergens=allergens)
 
 @app.route('/update_recipe/<recipe_id>' , methods=['GET', 'POST'])
 def update_recipe(recipe_id):

@@ -17,9 +17,23 @@
                     src="{{url_for('static', filename='img/default.jpg')}}"></a>
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
-                <h6><strong>Upload recipe image</strong></h6>
-                <input type="file" name="recipe_image">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn ">Done</a>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="recipe_image">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Upload image">
+                    </div>
+                    <div class="right-align">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green">Done</a>
+                    </div>
+                </div>
+
+
+
+                <!-- <input type="file" name="recipe_image">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn ">Done</a> -->
             </div>
         </div>
 
@@ -148,8 +162,17 @@
             </div>
             <div class=" col s12">
                 <h5>Allergens:</h5>
-                <p>* Enter each allergen on a new line</p>
-                <textarea id="allergens" name="allergens" class="materialize-textarea"></textarea>
+                <div class="input-field col s12">
+                    <select id="allergens" name="allergens" class="validate" multiple>
+                        {% for allergen in allergens %}
+                        {% if allergen.allergen == "Not specified" %}
+                        <option value="{{allergen.allergen}}" selected>{{allergen.allergen}}</option>
+                        {% else %}
+                        <option value="{{allergen.allergen}}">{{allergen.allergen}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
         </div>
 

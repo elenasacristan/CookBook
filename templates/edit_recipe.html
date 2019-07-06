@@ -114,7 +114,6 @@
                                 <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
                                 {% endif %}
                                 {% endfor %}
-                                <option value="3"><a href="#">Add new</a></option>
                             </select>
                         </div>
                     </div>
@@ -159,8 +158,17 @@
         </div>
         <div class=" col s12">
             <h5>Allergens:</h5>
-            <p>* Enter each allergen on a new line</p>
-            <textarea id="allergens" name="allergens" class="materialize-textarea">{{list_allergens}}</textarea>
+            <div class="input-field col s12">
+                <select id="allergens" name="allergens" class="validate" multiple>
+                    {% for allergen in allergens %}
+                    {% if allergen.allergen in recipe.allergens %}
+                    <option value="{{allergen.allergen}}" selected>{{allergen.allergen}}</option>
+                    {% else %}
+                    <option value="{{allergen.allergen}}">{{allergen.allergen}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
         </div>
     </div>
 
