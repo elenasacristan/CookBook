@@ -5,7 +5,8 @@
     <div class="row">
         <div class="input-field col s12 m6">
             <h6><strong>Recipe name:</strong></h6>
-            <input placeholder="Recipe name" id="recipe_name" name="recipe_name" type="text" class="validate">
+            <input placeholder="Recipe name" id="recipe_name" name="recipe_name" type="text" class="validate"
+                required="">
         </div>
     </div>
 
@@ -32,7 +33,7 @@
                         <div class="col s6 input-field">
                             <h6><strong>Cooking time:</strong></h6>
                             <input placeholder="Cooking time" id="cooking_time" name="cooking_time" type="text"
-                                class="validate">
+                                class="validate" required="">
                         </div>
                     </div>
                 </div>
@@ -43,7 +44,8 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Calories:</strong></h6>
-                            <input placeholder="Calories" id="calories" name="calories" type="text" class="validate">
+                            <input placeholder="Calories" id="calories" name="calories" type="text" class="validate"
+                                value="Not specified">
                         </div>
                     </div>
                 </div>
@@ -56,10 +58,13 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Difficulty:</strong></h6>
-                            <select id="difficulty_level" name="difficulty_level">
-                                <option value="" disabled selected>Select one</option>
+                            <select id="difficulty_level" name="difficulty_level" class="validate">
                                 {% for level in difficulty%}
+                                {% if level.difficulty_level == "Not specified" %}
+                                <option value="{{level.difficulty_level}}" selected>{{level.difficulty_level}}</option>
+                                {% else %}
                                 <option value="{{level.difficulty_level}}">{{level.difficulty_level}}</option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -72,10 +77,13 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Category:</strong></h6>
-                            <select id="category" name="category">
-                                <option value="" disabled selected>Select one</option>
+                            <select id="category" name="category" class="validate" required="">
                                 {% for category in categories%}
+                                {% if category.category == "Not specified" %}
+                                <option value="{{category.category}}" selected>{{category.category}}</option>
+                                {% else %}
                                 <option value="{{category.category}}">{{category.category}}</option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -90,10 +98,13 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Cuisine:</strong></h6>
-                            <select id="cuisine" name="cuisine">
-                                <option value="" disabled selected>Select one</option>
-                                {% for cuisine in cuisines%}
+                            <select id="cuisine" name="cuisine" class="validate" required="">
+                                {% for cuisine in cuisines %}
+                                {% if cuisine.cuisine == "Not specified" %}
+                                <option value="{{cuisine.cuisine}}" selected>{{cuisine.cuisine}}</option>
+                                {% else %}
                                 <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
+                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -106,7 +117,8 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Serves:</strong></h6>
-                            <input placeholder="Serves" id="serves" name="serves" type="text" class="validate">
+                            <input placeholder="Serves" id="serves" name="serves" type="text" class="validate"
+                                required="">
                         </div>
                     </div>
                 </div>
@@ -119,7 +131,8 @@
                     <div class="col s12">
                         <h5>Cooking instructions:</h5>
                         <p>* Enter each step on a new line</p>
-                        <textarea id="instructions" name="instructions" class="materialize-textarea"></textarea>
+                        <textarea id="instructions" name="instructions" class="materialize-textarea validate"
+                            required=""></textarea>
                     </div>
                 </div>
 
@@ -127,7 +140,8 @@
                     <div class="col s12">
                         <h5>Ingredients:</h5>
                         <p>* Enter each ingredient on a new line</p>
-                        <textarea id="ingredients" name="ingredients" class="materialize-textarea"></textarea>
+                        <textarea id="ingredients" name="ingredients" class="materialize-textarea validate"
+                            required=""></textarea>
                     </div>
                 </div>
 

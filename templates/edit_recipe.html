@@ -6,7 +6,8 @@
     <div class="row">
         <div class="input-field col s12 m6">
             <h6><strong>Recipe name:</strong></h6>
-            <input id="recipe_name" name="recipe_name" type="text" class="validate" value="{{recipe.recipe_name}}">
+            <input id="recipe_name" name="recipe_name" type="text" class="validate" value="{{recipe.recipe_name}}"
+                required="">
         </div>
     </div>
 
@@ -37,7 +38,7 @@
                         <div class="col s6 input-field">
                             <h6><strong>Cooking time:</strong></h6>
                             <input id="cooking_time" name="cooking_time" type="text" class="validate"
-                                value="{{recipe.cooking_time}}">
+                                value="{{recipe.cooking_time}}" required="">
                         </div>
                     </div>
                 </div>
@@ -126,7 +127,7 @@
                         <div class="col s6 input-field">
                             <h6><strong>Serves:</strong></h6>
                             <input placeholder="Serves" id="serves" name="serves" type="text" class="validate"
-                                value="{{recipe.serves}}">
+                                value="{{recipe.serves}}" required="">
                         </div>
                     </div>
                 </div>
@@ -141,8 +142,8 @@
                 <div class="col s12">
                     <h5>Cooking instructions:</h5>
                     <p>* Enter each step on a new line</p>
-                    <textarea id="instructions" name="instructions"
-                        class="materialize-textarea">{{list_instructions}}</textarea>
+                    <textarea id="instructions" name="instructions" class="materialize-textarea validate"
+                        required="">{{list_instructions}}</textarea>
                 </div>
             </div>
 
@@ -150,8 +151,8 @@
                 <div class="col s12">
                     <h5>Ingredients:</h5>
                     <p>* Enter each ingredient on a new line</p>
-                    <textarea id="ingredients" name="ingredients"
-                        class="materialize-textarea">{{list_ingredients}}</textarea>
+                    <textarea id="ingredients" name="ingredients" class="materialize-textarea validate"
+                        required="">{{list_ingredients}}</textarea>
                 </div>
             </div>
 
