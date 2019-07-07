@@ -32,11 +32,11 @@ def index():
 @app.route('/login', methods=['POST'])
 def login():
     users = mongo.db.Users
-    user_login = users.find_one({'author':request.form['username']})
+    user_login = users.find_one({'author':request.form['username'].capitalize()})
 
     if user_login:
         if request.form['password'] == user_login['password']:
-            session["username"] = request.form["username"]
+            session["username"] = request.form["username"].capitalize()
             return redirect(url_for('get_recipes'))
     
     message = 'The login details are not correct'
@@ -46,11 +46,11 @@ def login():
 def register():
     if request.method == 'POST':
         users = mongo.db.Users
-        user_exists = users.find_one({'author':request.form['username']})
+        user_exists = users.find_one({'author':request.form['username'].capitalize()})
 
         if user_exists is None:
-            users.insert({'author':request.form['username'], 'password':request.form['password']})
-            session['username'] = request.form['username']
+            users.insert({'author':request.form['username'].capitalize(), 'password':request.form['password']})
+            session['username'] = request.form['username'].capitalize()
             return redirect(url_for('get_recipes'))
 
         message = "That username already exists, please choose a different one."
@@ -127,7 +127,7 @@ def insert_recipe():
                 'allergens':request.form.getlist('allergens'),
                 'ingredients':string_to_array(request.form['ingredients']),
                 'recipe_image':recipe_image.filename,
-                'author':getusername().capitalize(),
+                'author':getusername(),
                 'upvotes':0,
                 'date':datetime.now().strftime("%d/%m/%Y"),
                 'category':request.form['category']
@@ -173,18 +173,26 @@ def update_recipe(recipe_id):
 
             recipes.update({"_id":ObjectId(recipe_id)},{ "$set":
                 {
-                    'recipe_name':request.form['recipe_name'],
+                    'recipe_name':request.form['recipe_name'].capitalize(),
                     'instructions':string_to_array(request.form['instructions']),
                     'serves':request.form['serves'],
                     'calories':request.form['calories'],
                     'difficulty_level':request.form['difficulty_level'],
                     'cooking_time':request.form['cooking_time'],
                     'cuisine':request.form['cuisine'],
-                    'allergens':string_to_array(request.form['allergens']),
+                    'allergens':request.form.getlist('allergens'),
                     'ingredients':string_to_array(request.form['ingredients']),
-                    'recipe_image':recipe_image.filename,
                     'category':request.form['category']      
                 }})
+
+            if recipe_image.filename != "":   
+                recipes.update({"_id":ObjectId(recipe_id)},{ "$set":
+                {
+                    'recipe_image':recipe_image.filename,
+                }})
+                
+
+
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
 # function to remove a recipe (only the author can remove a recipe)
@@ -219,7 +227,7 @@ def add_cuisine():
 def insert_category():
     categories = mongo.db.Categories  
     categories.insert_one({
-            'category':request.form['category']
+            'category':request.form['category'].capitalize()
         })
     return redirect(url_for('manage_categories'))
 
@@ -228,7 +236,7 @@ def insert_category():
 def insert_cuisine():
     cuisines = mongo.db.Cuisines  
     cuisines.insert_one({
-            'cuisine':request.form['cuisine']
+            'cuisine':request.form['cuisine'].capitalize()
         })
     return redirect(url_for('manage_categories'))
 

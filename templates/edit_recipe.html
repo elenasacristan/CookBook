@@ -16,16 +16,25 @@
             <!-- Modal Trigger -->
             <a class="modal-trigger" href="#modal1">Change image
                 {% if recipe.recipe_image %}
-                <img class="img_view_recipe" src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}"">
-                        {% else %}
-                        <img class=" img_view_recipe" src="{{url_for('static', filename='img/default.jpg')}}">
+                <img class="img_view_recipe" src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}">
+                {% else %}
+                <img class=" img_view_recipe" src="{{url_for('static', filename='img/default.jpg')}}">
                 {% endif %}
             </a>
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
-                <h6><strong>Upload new recipe image</strong></h6>
-                <input type="file" name="recipe_image" onchange="previewFile()">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn ">Done</a>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="recipe_image" onchange="previewFile()">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Upload image">
+                    </div>
+                    <div class="right-align">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green">Done</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col s12 m6">

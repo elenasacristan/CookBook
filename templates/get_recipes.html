@@ -87,27 +87,29 @@
 
 
                 <div class="col s12 m12 offset-l2 l6 filter-section">
-                    <h6><strong>Allergens:</strong></h6>
-                    <p>Select what allergens you want to exclude from the results</p>
-                    {% for allergen in allergens %}
-                    {% if allergen.allergen != "Not specified" %}
-                    <p class="checkbox">
-                        <input type="checkbox" id="{{allergen.allergen}}" name="{{allergen.allergen}}" />
-                        <label for="{{allergen.allergen}}">{{allergen.allergen}}</label>
-                    </p>
-                    {% endif %}
-                    {% endfor %}
-
-                    <h6><strong>Meal type:</strong></h6>
-                    {% for category in categories %}
-                    {% if category.category != "Not specified" %}
-                    <p class="checkbox">
-                        <input type="checkbox" id="{{category.category}}" name="{{category.category}}" />
-                        <label for="{{category.category}}">{{category.category}}</label>
-                    </p>
-                    {% endif %}
-                    {% endfor %}
-
+                    <div class="row">
+                        <h6><strong>Allergens:</strong></h6>
+                        <p>Select what allergens you want to exclude from the results</p>
+                        {% for allergen in allergens %}
+                        {% if allergen.allergen != "Not specified" %}
+                        <p class="checkbox">
+                            <input type="checkbox" id="{{allergen.allergen}}" name="{{allergen.allergen}}" />
+                            <label for="{{allergen.allergen}}">{{allergen.allergen}}</label>
+                        </p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <h6><strong>Meal type:</strong></h6>
+                        {% for category in categories %}
+                        {% if category.category != "Not specified" %}
+                        <p class="checkbox">
+                            <input type="checkbox" id="{{category.category}}" name="{{category.category}}" />
+                            <label for="{{category.category}}">{{category.category}}</label>
+                        </p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
 
 
