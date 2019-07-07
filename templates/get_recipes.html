@@ -6,6 +6,7 @@
     <div class="row">
         <div class="col s12 title center-align">
             <h4>Hello <strong>{{ username }}</strong>! What are we cooking today?</h4>
+            <p>Get inspired by these <strong>{{recipes_count}}</strong> recipes</p>
         </div>
     </div>
     <div class="row">
@@ -47,7 +48,7 @@
         </div>
     </div>
     <div class="wrapper-filter">
-        <form>
+        <form method="POST" action="{{url_for('filter_recipes')}}">
             <div class="row">
                 <div class="col" class="s12">
                     <h5>Filter the recipes</h5>
@@ -57,26 +58,29 @@
                 <div class="col s12 m12 offset-l1 l3 filter-section">
                     <div class="switch">
                         <label>
-                            <input type="checkbox">
+                            <input type="checkbox" name="only_mine" id="only_mine">
                             <span class="lever"></span>Only my recipes
                         </label>
                     </div>
                     <div class="dropdown">
                         <h6><strong>Cuisine:</strong></h6>
                         <select id="cuisine" name="cuisine">
-                            <option value="" disabled selected>Select one</option>
                             {% for cuisine in cuisines %}
+                            {% if cuisine.cuisine == "Not specified" %}
+                            <option value="{{cuisine.cuisine}}" selected>{{cuisine.cuisine}}</option>
+                            {% else %}
                             <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
+                            {% endif %}
                             {% endfor %}
                         </select>
                     </div>
                     <div class="dropdown">
                         <h6><strong>Difficulty:</strong></h6>
                         <select id="difficulty" name="difficulty">
-                            <option value="" disabled selected>Select one</option>
                             {% for level in difficulty %}
-                            {% if level.difficulty_level != "Not specified" %}
-
+                            {% if level.difficulty_level == "Not specified" %}
+                            <option value="{{level.difficulty_level}}" selected>{{level.difficulty_level}}</option>
+                            {% else %}
                             <option value="{{level.difficulty_level}}">{{level.difficulty_level}}</option>
                             {% endif %}
                             {% endfor %}
@@ -116,7 +120,6 @@
                 <div class="col s12 right-align">
                     <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
                             class="fa fa-filter"></i> Apply filter</button>
-
                 </div>
             </div>
         </form>

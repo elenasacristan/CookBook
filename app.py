@@ -71,17 +71,64 @@ def string_to_array(string):
     array = string.split("\n")
     return array
 
-#home page
+#home page, the recipes are sorted by votes. The most voted will be on the top one of the carousel and the it will be in descending order if you move to the right
 @app.route('/get_recipes')
 def get_recipes():
     title = "View recipes"
     username = getusername()
-    recipes = mongo.db.Recipes.find()
+    recipes = mongo.db.Recipes.find().sort("upvotes", -1)
+    recipes_count = recipes.count()
     allergens = mongo.db.Allergens.find()
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
     difficulty = mongo.db.Difficulty.find()
-    return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens)
+    return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
+
+
+@app.route('/filter_recipes', methods = ['GET', 'POST'])
+def filter_recipes():
+    title = "View recipes"
+    username = getusername()
+    allergens = mongo.db.Allergens.find()
+    categories = mongo.db.Categories.find()
+    cuisines = mongo.db.Cuisines.find()
+    difficulty = mongo.db.Difficulty.find()
+
+    cuisines_array = []
+    difficulty_array = []
+
+    for cuisine in cuisines:
+	    cuisines_array.append(cuisine['cuisine'])
+    
+    for dif in difficulty:
+	    difficulty_array.append(dif['difficulty_level'])
+    
+    
+    if request.form['cuisine'] != "Not specified":
+        query_cuisine = {"cuisine":request.form['cuisine']}
+    else:
+        query_cuisine = {"cuisine":{ "$in": cuisines_array}}
+    
+    if request.form['difficulty'] != "Not specified":
+        query_difficulty = {"difficulty_level":request.form['difficulty']}
+    else:
+        query_difficulty = {"difficulty_level":{ "$in": difficulty_array}}
+
+
+    # if request.form['only_mine'] == on:
+    #     author = username
+
+    
+    recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine]})
+    difficulty = mongo.db.Difficulty.find()
+
+
+   
+    cuisines = mongo.db.Cuisines.find()
+    recipes_count = recipes.count()
+
+    return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
+
 
 # function to add new recipe
 @app.route('/add_recipe')
@@ -192,10 +239,7 @@ def update_recipe(recipe_id):
                 recipes.update({"_id":ObjectId(recipe_id)},{ "$set":
                 {
                     'recipe_image':recipe_image.filename,
-                }})
-                
-
-
+                }})       
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
 # function to remove a recipe (only the author can remove a recipe)
@@ -248,8 +292,9 @@ def insert_cuisine():
 # we use this route to retrieve all the recipes from the database in json format
 @app.route("/data_recipes")
 def data():
-    recipes = mongo.db.Recipes.find(projection = {'recipe_name': True, 'upvotes': True,'category': True, 'difficulty_level': True, 'cuisine': True, '_id': False})
+    recipes = mongo.db.Recipes.find(projection = {'_id':True ,'recipe_name': True, 'upvotes': True,'category': True, 'difficulty_level': True, 'cuisine': True})
     json_recipes = []
+
     for recipe in recipes:
         json_recipes.append(recipe)
     json_recipes = json.dumps(json_recipes, default=json_util.default)

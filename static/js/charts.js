@@ -100,7 +100,7 @@ function createCharts(error, data) {
       {
         label: "Recipe_Name",
         format: function(d) {
-          return d.recipe_Name;
+          return d.recipe_name;
         }
       },
       {
@@ -122,9 +122,13 @@ function createCharts(error, data) {
         }
       },
       {
-        label: "view recipe",
+        label: "View recipe",
         format: function(d) {
-          return "find a way to return the url view_image/<id>";
+          // get the id value and remove the "
+          var keystring = JSON.stringify(d._id["$oid"]).replace(/"/g, "");
+          // var key = keystring.replace(/"/g, "");
+          // return "how to add this link ?? view_recipe/" + keystring;
+          return '<a href="https://www.google.com/"></a>';
         }
       }
     ])
