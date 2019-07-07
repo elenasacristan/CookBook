@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col s12">
+            <button class="btn" onclick="window.location.href = 'javascript:dc.filterAll(); dc.renderAll();';">Reset
+                All</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <h5>The total number of recipes is: <span id="totalRecipes"></span></h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <div id="difficulty"></div>
+        </div>
+
+        <div class="col s6">
+            <div id="category"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div id="cuisine"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div id="table"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

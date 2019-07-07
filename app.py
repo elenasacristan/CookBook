@@ -1,8 +1,11 @@
 import os
 import env
+import json
 from flask import Flask, render_template, request, url_for, redirect, session
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from bson import json_util
+from bson.json_util import dumps
 from datetime import datetime
 
 # create an instance of Flask
@@ -240,6 +243,21 @@ def insert_cuisine():
         })
     return redirect(url_for('manage_categories'))
 
+
+# http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-python-mongodb/
+# we use this route to retrieve all the recipes from the database in json format
+@app.route("/data_recipes")
+def data():
+    recipes = mongo.db.Recipes.find(projection = {'recipe_name': True, 'upvotes': True,'category': True, 'difficulty_level': True, 'cuisine': True, '_id': False})
+    json_recipes = []
+    for recipe in recipes:
+        json_recipes.append(recipe)
+    json_recipes = json.dumps(json_recipes, default=json_util.default)
+    return json_recipes
+
+@app.route("/statistics")
+def statistics():
+    return render_template('statistics.html')
 
 # funtion to log out / clear cookie
 # https://www.tutorialspoint.com/flask/flask_sessions.htm

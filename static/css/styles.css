@@ -29,7 +29,8 @@
   background-color: #ffffff;
 }
 
-.form-label-group>input, .form-label-group>label {
+.form-label-group > input,
+.form-label-group > label {
   height: 2.5em;
   padding-left: 1em;
   padding-top: 0.4em;
@@ -71,18 +72,26 @@ nav img {
   border-color: #ff9907;
 }
 
-.btn-block:hover, .btn-block:active {
+.btn-block:hover,
+.btn-block:active {
   background-color: #e68f16;
   border-color: #e68f16;
 }
 
-.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
   color: #fff;
   background-color: #e68f16;
   border-color: #e68f16;
 }
 
-.form-control:focus, .btn-primary.focus, .btn-primary:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+.form-control:focus,
+.btn-primary.focus,
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
   border-color: #ff9907;
   box-shadow: 0 0 0 0.2rem rgba(255, 204, 65, 0.603);
 }
@@ -131,7 +140,10 @@ nav .brand-logo {
   transform: translateX(-50%);
 }
 
-nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
+nav i,
+nav [class^="mdi-"],
+nav [class*="mdi-"],
+nav i.material-icons {
   font-size: 30px;
 }
 
@@ -211,7 +223,7 @@ hr {
 /* get recipies */
 
 .title {
-  margin-top: 80px;
+  margin-top: 35px;
 }
 
 .carousel .carousel-item {
@@ -221,7 +233,7 @@ hr {
 
 .carousel {
   height: 600px;
-  margin-top: -100px;
+  margin-top: -130px;
 }
 
 .img-carousel {
@@ -264,7 +276,7 @@ hr {
   margin-bottom: 30px;
 }
 
-[type="checkbox"]+label {
+[type="checkbox"] + label {
   font-size: 0.8rem;
 }
 
@@ -276,15 +288,15 @@ hr {
   margin-top: 25px;
 }
 
-.switch label input[type=checkbox]:checked+.lever {
+.switch label input[type="checkbox"]:checked + .lever {
   background-color: #ffbf007d;
 }
 
-.switch label input[type=checkbox]:checked+.lever:after {
+.switch label input[type="checkbox"]:checked + .lever:after {
   background-color: #ffbf00;
 }
 
-[type="checkbox"]:checked+label:before {
+[type="checkbox"]:checked + label:before {
   border-right: 2px solid #ffbf00;
   border-bottom: 2px solid #ffbf00;
 }
@@ -331,7 +343,8 @@ hr {
   padding-right: 20px;
 }
 
-.small, .img-details p {
+.small,
+.img-details p {
   white-space: nowrap;
 }
 
@@ -356,7 +369,9 @@ hr {
   .details-item {
     margin-bottom: 0px;
   }
-  .ingredients li, .instructions ol, .instructions p {
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
     font-size: 0.8em;
   }
 }
@@ -378,7 +393,9 @@ hr {
   .small {
     font-size: 0.7em;
   }
-  .ingredients li, .instructions ol, .instructions p {
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
     font-size: 0.9em;
   }
 }
@@ -399,7 +416,9 @@ hr {
   .small {
     font-size: 0.7em;
   }
-  .ingredients li, .instructions ol, .instructions p {
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
     font-size: 1em;
   }
 }
@@ -479,4 +498,13 @@ hr {
 
 .add_category_cuisine button {
   margin-top: 25px;
+}
+
+/* CHARTS */
+
+#category,
+#difficulty,
+#totalRecipes,
+#cuisine {
+  width: 100%;
 }
