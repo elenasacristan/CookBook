@@ -41,14 +41,11 @@ function createCharts(error, data) {
     .renderHorizontalGridLines(true)
     .dimension(dimCuisine)
     .group(groupCuisine)
-    // .stack(meals, "meals")
-    // .stack(drinks, "drinks")
-    // .stack(attractions, "attractions")
-    // .stack(transport, "transport")
+
     // .title(function (d) {
     //     return 'In ' + d.key + ' the ' + this.layer + ' by day cost: ' + d.value + '€';
     // })
-    // .ordinalColors(["#006B99", "#0E9E8D", "#F2C44F", "#F4994E", "#E86443"])
+    .ordinalColors(["#006B99", "#0E9E8D", "#F2C44F", "#F4994E", "#E86443"])
     .transitionDuration(1500)
     .x(d3.scale.ordinal())
     .xUnits(dc.units.ordinal)

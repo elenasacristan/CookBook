@@ -96,45 +96,69 @@ def filter_recipes():
 
     cuisines_array = []
     difficulty_array = []
-    allergens_array = []
+    categories_array = []
 
+    # create array with all the cuisines
     for cuisine in cuisines:
 	    cuisines_array.append(cuisine['cuisine'])
     
-    for dif in difficulty:
-	    difficulty_array.append(dif['difficulty_level'])
-
-    for allergen in allergens:
-        allergens_array.append(allergen['allergen'])
-
-    # allergens_to_remove = {}
-    # for aller in allergens_array:
-    #     print(request.form[str(aller)])
-        #     allergens_to_remove.append(aller)
-
-    # query_allergens = {"allergens": { "$not": {"$elemMatch": {allergens_to_remove} } } }
-
+    # create different query depending on if a cuisine has been selected or not in the dropdown menu
     if request.form['cuisine'] != "Not specified":
         query_cuisine = {"cuisine":request.form['cuisine']}
     else:
         query_cuisine = {"cuisine":{ "$in": cuisines_array}}
+
+    # create array with all the difficulty levels
+    for dif in difficulty:
+	    difficulty_array.append(dif['difficulty_level'])
     
+    # create different query depending on if a difficulty has been selected or not in the dropdown menu
     if request.form['difficulty'] != "Not specified":
         query_difficulty = {"difficulty_level":request.form['difficulty']}
     else:
         query_difficulty = {"difficulty_level":{ "$in": difficulty_array}}
 
+    # from the checkboxes in the filter section get the list of allergens to exclude 
+    allergens_to_remove = request.form.getlist('allergens')
+    
+    #show all the recipes that DON'T contain the allergens selected
+    query_allergens = {"allergens": { "$nin": allergens_to_remove } }
 
+    # create array with all the categories
+    for category in categories:
+	    categories_array.append(category['category'])
+    
+    # from the checkboxes in the filter section get the list of categories to display 
+    categories_to_display = request.form.getlist('categories')
+
+    # create different query depending on if there categoriesvchecked or not
+    if categories_to_display == []:
+        query_categories = {"category": { "$in": categories_array } }
+    else:
+        query_categories = {"category": { "$in": categories_to_display } }
+
+      
+      
     # if request.form['only_mine'] == on:
     #     author = username
     # recipes = mongo.db.Recipes.find(query_allergens)
-    recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine]})
+    # recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine]})
+    
+    # find the recipes based on all the filters selected / by adding all the queries with an $and logical operator
+    # recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine]})
+    # recipes = mongo.db.Recipes.find({"$and":[query_allergens, query_categories]})
+
+    # recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine,query_allergens, query_categories]})
+
+    recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine,query_allergens, query_categories]})
+
+
     difficulty = mongo.db.Difficulty.find()
-
-
-   
     cuisines = mongo.db.Cuisines.find()
     recipes_count = recipes.count()
+    allergens = mongo.db.Allergens.find()
+    categories = mongo.db.Categories.find()
+
 
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
 
