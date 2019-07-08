@@ -93,10 +93,12 @@ def filter_recipes():
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
     difficulty = mongo.db.Difficulty.find()
-
+    recipes = mongo.db.Recipes.find()
+    
     cuisines_array = []
     difficulty_array = []
     categories_array = []
+    authors_array = []
 
     # create array with all the cuisines
     for cuisine in cuisines:
@@ -131,16 +133,23 @@ def filter_recipes():
     # from the checkboxes in the filter section get the list of categories to display 
     categories_to_display = request.form.getlist('categories')
 
-    # create different query depending on if there categoriesvchecked or not
+    # create different query depending on if there categories are checked or not
     if categories_to_display == []:
         query_categories = {"category": { "$in": categories_array } }
     else:
         query_categories = {"category": { "$in": categories_to_display } }
+    
+    # create array with all the authors
+    for recipe in recipes:
+	    authors_array.append(recipe['author'])
+    
+    # create different query depending is the user selects "only_mine" or not"
+    if request.form.get('only_mine') == 'only_mine':
+        query_author = {"author": username }
+    else:
+        query_author = {"author": { "$in": authors_array } }
 
-      
-      
-    # if request.form['only_mine'] == on:
-    #     author = username
+
     # recipes = mongo.db.Recipes.find(query_allergens)
     # recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine]})
     
@@ -150,14 +159,14 @@ def filter_recipes():
 
     # recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine,query_allergens, query_categories]})
 
-    recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine,query_allergens, query_categories]})
+    recipes = mongo.db.Recipes.find({"$and":[query_author,query_difficulty,query_cuisine,query_allergens, query_categories]})
 
 
     difficulty = mongo.db.Difficulty.find()
     cuisines = mongo.db.Cuisines.find()
-    recipes_count = recipes.count()
     allergens = mongo.db.Allergens.find()
     categories = mongo.db.Categories.find()
+    recipes_count = recipes.count()
 
 
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
