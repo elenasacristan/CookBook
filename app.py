@@ -7,6 +7,7 @@ from bson.objectid import ObjectId
 from bson import json_util
 from bson.json_util import dumps
 from datetime import datetime
+import bcrypt
 
 # create an instance of Flask
 app = Flask(__name__)
@@ -38,7 +39,7 @@ def login():
     user_login = users.find_one({'author':request.form['username'].capitalize()})
 
     if user_login:
-        if request.form['password'] == user_login['password']:
+        if bcrypt.hashpw(request.form['password'].encode('utf-8'), user_login['password']) == user_login['password']:
             session["username"] = request.form["username"].capitalize()
             return redirect(url_for('get_recipes'))
     
@@ -52,7 +53,8 @@ def register():
         user_exists = users.find_one({'author':request.form['username'].capitalize()})
 
         if user_exists is None:
-            users.insert({'author':request.form['username'].capitalize(), 'password':request.form['password']})
+            hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+            users.insert({'author':request.form['username'].capitalize(), 'password':hashpass})
             session['username'] = request.form['username'].capitalize()
             return redirect(url_for('get_recipes'))
 
