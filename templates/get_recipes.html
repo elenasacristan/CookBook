@@ -95,7 +95,8 @@
                         {% for allergen in allergens %}
                         {% if allergen.allergen != "Not specified" %}
                         <p class="checkbox">
-                            <input type="checkbox" id="{{allergen.allergen}}" name="{{allergen.allergen}}" />
+                            <input type="checkbox" id="{{allergen.allergen}}" name="{{allergen.allergen}}"
+                                value="{{allergen.allergen}}" />
                             <label for="{{allergen.allergen}}">{{allergen.allergen}}</label>
                         </p>
                         {% endif %}

@@ -22,9 +22,26 @@
                         <td>{{category.count_recipes_category}}</td>
                         <!-- we can only delete categories with 0 recipes and we can't remove "Not specified because it is the default value" -->
                         <td>{% if category.count_recipes_category == 0 and category.category!="Not specified" %}
-                            <a href="{{url_for('delete_category', category_id=category.category_id)}}"
-                                class="btn waves-effect waves-light red right-align"><i class="fa fa-trash"></i></a>
-                            {% endif %}</td>
+                            <a href="#modal_delete_category"
+                                class="btn waves-effect waves-light red right-align modal-trigger"><i
+                                    class="fa fa-trash"></i></a>
+                            <!-- Modal Structure -->
+                            <div id="modal_delete_category" class="modal">
+                                <div class="modal-content">
+                                    <p>Are you sure you want to remove <strong>{{category.category}}</strong> category?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#"
+                                        class="modal-action modal-close waves-effect waves-green btn-flat">No</a>
+                                    <a href="{{url_for('delete_category', category_id=category.category_id)}}"
+                                        class="modal-action modal-close waves-effect waves-green btn-flat">Yes</a>
+                                </div>
+                            </div>
+
+
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -65,9 +82,24 @@
                         <td>{{cuisine.count_recipes_cuisine}}</td>
                         <!-- we can only delete cuisines with 0 recipes and we can't remove "Not specified because it is the default value" -->
                         <td>{% if cuisine.count_recipes_cuisine == 0 and cuisine.cuisine!="Not specified" %}
-                            <a href="{{url_for('delete_cuisine', cuisine_id=cuisine.cuisine_id)}}"
-                                class="btn waves-effect waves-light red"><i class="fa fa-trash"></i></a>
-                            {% endif %}</td>
+                            <a href="#modal_delete_cuisine" class="btn waves-effect waves-light red modal-trigger"><i
+                                    class="fa fa-trash"></i></a>
+
+                            <!-- Modal Structure -->
+                            <div id="modal_delete_cuisine" class="modal">
+                                <div class="modal-content">
+                                    <p>Are you sure you want to remove <strong>{{cuisine.cuisine}}</strong> cuisine?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#"
+                                        class="modal-action modal-close waves-effect waves-green btn-flat">No</a>
+                                    <a href="{{url_for('delete_cuisine', cuisine_id=cuisine.cuisine_id)}}"
+                                        class="modal-action modal-close waves-effect waves-green btn-flat">Yes</a>
+                                </div>
+                            </div>
+
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -90,6 +122,10 @@
             </form>
         </div>
     </div>
-
 </div>
+
+
+
+
+
 {% endblock %}

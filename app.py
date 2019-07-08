@@ -96,14 +96,24 @@ def filter_recipes():
 
     cuisines_array = []
     difficulty_array = []
+    allergens_array = []
 
     for cuisine in cuisines:
 	    cuisines_array.append(cuisine['cuisine'])
     
     for dif in difficulty:
 	    difficulty_array.append(dif['difficulty_level'])
-    
-    
+
+    for allergen in allergens:
+        allergens_array.append(allergen['allergen'])
+
+    # allergens_to_remove = {}
+    # for aller in allergens_array:
+    #     print(request.form[str(aller)])
+        #     allergens_to_remove.append(aller)
+
+    # query_allergens = {"allergens": { "$not": {"$elemMatch": {allergens_to_remove} } } }
+
     if request.form['cuisine'] != "Not specified":
         query_cuisine = {"cuisine":request.form['cuisine']}
     else:
@@ -117,8 +127,7 @@ def filter_recipes():
 
     # if request.form['only_mine'] == on:
     #     author = username
-
-    
+    # recipes = mongo.db.Recipes.find(query_allergens)
     recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine]})
     difficulty = mongo.db.Difficulty.find()
 
