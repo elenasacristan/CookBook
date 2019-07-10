@@ -114,13 +114,13 @@ def filter_recipes():
 
     # create array with all the difficulty levels
     for dif in difficulty:
-	    difficulty_array.append(dif['difficulty_level'])
+	    difficulty_array.append(dif['difficulty'])
     
     # create different query depending on if a difficulty has been selected or not in the dropdown menu
     if request.form['difficulty'] != "Not specified":
-        query_difficulty = {"difficulty_level":request.form['difficulty']}
+        query_difficulty = {"difficulty":request.form['difficulty']}
     else:
-        query_difficulty = {"difficulty_level":{ "$in": difficulty_array}}
+        query_difficulty = {"difficulty":{ "$in": difficulty_array}}
 
     # from the checkboxes in the filter section get the list of allergens to exclude 
     allergens_to_remove = request.form.getlist('allergens')
@@ -172,7 +172,9 @@ def filter_recipes():
 
 
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
-
+@app.route('/tips')
+def tips():
+    return render_template('tips.html')
 
 # function to add new recipe
 @app.route('/add_recipe')
@@ -215,7 +217,7 @@ def insert_recipe():
                 'instructions':string_to_array(request.form['instructions']),
                 'serves':request.form['serves'],
                 'calories':request.form['calories'],
-                'difficulty_level':request.form['difficulty_level'],
+                'difficulty':request.form['difficulty'],
                 'cooking_time':request.form['cooking_time'],
                 'cuisine':request.form['cuisine'],
                 'allergens':request.form.getlist('allergens'),
@@ -271,7 +273,7 @@ def update_recipe(recipe_id):
                     'instructions':string_to_array(request.form['instructions']),
                     'serves':request.form['serves'],
                     'calories':request.form['calories'],
-                    'difficulty_level':request.form['difficulty_level'],
+                    'difficulty':request.form['difficulty'],
                     'cooking_time':request.form['cooking_time'],
                     'cuisine':request.form['cuisine'],
                     'allergens':request.form.getlist('allergens'),
@@ -336,7 +338,7 @@ def insert_cuisine():
 # we use this route to retrieve all the recipes from the database in json format
 @app.route("/data_recipes")
 def data():
-    recipes = mongo.db.Recipes.find(projection = {'_id':True ,'recipe_name': True, 'upvotes': True,'category': True, 'difficulty_level': True, 'cuisine': True})
+    recipes = mongo.db.Recipes.find(projection = {'_id':True ,'recipe_name': True, 'upvotes': True,'category': True, 'difficulty': True, 'cuisine': True})
     json_recipes = []
 
     for recipe in recipes:

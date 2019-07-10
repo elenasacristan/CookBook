@@ -33,6 +33,9 @@
                 <!-- <ul class="right hide-on-med-and-down"> -->
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{url_for('get_recipes')}}"><i class="material-icons">home</i></a></li>
+                    <li><a href="{{url_for('tips')}}"><i class="material-icons">help_outline
+                            </i></a></li>
+
                     <li><a class="tooltipped" data-position="bottom" data-delay="80" data-tooltip="Add recipe"
                             href="{{url_for('add_recipe')}}"><i class="material-icons">add_box</i></a></li>
                     <li><a class="tooltipped" data-position="bottom" data-delay="80"
@@ -43,6 +46,8 @@
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <li><a href="{{url_for('get_recipes')}}">Home</a></li>
+                    <li><a href="{{url_for('tips')}}">How it works</a></li>
+
                     <li><a href="{{url_for('add_recipe')}}">Add recipie</a></li>
                     <li><a href="{{url_for('statistics')}}">Statistics</a></li>
                     <li><a href="{{url_for('manage_categories')}}">Manage categories / cuisines</a></li>

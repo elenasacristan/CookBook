@@ -7,7 +7,7 @@ function createCharts(error, data) {
 
   var ndx = crossfilter(recipes);
 
-  var dimDifficulty = ndx.dimension(dc.pluck("difficulty_level"));
+  var dimDifficulty = ndx.dimension(dc.pluck("difficulty"));
   var groupDifficulty = dimDifficulty.group();
 
   dc.pieChart("#difficulty")
