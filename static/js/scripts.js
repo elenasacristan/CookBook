@@ -17,3 +17,13 @@ function previewFile() {
     reader.readAsDataURL(file);
   }
 }
+
+// // function to unselect the option "Not specified" if one or more allegerns are selected
+
+// $("#na").click(function() {
+//   $(".select_allergen").attr("selected", false);
+// });
+
+// $(".select_allergen").click(function() {
+//   $("#na").removeAttr("selected");
+// });
