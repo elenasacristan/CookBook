@@ -97,30 +97,17 @@ def filter_recipes():
     difficulty = mongo.db.Difficulty.find()
     recipes = mongo.db.Recipes.find()
     
-    cuisines_array = []
-    difficulty_array = []
-    categories_array = []
-    authors_array = []
-
-    # create array with all the cuisines
-    for cuisine in cuisines:
-	    cuisines_array.append(cuisine['cuisine'])
-    
-    # create different query depending on if a cuisine has been selected or not in the dropdown menu
+    #create different query depending on if a cuisine has been selected or not in the dropdown menu
     if request.form['cuisine'] != "Not specified":
         query_cuisine = {"cuisine":request.form['cuisine']}
     else:
-        query_cuisine = {"cuisine":{ "$in": cuisines_array}}
-
-    # create array with all the difficulty levels
-    for dif in difficulty:
-	    difficulty_array.append(dif['difficulty'])
+        query_cuisine = {"cuisine":{ "$in": recipes.distinct('cuisine')}}
     
-    # create different query depending on if a difficulty has been selected or not in the dropdown menu
+    #create different query depending on if a difficulty has been selected or not in the dropdown menu
     if request.form['difficulty'] != "Not specified":
         query_difficulty = {"difficulty":request.form['difficulty']}
     else:
-        query_difficulty = {"difficulty":{ "$in": difficulty_array}}
+        query_difficulty = {"difficulty":{ "$in": recipes.distinct('difficulty')}}
 
     # from the checkboxes in the filter section get the list of allergens to exclude 
     allergens_to_remove = request.form.getlist('allergens')
@@ -128,50 +115,28 @@ def filter_recipes():
     #show all the recipes that DON'T contain the allergens selected
     query_allergens = {"allergens": { "$nin": allergens_to_remove } }
 
-    # create array with all the categories
-    for category in categories:
-	    categories_array.append(category['category'])
-    
     # from the checkboxes in the filter section get the list of categories to display 
     categories_to_display = request.form.getlist('categories')
-
+    
     # create different query depending on if there categories are checked or not
     if categories_to_display == []:
-        query_categories = {"category": { "$in": categories_array } }
+        query_categories = {"category": { "$in": recipes.distinct('category') } }
     else:
-        query_categories = {"category": { "$in": categories_to_display } }
-    
-    # create array with all the authors
-    for recipe in recipes:
-	    authors_array.append(recipe['author'])
+        query_categories = {"category": { "$in": request.form.getlist('categories') } }
     
     # create different query depending is the user selects "only_mine" or not"
     if request.form.get('only_mine') == 'only_mine':
         query_author = {"author": username }
     else:
-        query_author = {"author": { "$in": authors_array } }
-
-
-    # recipes = mongo.db.Recipes.find(query_allergens)
-    # recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine]})
-    
-    # find the recipes based on all the filters selected / by adding all the queries with an $and logical operator
-    # recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine]})
-    # recipes = mongo.db.Recipes.find({"$and":[query_allergens, query_categories]})
-
-    # recipes = mongo.db.Recipes.find({"$and":[query_difficulty,query_cuisine,query_allergens, query_categories]})
-
+        query_author = {"author": { "$in": recipes.distinct('author') } }
+        
     recipes = mongo.db.Recipes.find({"$and":[query_author,query_difficulty,query_cuisine,query_allergens, query_categories]})
-
-
-    difficulty = mongo.db.Difficulty.find()
-    cuisines = mongo.db.Cuisines.find()
-    allergens = mongo.db.Allergens.find()
-    categories = mongo.db.Categories.find()
     recipes_count = recipes.count()
 
-
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
+
+
+#route to the tips page
 @app.route('/tips')
 def tips():
     return render_template('tips.html')
