@@ -102,7 +102,7 @@ def search():
     '''CREATE TEXT INDEX FOR ALL TEXT FIELDS'''    
     mongo.db.Recipes.create_index( [("$**", 'text')] )
         
-    recipes = mongo.db.Recipes.find({ "$text": { "$search": text_to_find } })
+    recipes = mongo.db.Recipes.find({ "$text": { "$search": text_to_find } }).sort("upvotes", -1)
     recipes_count = recipes.count()
         
     # send recipes to page
@@ -153,7 +153,7 @@ def filter_recipes():
     else:
         query_author = {"author": { "$in": recipes.distinct('author') } }
         
-    recipes = mongo.db.Recipes.find({"$and":[query_author,query_difficulty,query_cuisine,query_allergens, query_categories]})
+    recipes = mongo.db.Recipes.find({"$and":[query_author,query_difficulty,query_cuisine,query_allergens, query_categories]}).sort("upvotes", -1)
     recipes_count = recipes.count()
 
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)

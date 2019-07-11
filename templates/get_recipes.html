@@ -17,10 +17,11 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container get-recipes">
     <div class="row">
         <div class="col s12 title center-align">
-            <h4>Hello <strong>{{ username }}</strong>! What are we cooking today?</h4>
+            <h4>Hi <span class="highlight">{{ username }}</span>! What are we cooking
+                today?</h4>
             {% if recipes_count < 1 %}
             <p> We haven't found any match </p>
             {% elif recipes_count > 1%}
@@ -54,11 +55,11 @@
                     </div>
                     <div class=" row ">
                         <div class=" col s6">
-                            <h6><strong>Likes: {{recipe.upvotes}}</strong></h6>
+                            <p><strong>Likes: {{recipe.upvotes}}</strong></p>
                         </div>
                         <div class="col s6 right-align">
                             <a href="{{url_for('view_recipe', recipe_id=recipe._id)}}">
-                                <h6>View</h6>
+                                <p>View</p>
                             </a>
                         </div>
                     </div>
@@ -77,13 +78,13 @@
             </div>
             <div class="row">
                 <div class="col s12 m12 offset-l1 l3 filter-section">
-                    <div class="switch">
+                    <div class="switch filters-left">
                         <label>
                             <input type="checkbox" name="only_mine" id="only_mine" value="only_mine">
                             <span class="lever"></span>Only my recipes
                         </label>
                     </div>
-                    <div class="dropdown">
+                    <div class="filters-left">
                         <h5><strong>Cuisine:</strong></h5>
                         <select id="cuisine" name="cuisine">
                             {% for cuisine in cuisines %}
@@ -95,7 +96,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="dropdown">
+                    <div class="filters-left">
                         <h5><strong>Difficulty:</strong></h5>
                         <select id="difficulty" name="difficulty">
                             {% for level in difficulty %}

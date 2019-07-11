@@ -8,16 +8,17 @@ body {
   background-color: #fafafa;
   font-family: 'Coming Soon', cursive;
   font-size: 1.1em;
+  font-weight: 400;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Fredericka the Great', cursive;
-  font-weight: 200;
+  font-weight: 300;
   color: #000000;
 }
 
 .container {
-  margin-top: 40px;
+  margin-top: 0px;
 }
 
 .container .row {
@@ -222,6 +223,32 @@ hr {
 
 /* get recipies */
 
+.get-recipes h4 {
+  font-size: 2.5em;
+}
+
+.get-recipes h5 {
+  font-size: 1.8em;
+}
+
+.get-recipes h6 {
+  font-size: 1.2em;
+}
+
+.get-recipes p {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.get-recipes p strong {
+  font-weight: 800;
+}
+
+.highlight {
+  color: #ffbf00;
+  font-weight: 600;
+}
+
 .carousel .carousel-item {
   width: auto;
   height: 300px;
@@ -234,6 +261,7 @@ hr {
 
 .img-carousel {
   width: 200px;
+  box-shadow: 2px 2px 12px #3f1e09;
 }
 
 @media only screen and (min-width: 601px) {
@@ -243,12 +271,16 @@ hr {
 }
 
 .wrapper-filter {
-  background-color: #e8e8e8;
-  padding: 35px 50px 35px 35px;
+  background-color: #ffffff;
+  padding: 20px 30px 20px 30px;
+  box-shadow: 2px 2px 5px #777777;
+  margin-bottom: 25px;
 }
 
-.wrapper-filter h6 {
-  margin-bottom: 20px;
+}
+
+.wrapper-filter h5 {
+  margin-bottom: 25px;
 }
 
 .wrapper-filter p {
@@ -276,8 +308,8 @@ hr {
   font-size: 0.9rem;
 }
 
-.dropdown {
-  margin-top: 60px;
+.filters-left {
+  margin-bottom: 80px;
 }
 
 .wrapper-filter button {
@@ -319,6 +351,17 @@ hr {
   margin-top: 10px;
   font-size: 2em;
   color: #ffbf00;
+}
+
+@media only screen and (max-width: 600px) {
+  .carousel {
+    height: 400px;
+    margin-top: -40px;
+    margin-bottom: -40px;
+  }
+  .search {
+    margin-top: 50px;
+  }
 }
 
 /* view recipe */
@@ -376,7 +419,7 @@ hr {
     padding-right: 15px;
     font-size: 1.5em;
   }
-  .details-item h6 {
+  .details-item p {
     font-size: 0.9em;
   }
   .details-item p {
@@ -398,7 +441,7 @@ hr {
     padding-right: 18px;
     font-size: 1.8em;
   }
-  .details-item h6 {
+  .details-item p {
     font-size: 0.9em;
   }
   .details-item p {
@@ -419,7 +462,7 @@ hr {
   .details-item .fa {
     font-size: 2em;
   }
-  .details-item h6 {
+  .details-item p {
     font-size: 1em;
   }
   .details-item p {
@@ -440,7 +483,7 @@ hr {
   .details-item .fa {
     font-size: 2.5em;
   }
-  .details-item h6 {
+  .details-item p {
     font-size: 1.2em;
   }
   .details-item p {
