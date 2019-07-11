@@ -269,7 +269,6 @@ def delete_cuisine(cuisine_id):
     mongo.db.Cuisines.remove({"_id":ObjectId(cuisine_id)})
     return redirect(url_for('manage_categories'))
 
-
 # function to redirect to the page where the user can add a new category
 @app.route('/add_category')
 def add_category():
