@@ -297,9 +297,28 @@ hr {
   border-bottom: 2px solid #ffbf00;
 }
 
+.search {
+  margin-top: 35px;
+}
+
+#text_to_find {
+  background-color: white;
+  border: 1px solid #ffbf00;
+  border-radius: 25px;
+  width: 90%;
+  margin-right: 20px;
+  padding-left: 20px;
+  box-shadow: 0 1px 0 0 #ffbf00;
+}
+
+.search button {
+  background-color: transparent;
+}
+
 .search i {
-  margin-top: 20px;
-  text-align: left;
+  margin-top: 10px;
+  font-size: 2em;
+  color: #ffbf00;
 }
 
 /* view recipe */

@@ -4,23 +4,20 @@
 
 <div class="row search">
     <div class="title right-align">
-        <form method="" action="#">
-            <div class="row">
-                <div class="input-field col offset-s1 s10 offset-m6 m5 offset-l7 l4">
-
-                    <input id="text_to_find" name="text_to_find" type="text" class="validate">
-                    <label class="right-align" for="text_to_find">Search recipes by ingredient, recipes name or
-                        allergen..</label>
+        <form method="POST" action="{{url_for('search')}}">
+            <div class=" row">
+                <div class="col offset-s1 s10 offset-m6 m5 offset-l7 l4">
+                    <input class="input_search" id="text_to_find" name="text_to_find" type="search" required>
                 </div>
-                <i class="material-icons prefix col s1 m1 l1">search</i>
+                <button class="col s1 m1 l1" type="submit" name="action"><i
+                        class="material-icons prefix col s1 m1 l1">search</i>
+                </button>
             </div>
         </form>
     </div>
 </div>
 
 <div class="container">
-
-
     <div class="row">
         <div class="col s12 title center-align">
             <h4>Hello <strong>{{ username }}</strong>! What are we cooking today?</h4>
@@ -139,8 +136,6 @@
                         {% endfor %}
                     </div>
                 </div>
-
-
             </div>
             <div class="row">
                 <div class="col s12 right-align">

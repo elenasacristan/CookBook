@@ -132,6 +132,5 @@ function createCharts(error, data) {
     // .sortBy(d.upvotes)
     .showGroups(false) // this will remove the [object][object] at the top of the rows
     .order(d3.ascending);
-
   dc.renderAll();
 }

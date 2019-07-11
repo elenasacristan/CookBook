@@ -86,6 +86,29 @@ def get_recipes():
     difficulty = mongo.db.Difficulty.find()
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    title = "View recipes"
+    username = getusername()
+    allergens = mongo.db.Allergens.find()
+    categories = mongo.db.Categories.find()
+    cuisines = mongo.db.Cuisines.find()
+    difficulty = mongo.db.Difficulty.find()
+    recipes = mongo.db.Recipes.find()
+
+    '''GET THE WORD/SENTENCE FROM THE SEARCH BOX'''    
+    text_to_find = request.form["text_to_find"]
+
+    '''CREATE TEXT INDEX FOR ALL TEXT FIELDS'''    
+    mongo.db.Recipes.create_index( [("$**", 'text')] )
+        
+    recipes = mongo.db.Recipes.find({ "$text": { "$search": text_to_find } })
+    recipes_count = recipes.count()
+        
+    # send recipes to page
+    return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
+    
+    
 
 @app.route('/filter_recipes', methods = ['GET', 'POST'])
 def filter_recipes():
