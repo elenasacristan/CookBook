@@ -22,6 +22,9 @@ mongo = PyMongo(app)
 # secret key needed to create session cookies / before deploying convert to enviroment variable
 app.secret_key = "randomString123"
 
+
+
+
 # https://www.youtube.com/watch?v=vVx1737auSE
 # landing page for the website for new users. 
 @app.route('/')
@@ -121,13 +124,13 @@ def filter_recipes():
     recipes = mongo.db.Recipes.find()
     
     #create different query depending on if a cuisine has been selected or not in the dropdown menu
-    if request.form['cuisine'] != "Not specified":
+    if request.form.getlist('cuisine') != []:
         query_cuisine = {"cuisine":{ "$in": request.form.getlist('cuisine')}}
     else:
         query_cuisine = {"cuisine":{ "$in": recipes.distinct('cuisine')}}
     
     #create different query depending on if a difficulty has been selected or not in the dropdown menu
-    if request.form['difficulty'] != "Not specified":
+    if request.form.getlist('difficulty') != []:
         query_difficulty = {"difficulty":{ "$in": request.form.getlist('difficulty')}}
     else:
         query_difficulty = {"difficulty":{ "$in": recipes.distinct('difficulty')}}
