@@ -14,7 +14,6 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Fredericka the Great', cursive;
   font-weight: 300;
-  color: #000000;
 }
 
 .container {
@@ -30,43 +29,8 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0px;
 }
 
-/* login page */
-
-.bg-image-login {
-  background-image: url("../img/bkg3.png") !important;
-  background-size: cover;
-  background-position: center;
-}
-
-.bg-side-login {
-  background-color: #ffffff;
-}
-
-.form-label-group>input, .form-label-group>label {
-  height: 2.5em;
-  padding-left: 1em;
-  padding-top: 0.4em;
-}
-
-.cando li {
-  list-style: none;
-  background: url("../img/tick2.png") no-repeat left top;
-  height: 80px;
-  padding-left: 70px;
-  padding-top: 50px;
-}
-
-.fixed-top {
-  padding: 0px;
-}
-
 nav {
   background-color: #a9a9a9;
-}
-
-.navbar-brand {
-  height: 60px;
-  position: relative;
 }
 
 nav img {
@@ -74,48 +38,6 @@ nav img {
   top: 15px;
   left: 30px;
   transform: rotate(-3deg);
-}
-
-.btn-block {
-  width: 62%;
-  margin: auto;
-  color: #fff;
-  background-color: #ff9907;
-  border-color: #ff9907;
-}
-
-.btn-block:hover, .btn-block:active {
-  background-color: #e68f16;
-  border-color: #e68f16;
-}
-
-.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
-  color: #fff;
-  background-color: #e68f16;
-  border-color: #e68f16;
-}
-
-.form-control:focus, .btn-primary.focus, .btn-primary:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
-  border-color: #ff9907;
-  box-shadow: 0 0 0 0.2rem rgba(255, 204, 65, 0.603);
-}
-
-.btn-login {
-  white-space: nowrap;
-}
-
-.register {
-  margin-top: 20px;
-  font-size: 0.7em;
-}
-
-.register_here {
-  font-size: 1.2em;
-}
-
-.error_message {
-  margin-top: 20px;
-  color: red;
 }
 
 /* base.html */
@@ -270,7 +192,7 @@ hr {
   }
 }
 
-.wrapper-filter {
+.wrapper-filter, .instructions {
   background-color: #ffffff;
   padding: 20px 30px 20px 30px;
   box-shadow: 2px 2px 5px #777777;
@@ -406,12 +328,20 @@ hr {
   padding-right: 20px;
 }
 
+.details-item h6 {
+  padding-bottom: 10px;
+}
+
 .small, .img-details p {
   white-space: nowrap;
 }
 
 .instructions h5 {
   padding-top: 15px;
+}
+
+.ingredients h5, .allergens h5 {
+  margin-bottom: 25px;
 }
 
 @media only screen and (max-width: 400px) {
@@ -497,9 +427,9 @@ hr {
   }
 }
 
-.instructions {
+/* .instructions {
   background-color: #e8e8e8;
-}
+} */
 
 .img-details {
   margin-bottom: 40px;
@@ -509,12 +439,17 @@ hr {
   margin-bottom: 30px;
 }
 
+.ingredients ul:not(.browser-default)>li {
+  list-style-type: circle;
+  margin-left: 10px;
+}
+
 .instructions ol {
   padding: 20px 60px;
 }
 
 .instructions ol li {
-  padding: 10px;
+  padding: 15px;
 }
 
 .ingredients li {
