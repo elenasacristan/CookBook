@@ -122,13 +122,13 @@ def filter_recipes():
     
     #create different query depending on if a cuisine has been selected or not in the dropdown menu
     if request.form['cuisine'] != "Not specified":
-        query_cuisine = {"cuisine":request.form['cuisine']}
+        query_cuisine = {"cuisine":{ "$in": request.form.getlist('cuisine')}}
     else:
         query_cuisine = {"cuisine":{ "$in": recipes.distinct('cuisine')}}
     
     #create different query depending on if a difficulty has been selected or not in the dropdown menu
     if request.form['difficulty'] != "Not specified":
-        query_difficulty = {"difficulty":request.form['difficulty']}
+        query_difficulty = {"difficulty":{ "$in": request.form.getlist('difficulty')}}
     else:
         query_difficulty = {"difficulty":{ "$in": recipes.distinct('difficulty')}}
 
@@ -200,11 +200,16 @@ def insert_recipe():
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
         mongo.save_file(recipe_image.filename, recipe_image)
+        if request.form['calories']:
+            calories = request.form['calories']
+        else:
+            calories = "Not specified"
+
         mongo.db.Recipes.insert({
                 'recipe_name':request.form['recipe_name'].capitalize(),
                 'instructions':string_to_array(request.form['instructions']),
                 'serves':request.form['serves'],
-                'calories':request.form['calories'],
+                'calories':calories,
                 'difficulty':request.form['difficulty'],
                 'cooking_time':request.form['cooking_time'],
                 'cuisine':request.form['cuisine'],

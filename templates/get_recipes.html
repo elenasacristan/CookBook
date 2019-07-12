@@ -2,18 +2,20 @@
 
 {% block content %}
 
-<div class="row search">
-    <div class="title right-align">
-        <form method="POST" action="{{url_for('search')}}">
-            <div class=" row">
-                <div class="col offset-s1 s10 offset-m6 m5 offset-l7 l4">
-                    <input class="input_search" id="text_to_find" name="text_to_find" type="search" required>
+<div class="container-fluid">
+    <div class="row search">
+        <div class="title right-align">
+            <form method="POST" action="{{url_for('search')}}">
+                <div class=" row">
+                    <div class="col offset-s1 s10 offset-m6 m5 offset-l7 l4">
+                        <input class="input_search" id="text_to_find" name="text_to_find" type="search" required>
+                    </div>
+                    <button class="col s1 m1 l1" type="submit" name="action"><i
+                            class="material-icons prefix col s1 m1 l1">search</i>
+                    </button>
                 </div>
-                <button class="col s1 m1 l1" type="submit" name="action"><i
-                        class="material-icons prefix col s1 m1 l1">search</i>
-                </button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -86,25 +88,19 @@
                     </div>
                     <div class="filters-left">
                         <h5><strong>Cuisine:</strong></h5>
-                        <select id="cuisine" name="cuisine">
+                        <select id="cuisine" name="cuisine" multiple>
+                            <option value="" selected disabled>Select one</option>
                             {% for cuisine in cuisines %}
-                            {% if cuisine.cuisine == "Not specified" %}
-                            <option value="{{cuisine.cuisine}}" selected>{{cuisine.cuisine}}</option>
-                            {% else %}
                             <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
-                            {% endif %}
                             {% endfor %}
                         </select>
                     </div>
                     <div class="filters-left">
                         <h5><strong>Difficulty:</strong></h5>
-                        <select id="difficulty" name="difficulty">
+                        <select id="difficulty" name="difficulty" multiple>
+                            <option value="" selected disabled>Select one</option>
                             {% for level in difficulty %}
-                            {% if level.difficulty == "Not specified" %}
-                            <option value="{{level.difficulty}}" selected>{{level.difficulty}}</option>
-                            {% else %}
                             <option value="{{level.difficulty}}">{{level.difficulty}}</option>
-                            {% endif %}
                             {% endfor %}
                         </select>
                     </div>

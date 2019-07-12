@@ -18,7 +18,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .container {
-  margin-top: 0px;
+  margin-top: 40px;
 }
 
 .container .row {
@@ -301,7 +301,7 @@ hr {
 
 .switch {
   margin-left: -15px;
-  margin-bottom: 30px;
+  margin-top: 30px;
 }
 
 [type="checkbox"]+label {
@@ -577,4 +577,19 @@ hr {
 
 .tips .row {
   margin-bottom: 50px;
+}
+
+.input-field select {
+  display: block;
+  position: absolute;
+  width: 0;
+  pointer-events: none;
+  height: 0;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.select-label {
+  position: absolute;
 }

@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="{{url_for('insert_recipe')}}" method="POST" class="container" enctype="multipart/form-data">
+<form id="form_add_recipe" action="{{url_for('insert_recipe')}}" method="POST" class="container"
+    onsubmit="return checkForm()" enctype="multipart/form-data">
     <div class="row">
         <div class="input-field col s12 m6">
             <h6><strong>Recipe name:</strong></h6>
@@ -58,8 +59,7 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Calories:</strong></h6>
-                            <input placeholder="Calories" id="calories" name="calories" type="text" class="validate"
-                                value="Not specified">
+                            <input placeholder="Calories" id="calories" name="calories" type="text" class="validate">
                         </div>
                     </div>
                 </div>
@@ -72,13 +72,10 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Difficulty:</strong></h6>
-                            <select id="difficulty" name="difficulty" class="validate">
+                            <select id="difficulty" name="difficulty" class="validate" required="required">
+                                <option value="" disabled selected>Select one</option>
                                 {% for level in difficulty%}
-                                {% if level.difficulty == "Not specified" %}
-                                <option value="{{level.difficulty}}" selected>{{level.difficulty}}</option>
-                                {% else %}
                                 <option value="{{level.difficulty}}">{{level.difficulty}}</option>
-                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -91,13 +88,10 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Category:</strong></h6>
-                            <select id="category" name="category" class="validate" required="">
+                            <select id="category" name="category" class="validate" required="required">
+                                <option value="" disabled selected>Select one</option>
                                 {% for category in categories%}
-                                {% if category.category == "Not specified" %}
-                                <option value="{{category.category}}" selected>{{category.category}}</option>
-                                {% else %}
                                 <option value="{{category.category}}">{{category.category}}</option>
-                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -112,13 +106,10 @@
                         </div>
                         <div class="col s6 input-field">
                             <h6><strong>Cuisine:</strong></h6>
-                            <select id="cuisine" name="cuisine" class="validate" required="">
+                            <select id="cuisine" name="cuisine" class="validate" required="required">
+                                <option value="" selected>Select one</option>
                                 {% for cuisine in cuisines %}
-                                {% if cuisine.cuisine == "Not specified" %}
-                                <option value="{{cuisine.cuisine}}" selected>{{cuisine.cuisine}}</option>
-                                {% else %}
                                 <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
-                                {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -164,12 +155,9 @@
                 <h5>Allergens:</h5>
                 <div class="input-field col s12">
                     <select id="allergens" name="allergens" class="validate" multiple>
+                        <option class="na" value="" selected disabled>Select the allergens</option>
                         {% for allergen in allergens %}
-                        {% if allergen.allergen == "Not specified" %}
-                        <option value="{{allergen.allergen}}" selected>{{allergen.allergen}}</option>
-                        {% else %}
-                        <option value="{{allergen.allergen}}">{{allergen.allergen}}</option>
-                        {% endif %}
+                        <option class="aller" value="{{allergen.allergen}}">{{allergen.allergen}}</option>
                         {% endfor %}
                     </select>
                 </div>
