@@ -567,3 +567,8 @@ hr {
 .pie-charts h6 {
   margin-bottom: 25px;
 }
+
+.dc-chart g.row text {
+  fill: #000000;
+  font-weight: 900;
+}

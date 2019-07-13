@@ -113,7 +113,7 @@ function createCharts(error, data) {
       "#ffb74d",
       "#ffcc80",
       "#ffe0b2",
-      "#fff3e0"
+      "#FEE1C0"
     ])
     .dimension(dimauthor)
     .group(groupauthor)
