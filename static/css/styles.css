@@ -491,6 +491,7 @@ hr {
 
 .modal {
   padding: 40px;
+  text-align: left;
 }
 
 .input-field.col label {
