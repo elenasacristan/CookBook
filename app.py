@@ -9,6 +9,7 @@ from bson.json_util import dumps
 from datetime import datetime
 import bcrypt
 
+
 # create an instance of Flask
 app = Flask(__name__)
 
@@ -21,9 +22,6 @@ mongo = PyMongo(app)
 
 # secret key needed to create session cookies / before deploying convert to enviroment variable
 app.secret_key = "randomString123"
-
-
-
 
 # https://www.youtube.com/watch?v=vVx1737auSE
 # landing page for the website for new users. 
@@ -333,12 +331,13 @@ def insert_cuisine():
 # we use this route to retrieve all the recipes from the database in json format
 @app.route("/data_recipes")
 def data():
-    recipes = mongo.db.Recipes.find(projection = {'_id':True ,'recipe_name': True, 'upvotes': True,'category': True, 'difficulty': True, 'cuisine': True})
+    recipes = mongo.db.Recipes.find(projection = {'_id':True ,'recipe_name': True, 'upvotes': True,'category': True, 'difficulty': True, 'cuisine': True, 'author':True})
     json_recipes = []
 
     for recipe in recipes:
         json_recipes.append(recipe)
     json_recipes = json.dumps(json_recipes, default=json_util.default)
+
     return json_recipes
 
 @app.route("/statistics")

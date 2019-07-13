@@ -12,7 +12,7 @@ function createCharts(error, data) {
 
   dc.pieChart("#difficulty")
     .height(200)
-    .useViewBoxResizing(true) //to make the chart responsive
+    // .useViewBoxResizing(true) //to make the chart responsive
     .externalRadiusPadding(40)
     .dimension(dimDifficulty)
     .group(groupDifficulty)
@@ -24,7 +24,7 @@ function createCharts(error, data) {
 
   dc.pieChart("#category")
     .height(200)
-    .useViewBoxResizing(true) //to make the chart responsive
+    // .useViewBoxResizing(true) //to make the chart responsive
     .externalRadiusPadding(40)
     .dimension(dimCategory)
     .group(groupCategory)
@@ -34,26 +34,34 @@ function createCharts(error, data) {
   var dimCuisine = ndx.dimension(dc.pluck("cuisine"));
   var groupCuisine = dimCuisine.group();
 
-  dc.barChart("#cuisine")
-    .height(200)
-    .useViewBoxResizing(true) //to make the chart responsive
-    // .margins({ top: 15, right: 10, bottom: 55, left: 35 })
-    .renderHorizontalGridLines(true)
+  rowChartCuisine = dc.rowChart("#cuisine");
+  rowChartCuisine
+    .height(400)
+    .width(250)
+    // .useViewBoxResizing(true) //to make the chart responsive
     .dimension(dimCuisine)
     .group(groupCuisine)
+    .elasticX(true)
+    .xAxis()
+    .ticks(3);
 
-    // .title(function (d) {
-    //     return 'In ' + d.key + ' the ' + this.layer + ' by day cost: ' + d.value + '€';
-    // })
-    .ordinalColors(["#006B99", "#0E9E8D", "#F2C44F", "#F4994E", "#E86443"])
-    .transitionDuration(1500)
-    .x(d3.scale.ordinal())
-    .xUnits(dc.units.ordinal)
-    .barPadding(0.3)
-    .xAxisLabel("Cuisines")
-    .yAxisLabel("Number of recipes")
-    .yAxis()
-    .ticks(6);
+  rowChartCuisine.rowsCap(10);
+
+  var dimauthor = ndx.dimension(dc.pluck("author"));
+  var groupauthor = dimauthor.group().reduceSum(dc.pluck("upvotes"));
+
+  rowChartAuthor = dc.rowChart("#author");
+  rowChartAuthor
+    .height(200)
+    .width(250)
+    // .useViewBoxResizing(true) //to make the chart responsive
+    .dimension(dimauthor)
+    .group(groupauthor)
+    .elasticX(true)
+    .xAxis()
+    .ticks(3);
+
+  rowChartAuthor.rowsCap(5);
 
   var total = ndx.groupAll().reduce(
     //p keeps track of the changes, v will be input values from the dataset
@@ -85,8 +93,8 @@ function createCharts(error, data) {
   });
 
   dc.dataTable("#table")
-    .height(300)
-    .width(400)
+    // .height(400)
+    // .width(400)
     .useViewBoxResizing(true) //to make the chart responsive
     .dimension(allDimension)
     .group(function(data) {
@@ -95,7 +103,7 @@ function createCharts(error, data) {
     .size(Infinity)
     .columns([
       {
-        label: "Recipe_Name",
+        label: "Recipe Name",
         format: function(d) {
           return d.recipe_name;
         }
@@ -113,9 +121,15 @@ function createCharts(error, data) {
         }
       },
       {
-        label: "Category",
+        label: "Type of meal",
         format: function(d) {
           return d.category;
+        }
+      },
+      {
+        label: "Author",
+        format: function(d) {
+          return d.author;
         }
       },
       {

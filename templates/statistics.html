@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container charts">
 
     <div class="row">
         <div class="col s12 right-align">
@@ -13,35 +13,50 @@
 
     <div class="row">
         <div class="col s12">
-            <h5>The total number of recipes is: <span id="totalRecipes"></span></h5>
+            <p>The total number of recipes is: <span id="totalRecipes"></span></p>
         </div>
     </div>
+
+
     <div class="row">
-        <div class="col s6">
-            <h6 class="center-align">Recipes by difficulty</h6>
-            <div id="difficulty"></div>
+        <div class="col s12 m4">
+            <div class="row">
+                <div class="col s12">
+                    <h6>Top rated authors</h6>
+                    <div id="author"></div>
+                </div>
+            </div>
         </div>
 
-        <div class="col s6">
-            <h6 class="center-align">Recipes by Type of meal</h6>
-            <div id="category"></div>
+        <div class="col s12 offset-m1 m7 pie-charts">
+            <div class="row">
+                <div class="col s12 offset-l1 l5">
+                    <h6>Recipes by difficulty</h6>
+                    <div id="difficulty"></div>
+                </div>
+                <div class="col s12 offset-l1 l5">
+                    <h6>Recipes by Type of meal</h6>
+                    <div id="category"></div>
+                </div>
+            </div>
         </div>
     </div>
+
     <div class="row">
-        <div class="col s12">
-            <h6>Recipes by Cuisine</h6>
-
-            <div id="cuisine"></div>
+        <div class="col s12 m4">
+            <div class="row">
+                <div class="col s12">
+                    <h6>Recipes by Cuisine</h6>
+                    <div id="cuisine"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 offset-m1 m7 ">
+            <table class="striped centered summary-table responsive-table" id="table">
+            </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col s12">
-            <div id="table"></div>
-        </div>
-    </div>
-</div>
 
 
 
-
-{% endblock %}
+    {% endblock %}
