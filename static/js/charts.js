@@ -36,32 +36,30 @@ function createCharts(error, data) {
 
   rowChartCuisine = dc.rowChart("#cuisine");
   rowChartCuisine
-    .height(400)
+    .height(600)
     .width(250)
-    // .useViewBoxResizing(true) //to make the chart responsive
     .dimension(dimCuisine)
     .group(groupCuisine)
     .elasticX(true)
     .xAxis()
     .ticks(3);
 
-  rowChartCuisine.rowsCap(10);
+  rowChartCuisine.rowsCap(20);
 
   var dimauthor = ndx.dimension(dc.pluck("author"));
   var groupauthor = dimauthor.group().reduceSum(dc.pluck("upvotes"));
 
   rowChartAuthor = dc.rowChart("#author");
   rowChartAuthor
-    .height(200)
+    .height(300)
     .width(250)
-    // .useViewBoxResizing(true) //to make the chart responsive
     .dimension(dimauthor)
     .group(groupauthor)
     .elasticX(true)
     .xAxis()
     .ticks(3);
 
-  rowChartAuthor.rowsCap(5);
+  rowChartAuthor.rowsCap(10);
 
   var total = ndx.groupAll().reduce(
     //p keeps track of the changes, v will be input values from the dataset
@@ -93,8 +91,6 @@ function createCharts(error, data) {
   });
 
   dc.dataTable("#table")
-    // .height(400)
-    // .width(400)
     .useViewBoxResizing(true) //to make the chart responsive
     .dimension(allDimension)
     .group(function(data) {
@@ -145,6 +141,9 @@ function createCharts(error, data) {
     ])
     // .sortBy(d.upvotes)
     .showGroups(false) // this will remove the [object][object] at the top of the rows
-    .order(d3.ascending);
+    .sortBy(function(d) {
+      return d.upvotes;
+    })
+    .order(d3.descending);
   dc.renderAll();
 }

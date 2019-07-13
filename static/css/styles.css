@@ -557,3 +557,8 @@ hr {
 .charts h6 {
   white-space: nowrap;
 }
+
+.table-wrapper {
+  overflow: auto;
+  height: 600px
+}
