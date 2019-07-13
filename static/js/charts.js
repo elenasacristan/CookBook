@@ -12,9 +12,23 @@ function createCharts(error, data) {
 
   dc.pieChart("#difficulty")
     .height(200)
-    // .useViewBoxResizing(true) //to make the chart responsive
-    .externalRadiusPadding(40)
+    .width(300)
+    .radius(70)
+    .innerRadius(20)
+    .legend(
+      dc
+        .legend()
+        .x(0)
+        .y(0)
+        .itemHeight(13)
+        .gap(5)
+    )
+    .externalRadiusPadding(5)
+    .title(function(d) {
+      return "Difficulty " + d.key + " - " + d.value + " Recipes";
+    })
     .dimension(dimDifficulty)
+    .ordinalColors(["#26a69a", "#44DFCF", "#00796b"])
     .group(groupDifficulty)
     .renderLabel(false) //we use the legend instead
     .transitionDuration(1500);
@@ -24,9 +38,36 @@ function createCharts(error, data) {
 
   dc.pieChart("#category")
     .height(200)
-    // .useViewBoxResizing(true) //to make the chart responsive
-    .externalRadiusPadding(40)
+    .width(300)
+    .radius(70)
+    .innerRadius(20)
+    .legend(
+      dc
+        .legend()
+        .x(0)
+        .y(0)
+        .itemHeight(13)
+        .gap(5)
+    )
+    .externalRadiusPadding(5)
+    .title(function(d) {
+      return "Type of meal " + d.key + " - " + d.value + " Recipes";
+    })
     .dimension(dimCategory)
+    .ordinalColors([
+      "#00897b",
+      "#FFB100",
+      "#FF5733",
+      "#C70039",
+      "#900C3F",
+      "#581845",
+      "#02C4B0",
+      "#FFD500",
+      "#FF8B33",
+      "#EC245D",
+      "#C24B79",
+      "#85356D"
+    ])
     .group(groupCategory)
     .renderLabel(false) //we use the legend instead
     .transitionDuration(1500);
@@ -38,6 +79,15 @@ function createCharts(error, data) {
   rowChartCuisine
     .height(600)
     .width(250)
+
+    .ordinalColors([
+      "#00897b",
+      "#FFB100",
+      "#FF5733",
+      "#C70039",
+      "#900C3F",
+      "#581845"
+    ])
     .dimension(dimCuisine)
     .group(groupCuisine)
     .elasticX(true)
@@ -53,6 +103,18 @@ function createCharts(error, data) {
   rowChartAuthor
     .height(300)
     .width(250)
+    .ordinalColors([
+      "#e65100",
+      "#ef6c00",
+      "#f57c00",
+      "#fb8c00",
+      "#ff9800",
+      "#ffa726",
+      "#ffb74d",
+      "#ffcc80",
+      "#ffe0b2",
+      "#fff3e0"
+    ])
     .dimension(dimauthor)
     .group(groupauthor)
     .elasticX(true)

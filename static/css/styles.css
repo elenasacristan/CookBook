@@ -562,3 +562,7 @@ hr {
   overflow: auto;
   height: 600px
 }
+
+.pie-charts h6 {
+  margin-bottom: 25px;
+}
