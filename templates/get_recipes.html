@@ -33,6 +33,7 @@
             {% endif %}
         </div>
     </div>
+    {% if recipes_count > 0 %}
     <div class="row">
         <div class="col s12">
             <div class="carousel">
@@ -71,6 +72,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <div class="wrapper-filter">
         <form method="POST" action="{{url_for('filter_recipes')}}">
             <div class="row">

@@ -1,5 +1,4 @@
-/* login page */
-
+/* register.html & login.html */
 .bg-image-login {
   background-image: url("../img/bkg3.png") !important;
   background-size: cover;
@@ -10,7 +9,14 @@
   background-color: #ffffff;
 }
 
-.form-label-group>input, .form-label-group>label {
+@media only screen and (max-width: 600px) {
+  .login-heading {
+    margin-top: 35px;
+  }
+}
+
+.form-label-group > input,
+.form-label-group > label {
   height: 2.5em;
   padding-left: 1em;
   padding-top: 0.4em;
@@ -44,18 +50,26 @@ nav img {
   border-color: #ff9907;
 }
 
-.btn-block:hover, .btn-block:active {
+.btn-block:hover,
+.btn-block:active {
   background-color: #e68f16;
   border-color: #e68f16;
 }
 
-.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
   color: #fff;
   background-color: #e68f16;
   border-color: #e68f16;
 }
 
-.form-control:focus, .btn-primary.focus, .btn-primary:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+.form-control:focus,
+.btn-primary.focus,
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
   border-color: #ff9907;
   box-shadow: 0 0 0 0.2rem rgba(255, 204, 65, 0.603);
 }

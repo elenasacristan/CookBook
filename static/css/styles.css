@@ -6,13 +6,18 @@
 
 body {
   background-color: #fafafa;
-  font-family: 'Coming Soon', cursive;
+  font-family: "Coming Soon", cursive;
   font-size: 1.1em;
   font-weight: 400;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fredericka the Great', cursive;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Fredericka the Great", cursive;
   font-weight: 300;
 }
 
@@ -40,8 +45,6 @@ nav img {
   transform: rotate(-3deg);
 }
 
-/* base.html */
-
 /* Sticky Footer */
 
 body {
@@ -66,7 +69,17 @@ nav .brand-logo {
   transform: translateX(-50%);
 }
 
-nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
+@media only screen and (max-width: 600px) {
+  nav img {
+    width: 150px;
+    top: 20px;
+  }
+}
+
+nav i,
+nav [class^="mdi-"],
+nav [class*="mdi-"],
+nav i.material-icons {
   font-size: 30px;
 }
 
@@ -192,11 +205,13 @@ hr {
   box-shadow: 2px 2px 12px #3f1e09;
 }
 
-.carousel .recipe-name, .carousel .bottom-carousel {
+.carousel .recipe-name,
+.carousel .bottom-carousel {
   visibility: hidden;
 }
 
-.carousel .active .recipe-name, .carousel .active .bottom-carousel {
+.carousel .active .recipe-name,
+.carousel .active .bottom-carousel {
   visibility: visible;
 }
 
@@ -206,13 +221,12 @@ hr {
   }
 }
 
-.wrapper-filter, .instructions {
+.wrapper-filter,
+.instructions {
   background-color: #ffffff;
   padding: 20px 30px 20px 30px;
   box-shadow: 2px 2px 5px #777777;
   margin-bottom: 25px;
-}
-
 }
 
 .wrapper-filter h5 {
@@ -240,8 +254,15 @@ hr {
   margin-top: 30px;
 }
 
-[type="checkbox"]+label {
+[type="checkbox"] + label {
   font-size: 0.9rem;
+}
+
+@media only screen and (max-width: 400px) {
+  [type="checkbox"] + label {
+    font-size: 0.8rem;
+    padding-left: 22px;
+  }
 }
 
 .filters-left {
@@ -252,15 +273,15 @@ hr {
   margin-top: 25px;
 }
 
-.switch label input[type="checkbox"]:checked+.lever {
+.switch label input[type="checkbox"]:checked + .lever {
   background-color: #ffbf007d;
 }
 
-.switch label input[type="checkbox"]:checked+.lever:after {
+.switch label input[type="checkbox"]:checked + .lever:after {
   background-color: #ffbf00;
 }
 
-[type="checkbox"]:checked+label:before {
+[type="checkbox"]:checked + label:before {
   border-right: 2px solid #ffbf00;
   border-bottom: 2px solid #ffbf00;
 }
@@ -314,12 +335,8 @@ hr {
   padding-bottom: 30px;
 }
 
-.votes {
-  white-space: nowrap;
-}
-
 .fa-star {
-  font-size: 3em;
+  font-size: 2.5em;
   color: #ffbf00;
   text-shadow: 2px 2px 2px #777777;
 }
@@ -349,7 +366,8 @@ hr {
   padding-bottom: 10px;
 }
 
-.small, .img-details p {
+.small,
+.img-details p {
   white-space: nowrap;
 }
 
@@ -357,8 +375,22 @@ hr {
   padding-top: 15px;
 }
 
-.ingredients h5, .allergens h5 {
+.ingredients h5,
+.allergens h5 {
   margin-bottom: 25px;
+}
+
+.ingredients ul:not(.browser-default) > li {
+  list-style-type: circle;
+  margin-left: 10px;
+}
+
+.instructions ol {
+  padding: 20px 60px;
+}
+
+.instructions ol li {
+  padding: 15px;
 }
 
 @media only screen and (max-width: 400px) {
@@ -378,7 +410,9 @@ hr {
   .details-item {
     margin-bottom: 0px;
   }
-  .ingredients li, .instructions ol, .instructions p {
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
     font-size: 0.8em;
   }
 }
@@ -400,8 +434,24 @@ hr {
   .small {
     font-size: 0.7em;
   }
-  .ingredients li, .instructions ol, .instructions p {
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
     font-size: 0.9em;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .ingredients ul:not(.browser-default) > li {
+    list-style-type: circle;
+    margin-left: 65px;
+  }
+  .instructions ol {
+    padding: 20px 35px 20px 55px;
+  }
+
+  .fa-star {
+    font-size: 2em;
   }
 }
 
@@ -421,7 +471,9 @@ hr {
   .small {
     font-size: 0.7em;
   }
-  .ingredients li, .instructions ol, .instructions p {
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
     font-size: 1em;
   }
 }
@@ -444,29 +496,12 @@ hr {
   }
 }
 
-/* .instructions {
-  background-color: #e8e8e8;
-} */
-
 .img-details {
   margin-bottom: 40px;
 }
 
 .ingredients {
   margin-bottom: 30px;
-}
-
-.ingredients ul:not(.browser-default)>li {
-  list-style-type: circle;
-  margin-left: 10px;
-}
-
-.instructions ol {
-  padding: 20px 60px;
-}
-
-.instructions ol li {
-  padding: 15px;
 }
 
 .ingredients li {
@@ -511,7 +546,10 @@ hr {
 
 /* CHARTS */
 
-#category, #difficulty, #totalRecipes, #cuisine {
+#category,
+#difficulty,
+#totalRecipes,
+#cuisine {
   width: 100%;
 }
 
@@ -525,7 +563,7 @@ hr {
 }
 
 .tips p {
-  text-align: justify
+  text-align: justify;
 }
 
 .tips .row {
@@ -561,7 +599,7 @@ hr {
 
 .table-wrapper {
   overflow: auto;
-  height: 600px
+  height: 600px;
 }
 
 .pie-charts h6 {
