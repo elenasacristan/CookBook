@@ -332,7 +332,11 @@ hr {
 
 .img_view_recipe {
   width: 100%;
+  width: 100%;
   padding-bottom: 30px;
+  background-color: white;
+  padding: 15px;
+  box-shadow: 2px 2px 4px #777777;
 }
 
 .fa-star {
@@ -562,8 +566,17 @@ hr {
   margin-top: 20px;
 }
 
+.tips {
+  margin-bottom: 80px;
+}
+
 .tips p {
   text-align: justify;
+}
+
+.note {
+  font-size: 0.7em;
+  font-weight: 600;
 }
 
 .tips .row {
