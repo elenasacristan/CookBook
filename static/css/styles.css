@@ -324,6 +324,14 @@ hr {
   }
 }
 
+/* add recipe */
+
+.ingredients-instructions p {
+  color: #ff7b00;
+  font-weight: 800;
+  font-size: 0.8em;
+}
+
 /* view recipe */
 
 .view-image {
@@ -470,7 +478,7 @@ hr {
     font-size: 0.9em;
   }
   .details-item {
-    margin-bottom: 18px;
+    margin-bottom: 0px;
   }
   .small {
     font-size: 0.7em;
@@ -479,6 +487,10 @@ hr {
   .instructions ol,
   .instructions p {
     font-size: 1em;
+  }
+  .details-item h6,
+  input[type="text"]:not(.browser-default) {
+    margin: 0px;
   }
 }
 
@@ -493,11 +505,15 @@ hr {
     font-size: 1em;
   }
   .details-item {
-    margin-bottom: 20px;
+    margin-bottom: 0px;
   }
   .small {
     font-size: 0.7em;
   }
+}
+
+.img-details h6 {
+  white-space: nowrap;
 }
 
 .img-details {
@@ -522,6 +538,11 @@ hr {
   width: 100%;
 }
 
+@media only screen and (max-width: 992px) {
+  .img-recipe {
+    padding: 50px;
+  }
+}
 .uploadText {
   margin-bottom: 20px;
 }

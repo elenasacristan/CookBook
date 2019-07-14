@@ -5,17 +5,17 @@
     onsubmit="return checkForm()" enctype="multipart/form-data">
     <div class="row">
         <div class="input-field col s12 m6">
-            <h6><strong>Recipe name:</strong></h6>
+            <h5><strong>Recipe name:</strong></h5>
             <input placeholder="Recipe name" id="recipe_name" name="recipe_name" type="text" class="validate"
                 required="">
         </div>
     </div>
 
     <div class="row img-details">
-        <div class="col s12 m6">
+        <div class="col m12 l6">
             <!-- Modal Trigger -->
-            <a class="modal-trigger" href="#modal1"><span class="uploadText">Upload image</span><img class="img-recipe"
-                    src="{{url_for('static', filename='img/default.jpg')}}"></a>
+            <a class="modal-trigger" href="#modal1"><span class="uploadText">Upload image</span><br><img
+                    class="img-recipe" src="{{url_for('static', filename='img/default.jpg')}}"></a>
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
                 <div class="file-field input-field">
@@ -30,47 +30,41 @@
                         <a href="#!" class="modal-action modal-close waves-effect waves-green">Done</a>
                     </div>
                 </div>
-
-
-
-                <!-- <input type="file" name="recipe_image">
-                <a href="#!" class="modal-action modal-close waves-effect waves-green btn ">Done</a> -->
             </div>
         </div>
-
-        <div class="col s12 m6">
+        <div class="col m12 l6">
             <div class="row">
-                <div class="col s6">
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
                     <div class="row details-item">
-                        <div class="col s6 right-align">
+                        <div class="col s3 m6 right-align">
                             <i class="fa fa-clock-o"></i>
                         </div>
-                        <div class="col s6 input-field">
+                        <div class="col s9 m6 input-field">
                             <h6><strong>Cooking time:</strong></h6>
                             <input placeholder="Cooking time" id="cooking_time" name="cooking_time" type="text"
                                 class="validate" required="">
                         </div>
                     </div>
                 </div>
-                <div class="col s6">
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
                     <div class="row details-item">
-                        <div class="col s6 right-align">
+                        <div class="col s3 m6 right-align">
                             <i class="fa fa-heart"></i>
                         </div>
-                        <div class="col s6 input-field">
-                            <h6><strong>Calories:</strong></h6>
+                        <div class="col s9 m6 input-field">
+                            <h6><strong>Calories</strong></h6>
                             <input placeholder="Calories" id="calories" name="calories" type="text" class="validate">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col s6">
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
                     <div class="row details-item">
-                        <div class="col s6 right-align">
+                        <div class="col s3 m6 right-align">
                             <i class="fa fa-puzzle-piece"></i>
                         </div>
-                        <div class="col s6 input-field">
+                        <div class="col s9 m6 input-field">
                             <h6><strong>Difficulty:</strong></h6>
                             <select id="difficulty" name="difficulty" class="validate" required="required">
                                 <option value="" disabled selected>Select one</option>
@@ -81,12 +75,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s6">
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
                     <div class="row details-item">
-                        <div class="col s6 right-align">
+                        <div class="col s3 m6 right-align">
                             <i class="fa fa-cutlery"></i>
                         </div>
-                        <div class="col s6 input-field">
+                        <div class="col s9 m6 input-field">
                             <h6><strong>Category:</strong></h6>
                             <select id="category" name="category" class="validate" required="required">
                                 <option value="" disabled selected>Select one</option>
@@ -99,12 +93,12 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col s6">
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
                     <div class="row details-item">
-                        <div class="col s6 right-align">
+                        <div class="col s3 m6 right-align">
                             <i class="fa fa-globe"></i>
                         </div>
-                        <div class="col s6 input-field">
+                        <div class="col s9 m6 input-field">
                             <h6><strong>Cuisine:</strong></h6>
                             <select id="cuisine" name="cuisine" class="validate" required="required">
                                 <option value="" selected>Select one</option>
@@ -115,12 +109,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s6">
+                <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
                     <div class="row details-item">
-                        <div class="col s6 right-align">
+                        <div class="col s3 m6 right-align">
                             <i class="fa fa-users"></i>
                         </div>
-                        <div class="col s6 input-field">
+                        <div class="col s9 m6 input-field">
                             <h6><strong>Serves:</strong></h6>
                             <input placeholder="Serves" id="serves" name="serves" type="number" class="validate"
                                 required="">
@@ -129,8 +123,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
+        <div class="row ingredients-instructions">
             <div class="col s12">
                 <div class="row">
                     <div class="col s12">
