@@ -14,8 +14,15 @@
     <div class="row img-details">
         <div class="col m12 l6">
             <!-- Modal Trigger -->
-            <a class="modal-trigger" href="#modal1"><span class="uploadText">Upload image</span><br><img
-                    class="img-recipe" src="{{url_for('static', filename='img/default.jpg')}}"></a>
+
+            <div class="row">
+                <a class="modal-trigger" href="#modal1"><span class="uploadText">Upload image</span></a>
+            </div>
+            <div class="row img-wrapper">
+                <a class="modal-trigger" href="#modal1"><img src="{{url_for('static', filename='img/default.jpg')}}">
+                </a>
+            </div>
+
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
                 <div class="file-field input-field">

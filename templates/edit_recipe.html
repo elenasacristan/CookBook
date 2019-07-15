@@ -14,13 +14,15 @@
     <div class="row img-details">
         <div class="col m12 l6">
             <!-- Modal Trigger -->
-            <a class="modal-trigger" href="#modal1">Change image
-                {% if recipe.recipe_image %}
-                <img class="img-recipe" src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}">
-                {% else %}
-                <img class="img-recipe" src="{{url_for('static', filename='img/default.jpg')}}">
-                {% endif %}
-            </a>
+            <div class="row"><a class="modal-trigger" href="#modal1">Change image</a></div>
+            <div class="row img-wrapper"> <a class="modal-trigger" href="#modal1">
+                    {% if recipe.recipe_image %}
+                    <img src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}">
+                    {% else %}
+                    <img src="{{url_for('static', filename='img/default.jpg')}}">
+                    {% endif %}
+                </a></div>
+
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
                 <div class="file-field input-field">
