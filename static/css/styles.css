@@ -509,6 +509,10 @@ hr {
   text-align: left;
 }
 
+.img-details .modal-close {
+  margin-left: 30px;
+}
+
 /* manage_categories.html */
 
 /*all pages */
