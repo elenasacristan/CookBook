@@ -73,6 +73,7 @@ def getusername():
 def string_to_array(string):
     array = string.split("\n")
     return array
+    
 
 #home page, the recipes are sorted by votes. The most voted will be on the top one of the carousel and the it will be in descending order if you move to the right
 @app.route('/get_recipes')
