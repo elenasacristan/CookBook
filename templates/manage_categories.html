@@ -1,10 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
+<div class="container manage-categories">
 
     <div class="row">
         <div class="col s12 m12 l5 center-align">
+            <form action="{{url_for('insert_category')}}" method="POST" class="add_category_cuisine">
+                <h6 class="left-align">Add Type of meal</h6>
+                <div class="row">
+                    <div class="col s9 input-field">
+                        <input placeholder="Category" id="category" name="category" type="text" class="validate"
+                            required="">
+                    </div>
+
+                    <div class="col s3 right-align">
+                        <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
+                                class="material-icons">add_box</i></button>
+
+                    </div>
+                </div>
+            </form>
             <h5>Types of meal</h5>
             <table class="striped centered">
                 <thead>
@@ -46,11 +61,15 @@
                 </tbody>
             </table>
 
-            <form action="{{url_for('insert_category')}}" method="POST" class="add_category_cuisine">
-                <h5 class="left-align">Add Type of meal</h5>
+
+
+        </div>
+        <div class="col s12 m12 offset-l2 l5 center-align">
+            <form action="{{url_for('insert_cuisine')}}" method="POST" class="add_category_cuisine">
+                <h6 class="left-align">Add Cuisine</h6>
                 <div class="row">
                     <div class="col s9 input-field">
-                        <input placeholder="Category" id="category" name="category" type="text" class="validate"
+                        <input placeholder="Cuisine" id="cuisine" name="cuisine" type="text" class="validate"
                             required="">
                     </div>
 
@@ -61,9 +80,6 @@
                     </div>
                 </div>
             </form>
-
-        </div>
-        <div class="col s12 m12 offset-l2 l5 center-align">
             <h5>Cuisines</h5>
             <table class="striped centered">
                 <thead>
@@ -103,21 +119,7 @@
                 </tbody>
             </table>
 
-            <form action="{{url_for('insert_cuisine')}}" method="POST" class="add_category_cuisine">
-                <h5 class="left-align">Add Cuisine</h5>
-                <div class="row">
-                    <div class="col s9 input-field">
-                        <input placeholder="Cuisine" id="cuisine" name="cuisine" type="text" class="validate"
-                            required="">
-                    </div>
 
-                    <div class="col s3 right-align">
-                        <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
-                                class="material-icons">add_box</i></button>
-
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 </div>

@@ -270,9 +270,10 @@ hr {
 
 /**** h5 margin-bottom is also used below for .ingredients and .allergens, try to remove all, or try margin-bottom:25 for all h5, or group the r of them *****/
 
+/* 
 .wrapper-filter h5 {
   margin-bottom: 25px;
-}
+} */
 
 .wrapper-filter p {
   font-size: 0.8em;
@@ -343,6 +344,10 @@ hr {
   width: 80%;
 } */
 
+.img-details {
+  margin-bottom: 40px;
+}
+
 .img-details img {
   width: 100%;
   width: 100%;
@@ -388,14 +393,6 @@ hr {
   padding-bottom: 10px;
 }
 
-/* .small {
-  white-space: nowrap;
-} */
-
-/* .img-details p {
-  white-space: nowrap;
-} */
-
 /* instructions, ingredients and allergens section */
 
 .instructions h5 {
@@ -403,7 +400,7 @@ hr {
 }
 
 .instructions h5, .ingredients h5, .allergens h5 {
-  margin-bottom: 25px;
+  /* margin-bottom: 25px; */
   padding-top: 15px;
 }
 
@@ -421,21 +418,19 @@ hr {
 }
 
 .details-item {
-  margin-bottom: 0px;
+  margin-bottom: 20px;
+}
+
+.details-item p {
+  font-size: 0.7em;
 }
 
 /* details items - screen with widths lower than 401 */
 
 @media only screen and (max-width: 400px) {
   .details-item .fa {
-    padding-right: 15px;
-    font-size: 1.5em;
-  }
-  .details-item p {
-    font-size: 0.7em;
-  }
-  .small {
-    font-size: 0.8em;
+    padding-right: 12px;
+    font-size: 1.4em;
   }
   .ingredients li, .instructions ol, .instructions p {
     font-size: 0.8em;
@@ -447,26 +442,14 @@ hr {
     padding-right: 18px;
     font-size: 1.8em;
   }
-  .details-item p {
-    font-size: 0.7em;
-  }
-  .small {
-    font-size: 0.7em;
-  }
   .ingredients li, .instructions ol, .instructions p {
     font-size: 0.9em;
   }
 }
 
 @media only screen and (min-width: 993px) {
-  .details-item .fa {
-    font-size: 2em;
-  }
   .details-item p {
     font-size: 0.9em;
-  }
-  .small {
-    font-size: 0.7em;
   }
   .ingredients li, .instructions ol, .instructions p {
     font-size: 1em;
@@ -476,14 +459,7 @@ hr {
   }
 }
 
-@media only screen and (min-width: 1200px) {
-  .details-item .fa {
-    font-size: 2.5em;
-  }
-  .small {
-    font-size: 0.7em;
-  }
-}
+/* ingredients, votes star */
 
 @media only screen and (max-width: 600px) {
   .ingredients ul:not(.browser-default)>li {
@@ -498,9 +474,7 @@ hr {
   }
 }
 
-.img-details {
-  margin-bottom: 40px;
-}
+/*Ingredients and allergens section*/
 
 .ingredients {
   margin-bottom: 30px;
@@ -510,16 +484,14 @@ hr {
   margin-top: 10px;
 }
 
+/*author and date*/
+
 .author-date {
   margin-top: 25px;
   font-style: italic;
 }
 
-/* add recipe */
-
-.img-recipe {
-  width: 100%;
-}
+/* add, view and edit recipe */
 
 @media only screen and (max-width: 992px) {
   .img-details img {
@@ -530,10 +502,6 @@ hr {
   }
 }
 
-.uploadText {
-  margin-bottom: 20px;
-}
-
 /* modal */
 
 .modal {
@@ -541,25 +509,43 @@ hr {
   text-align: left;
 }
 
-.input-field.col label {
-  left: 0px;
+/* manage_categories.html */
+
+/*all pages */
+
+h5 {
+  margin-bottom: 30px;
 }
 
-/* manage_categories.html */
+.manage-categories h6 {
+  font-size: 1.2em;
+}
 
 .add_category_cuisine {
   margin-top: 70px;
-  margin-bottom: 70px;
+  margin-bottom: 100px;
 }
 
 .add_category_cuisine button {
   margin-top: 25px;
 }
 
+.manage-categories table {
+  margin-bottom: 80px;
+}
+
 /* CHARTS */
 
 #category, #difficulty, #totalRecipes, #cuisine {
   width: 100%;
+}
+
+/* to center the pie charts when the width is between 601 and 992*/
+
+@media only screen and (max-width: 992px) and (min-width: 601px) {
+  .pie-charts {
+    text-align: center;
+  }
 }
 
 /* tips */
@@ -588,6 +574,8 @@ hr {
   margin-bottom: 50px;
 }
 
+/* this is needed in order to display the validation messages in the materialize selects */
+
 .input-field select {
   display: block;
   position: absolute;
@@ -602,6 +590,8 @@ hr {
 .select-label {
   position: absolute;
 }
+
+/* *************** */
 
 /* summary-table */
 
