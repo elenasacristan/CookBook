@@ -7,6 +7,33 @@ function createCharts(error, data) {
 
   var ndx = crossfilter(recipes);
 
+  // display number of recipes
+  var total = ndx.groupAll().reduce(
+    //p keeps track of the changes, v will be input values from the dataset
+    //function adder
+    function(p, v) {
+      p.count++;
+      return p;
+    },
+    //function remover
+    function(p, v) {
+      p.count--;
+      return p;
+    },
+    //Initialise the Reducer
+    function() {
+      return { count: 0 };
+    }
+  );
+
+  dc.numberDisplay("#totalRecipes")
+    .formatNumber(d3.format("d"))
+    .valueAccessor(function(d) {
+      return d.count;
+    })
+    .group(total);
+
+  // difficulty pie chart
   var dimDifficulty = ndx.dimension(dc.pluck("difficulty"));
   var groupDifficulty = dimDifficulty.group();
 
@@ -33,6 +60,7 @@ function createCharts(error, data) {
     .renderLabel(false) //we use the legend instead
     .transitionDuration(1500);
 
+  // Type of meal pie chart
   var dimCategory = ndx.dimension(dc.pluck("category"));
   var groupCategory = dimCategory.group();
 
@@ -72,6 +100,7 @@ function createCharts(error, data) {
     .renderLabel(false) //we use the legend instead
     .transitionDuration(1500);
 
+  // Cuisines rowchart
   var dimCuisine = ndx.dimension(dc.pluck("cuisine"));
   var groupCuisine = dimCuisine.group();
 
@@ -96,6 +125,7 @@ function createCharts(error, data) {
 
   rowChartCuisine.rowsCap(20);
 
+  // author ranking rowchart
   var dimauthor = ndx.dimension(dc.pluck("author"));
   var groupauthor = dimauthor.group().reduceSum(dc.pluck("upvotes"));
 
@@ -123,31 +153,7 @@ function createCharts(error, data) {
 
   rowChartAuthor.rowsCap(10);
 
-  var total = ndx.groupAll().reduce(
-    //p keeps track of the changes, v will be input values from the dataset
-    //function adder
-    function(p, v) {
-      p.count++;
-      return p;
-    },
-    //function remover
-    function(p, v) {
-      p.count--;
-      return p;
-    },
-    //Initialise the Reducer
-    function() {
-      return { count: 0 };
-    }
-  );
-
-  dc.numberDisplay("#totalRecipes")
-    .formatNumber(d3.format("d"))
-    .valueAccessor(function(d) {
-      return d.count;
-    })
-    .group(total);
-
+  // summary table
   var allDimension = ndx.dimension(function(d) {
     return d;
   });
@@ -195,9 +201,7 @@ function createCharts(error, data) {
         format: function(d) {
           // get the id value and remove the "
           var keystring = JSON.stringify(d._id["$oid"]).replace(/"/g, "");
-          // var key = keystring.replace(/"/g, "");
-          // return "how to add this link ?? view_recipe/" + keystring;
-          return '<a href="https://www.google.com/"></a>';
+          return `<a href="view_recipe/${keystring}">View</a>`;
         }
       }
     ])

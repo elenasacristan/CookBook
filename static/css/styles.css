@@ -191,6 +191,7 @@ hr {
 /*I use max-width, max-height and overflow to display properly the recipe name in case it is too long*/
 
 .get-recipes h5 {
+  margin-bottom: 0px;
   font-size: 1.8em;
   max-width: 400px;
   max-height: 40px;

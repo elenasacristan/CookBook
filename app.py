@@ -2,7 +2,7 @@ import os
 import env
 import json
 from flask import Flask, render_template, request, url_for, redirect, session
-from flask_pymongo import PyMongo
+from flask_pymongo import PyMongo, DESCENDING
 from bson.objectid import ObjectId
 from bson import json_util
 from bson.json_util import dumps
@@ -80,8 +80,8 @@ def string_to_array(string):
 def get_recipes():
     title = "View recipes"
     username = getusername()
-    recipes = mongo.db.Recipes.find().sort("upvotes", -1) 
-    '''recipes = mongo.db.Recipes.find().sort({"upvotes":-1, "views":-1}) '''
+    '''recipes = mongo.db.Recipes.find().sort("upvotes", -1) '''
+    recipes = mongo.db.Recipes.find().sort([("upvotes",DESCENDING), ("views",DESCENDING)])
     recipes_count = recipes.count()
     allergens = mongo.db.Allergens.find()
     categories = mongo.db.Categories.find()
@@ -104,7 +104,8 @@ def search():
 
     '''CREATE TEXT INDEX FOR ALL TEXT FIELDS'''    
     mongo.db.Recipes.create_index( [("$**", 'text')] )
-        
+
+    '''Search result sorted by upvotes'''    
     recipes = mongo.db.Recipes.find({ "$text": { "$search": text_to_find } }).sort("upvotes", -1)
     recipes_count = recipes.count()
         
@@ -200,6 +201,7 @@ def manage_categories():
 # funtion to insert into the database the new recipe
 @app.route('/insert_recipe', methods=['GET', 'POST'])
 def insert_recipe():
+    '''https://www.youtube.com/watch?v=DsgAuceHha4'''
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
         mongo.save_file(recipe_image.filename, recipe_image)
