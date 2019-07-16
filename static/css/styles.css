@@ -26,6 +26,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 }
 
+h5 {
+  margin-bottom: 30px;
+}
+
 .container {
   margin-top: 40px;
 }
@@ -270,11 +274,6 @@ hr {
 
 /**** h5 margin-bottom is also used below for .ingredients and .allergens, try to remove all, or try margin-bottom:25 for all h5, or group the r of them *****/
 
-/* 
-.wrapper-filter h5 {
-  margin-bottom: 25px;
-} */
-
 .wrapper-filter p {
   font-size: 0.8em;
   margin-bottom: 20px;
@@ -338,12 +337,6 @@ hr {
   font-size: 0.8em;
 }
 
-/* view recipe */
-
-/* .view-image {
-  width: 80%;
-} */
-
 .img-details {
   margin-bottom: 40px;
 }
@@ -400,7 +393,6 @@ hr {
 }
 
 .instructions h5, .ingredients h5, .allergens h5 {
-  /* margin-bottom: 25px; */
   padding-top: 15px;
 }
 
@@ -514,12 +506,6 @@ hr {
 }
 
 /* manage_categories.html */
-
-/*all pages */
-
-h5 {
-  margin-bottom: 30px;
-}
 
 .manage-categories h6 {
   font-size: 1.2em;
