@@ -80,7 +80,8 @@ def string_to_array(string):
 def get_recipes():
     title = "View recipes"
     username = getusername()
-    recipes = mongo.db.Recipes.find().sort("upvotes", -1)
+    recipes = mongo.db.Recipes.find().sort("upvotes", -1) 
+    '''recipes = mongo.db.Recipes.find().sort({"upvotes":-1, "views":-1}) '''
     recipes_count = recipes.count()
     allergens = mongo.db.Allergens.find()
     categories = mongo.db.Categories.find()
@@ -232,7 +233,9 @@ def img_uploads(filename):
 # function to see a recipe after clicking on its image or "view" link
 @app.route('/view_recipe/<recipe_id>')
 def view_recipe(recipe_id):
+    mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'views': 1}})
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
+
     return render_template('view_recipe.html', recipe = recipe, username = getusername())
 
 # function to vote the recipes (the recipe author is not allowed to vote)

@@ -57,9 +57,11 @@
                         </div>
                     </div>
                     <div class=" row bottom-carousel">
-                        <div class=" col s6">
-                            <p><strong>Likes: {{recipe.upvotes}}</strong></p>
+                        <div class=" col s6 ">
+                            <p><strong>Votes: {{recipe.upvotes}} - <span class="small"> {{recipe.views}}
+                                        views</span></strong></p>
                         </div>
+
                         <div class="col s6 right-align">
                             <a href="{{url_for('view_recipe', recipe_id=recipe._id)}}">
                                 <p>View</p>
