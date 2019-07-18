@@ -33,6 +33,59 @@ function createCharts(error, data) {
     })
     .group(total);
 
+  // Cuisines rowchart
+  var dimCuisine = ndx.dimension(dc.pluck("cuisine"));
+  var groupCuisine = dimCuisine.group();
+
+  rowChartCuisine = dc.rowChart("#cuisine");
+  rowChartCuisine
+    .height(600)
+    .width(250)
+
+    .ordinalColors([
+      "#00897b",
+      "#FFB100",
+      "#FF5733",
+      "#C70039",
+      "#900C3F",
+      "#581845"
+    ])
+    .dimension(dimCuisine)
+    .group(groupCuisine)
+    .elasticX(true)
+    .xAxis()
+    .ticks(3);
+
+  rowChartCuisine.rowsCap(20);
+
+  // author ranking rowchart
+  var dimauthor = ndx.dimension(dc.pluck("author"));
+  var groupauthor = dimauthor.group().reduceSum(dc.pluck("upvotes"));
+
+  rowChartAuthor = dc.rowChart("#author");
+  rowChartAuthor
+    .height(300)
+    .width(250)
+    .ordinalColors([
+      "#e65100",
+      "#ef6c00",
+      "#f57c00",
+      "#fb8c00",
+      "#ff9800",
+      "#ffa726",
+      "#ffb74d",
+      "#ffcc80",
+      "#ffe0b2",
+      "#FEE1C0"
+    ])
+    .dimension(dimauthor)
+    .group(groupauthor)
+    .elasticX(true)
+    .xAxis()
+    .ticks(3);
+
+  rowChartAuthor.rowsCap(10);
+
   // difficulty pie chart
   var dimDifficulty = ndx.dimension(dc.pluck("difficulty"));
   var groupDifficulty = dimDifficulty.group();
@@ -99,59 +152,6 @@ function createCharts(error, data) {
     .group(groupCategory)
     .renderLabel(false) //we use the legend instead
     .transitionDuration(1500);
-
-  // Cuisines rowchart
-  var dimCuisine = ndx.dimension(dc.pluck("cuisine"));
-  var groupCuisine = dimCuisine.group();
-
-  rowChartCuisine = dc.rowChart("#cuisine");
-  rowChartCuisine
-    .height(600)
-    .width(250)
-
-    .ordinalColors([
-      "#00897b",
-      "#FFB100",
-      "#FF5733",
-      "#C70039",
-      "#900C3F",
-      "#581845"
-    ])
-    .dimension(dimCuisine)
-    .group(groupCuisine)
-    .elasticX(true)
-    .xAxis()
-    .ticks(3);
-
-  rowChartCuisine.rowsCap(20);
-
-  // author ranking rowchart
-  var dimauthor = ndx.dimension(dc.pluck("author"));
-  var groupauthor = dimauthor.group().reduceSum(dc.pluck("upvotes"));
-
-  rowChartAuthor = dc.rowChart("#author");
-  rowChartAuthor
-    .height(300)
-    .width(250)
-    .ordinalColors([
-      "#e65100",
-      "#ef6c00",
-      "#f57c00",
-      "#fb8c00",
-      "#ff9800",
-      "#ffa726",
-      "#ffb74d",
-      "#ffcc80",
-      "#ffe0b2",
-      "#FEE1C0"
-    ])
-    .dimension(dimauthor)
-    .group(groupauthor)
-    .elasticX(true)
-    .xAxis()
-    .ticks(3);
-
-  rowChartAuthor.rowsCap(10);
 
   // summary table
   var allDimension = ndx.dimension(function(d) {

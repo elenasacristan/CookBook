@@ -204,7 +204,8 @@ def insert_recipe():
     '''https://www.youtube.com/watch?v=DsgAuceHha4'''
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
-        mongo.save_file(recipe_image.filename, recipe_image)
+        if recipe_image != "":
+            mongo.save_file(recipe_image.filename, recipe_image)
         if request.form['calories']:
             calories = request.form['calories']
         else:
