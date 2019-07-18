@@ -12,3 +12,4 @@ json_recipes_collection.json
 tests.csv
 *.csv#
 .~lock.tests.csv#
+static/css/styles_index.css

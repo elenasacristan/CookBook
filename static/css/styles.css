@@ -30,6 +30,79 @@ h5 {
   margin-bottom: 30px;
 }
 
+/* register.html & login.html */
+
+.bg-image-login {
+  background-image: url("../img/bkg3.png") !important;
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-side-login {
+  background-color: #ffffff;
+}
+
+@media only screen and (max-width: 600px) {
+  .login-heading {
+    margin-top: 35px;
+  }
+}
+
+.form-label-group>input, .form-label-group>label {
+  height: 2.5em;
+  padding-left: 1em;
+  padding-top: 0.4em;
+}
+
+.fixed-top {
+  padding: 0px;
+}
+
+.navbar-brand {
+  height: 60px;
+  position: relative;
+}
+
+.btn-block {
+  width: 62%;
+  margin: auto;
+  color: #fff;
+  background-color: #ff9907;
+  border-color: #ff9907;
+}
+
+.btn-block:hover, .btn-block:active {
+  background-color: #e68f16;
+  border-color: #e68f16;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #e68f16;
+  border-color: #e68f16;
+}
+
+.form-control:focus, .btn-primary.focus, .btn-primary:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+  border-color: #ff9907;
+  box-shadow: 0 0 0 0.2rem rgba(255, 204, 65, 0.603);
+}
+
+.btn-login {
+  white-space: nowrap;
+}
+
+.register {
+  margin-top: 20px;
+  font-size: 0.7em;
+}
+
+.error_message {
+  margin-top: 20px;
+  color: red;
+}
+
+/* rest of the pages */
+
 .container {
   margin-top: 40px;
 }
@@ -185,7 +258,6 @@ hr {
 /*I use max-width, max-height and overflow to display properly the recipe name in case it is too long*/
 
 .get-recipes h5 {
-  margin-bottom: 0px;
   font-size: 1.8em;
   max-width: 400px;
   max-height: 40px;
