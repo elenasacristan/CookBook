@@ -13,3 +13,4 @@ tests.csv
 *.csv#
 .~lock.tests.csv#
 static/css/styles_index.css
+static/collections_backup

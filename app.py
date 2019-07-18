@@ -1,4 +1,5 @@
 import os
+# env is where I have my environmental variables and it is only used for to run my code locally
 import env
 import json
 from flask import Flask, render_template, request, url_for, redirect, session
@@ -13,18 +14,27 @@ import bcrypt
 # create an instance of Flask
 app = Flask(__name__)
 
+
 # before deploying convert to enviroment variable
 app.config["MONGO_DBNAME"] = 'CookBook'
 app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 
+
 # we create an instance of Mongo
 mongo = PyMongo(app)
 
-# secret key needed to create session cookies / before deploying convert to enviroment variable
-app.secret_key = "randomString123"
 
-# https://www.youtube.com/watch?v=vVx1737auSE
-# landing page for the website for new users. 
+# secret key needed to create session cookies
+app.secret_key = os.environ.get('SECRET_KEY')
+
+
+#function use to convert strings separated by commas to arrays
+def string_to_array(string):
+    array = string.split("\n")
+    return array
+    
+
+# landing page for the website for new users. I learn how to create the login/register functionality by watchin this tutorial https://www.youtube.com/watch?v=vVx1737auSE
 @app.route('/')
 def index():
    
@@ -33,6 +43,7 @@ def index():
         return redirect(url_for('get_recipes'))
     
     return render_template('login.html')
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -46,6 +57,7 @@ def login():
     
     message = 'The login details are not correct'
     return render_template('login.html', message=message)
+
 
 @app.route('/register', methods=['POST','GET'])
 def register():
@@ -64,23 +76,12 @@ def register():
 
     return render_template('register.html')
 
-#function to get the username at anytime when the user is logged in
-def getusername():
-    username = session['username']
-    return username
 
-#function use to convert strings separated by commas to arrays
-def string_to_array(string):
-    array = string.split("\n")
-    return array
-    
-
-#home page, the recipes are sorted by votes. The most voted will be on the top one of the carousel and the it will be in descending order if you move to the right
+#home page, the recipes are sorted by votes and views. The most voted will be on the top one of the carousel and the it will be in descending order if you move to the right
 @app.route('/get_recipes')
 def get_recipes():
     title = "View recipes"
-    username = getusername()
-    '''recipes = mongo.db.Recipes.find().sort("upvotes", -1) '''
+    username = session['username']
     recipes = mongo.db.Recipes.find().sort([("upvotes",DESCENDING), ("views",DESCENDING)])
     recipes_count = recipes.count()
     allergens = mongo.db.Allergens.find()
@@ -89,10 +90,11 @@ def get_recipes():
     difficulty = mongo.db.Difficulty.find()
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
 
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     title = "View recipes"
-    username = getusername()
+    username = session['username']
     allergens = mongo.db.Allergens.find()
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
@@ -105,19 +107,18 @@ def search():
     '''CREATE TEXT INDEX FOR ALL TEXT FIELDS'''    
     mongo.db.Recipes.create_index( [("$**", 'text')] )
 
-    '''Search result sorted by upvotes'''    
-    recipes = mongo.db.Recipes.find({ "$text": { "$search": text_to_find } }).sort("upvotes", -1)
+    '''Search result sorted by upvotes and after sorted by number of views'''    
+    recipes = mongo.db.Recipes.find({ "$text": { "$search": text_to_find } }).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
     recipes_count = recipes.count()
         
     # send recipes to page
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
     
     
-
 @app.route('/filter_recipes', methods = ['GET', 'POST'])
 def filter_recipes():
     title = "View recipes"
-    username = getusername()
+    username = session['username']
     allergens = mongo.db.Allergens.find()
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
@@ -157,7 +158,7 @@ def filter_recipes():
     else:
         query_author = {"author": { "$in": recipes.distinct('author') } }
         
-    recipes = mongo.db.Recipes.find({"$and":[query_author,query_difficulty,query_cuisine,query_allergens, query_categories]}).sort("upvotes", -1)
+    recipes = mongo.db.Recipes.find({"$and":[query_author,query_difficulty,query_cuisine,query_allergens, query_categories]}).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
     recipes_count = recipes.count()
 
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
@@ -168,6 +169,7 @@ def filter_recipes():
 def tips():
     return render_template('tips.html')
 
+
 # function to add new recipe
 @app.route('/add_recipe')
 def add_recipe():
@@ -177,6 +179,7 @@ def add_recipe():
     cuisines = mongo.db.Cuisines.find()
     difficulty = mongo.db.Difficulty.find()
     return render_template('add_recipe.html', title=title, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens)
+
 
 # function to see and insert new categories or cuisines
 @app.route('/manage_categories')
@@ -197,6 +200,7 @@ def manage_categories():
 	    cuisine_object.append({"cuisine_id" : cuisine['_id'], "cuisine" : cuisine['cuisine'], "count_recipes_cuisine" : count_recipes_cuisine} )
 
     return render_template('manage_categories.html', title=title, categories = category_object, cuisines = cuisine_object)
+
 
 # funtion to insert into the database the new recipe
 @app.route('/insert_recipe', methods=['GET', 'POST'])
@@ -222,16 +226,18 @@ def insert_recipe():
                 'allergens':request.form.getlist('allergens'),
                 'ingredients':string_to_array(request.form['ingredients']),
                 'recipe_image':recipe_image.filename,
-                'author':getusername(),
+                'author':session['username'],
                 'upvotes':0,
                 'date':datetime.now().strftime("%d/%m/%Y"),
                 'category':request.form['category']
             })
     return redirect(url_for('get_recipes'))
 
+
 @app.route('/img_uploads/<filename>')
 def img_uploads(filename):
     return mongo.send_file(filename)
+
 
 # function to see a recipe after clicking on its image or "view" link
 @app.route('/view_recipe/<recipe_id>')
@@ -239,13 +245,15 @@ def view_recipe(recipe_id):
     mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'views': 1}})
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
 
-    return render_template('view_recipe.html', recipe = recipe, username = getusername())
+    return render_template('view_recipe.html', recipe = recipe, username = session['username'])
+
 
 # function to vote the recipes (the recipe author is not allowed to vote)
 @app.route('/view_recipe/vote/<recipe_id>')
 def vote(recipe_id):
     mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'upvotes': 1}})
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
+
 
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
@@ -259,6 +267,7 @@ def edit_recipe(recipe_id):
     list_instructions = '\n'.join(recipe['instructions'])
 
     return render_template('edit_recipe.html', recipe=recipe, categories=categories, cuisines=cuisines, difficulty=difficulty, list_ingredients=list_ingredients, list_allergens=list_allergens,list_instructions=list_instructions, allergens=allergens)
+
 
 @app.route('/update_recipe/<recipe_id>' , methods=['GET', 'POST'])
 def update_recipe(recipe_id):
@@ -289,31 +298,37 @@ def update_recipe(recipe_id):
                 }})       
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
+
 # function to remove a recipe (only the author can remove a recipe)
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):
     mongo.db.Recipes.remove({"_id":ObjectId(recipe_id)})
     return redirect(url_for('get_recipes'))
 
+
 @app.route('/delete_category/<category_id>')
 def delete_category(category_id):
     mongo.db.Categories.remove({"_id":ObjectId(category_id)})
     return redirect(url_for('manage_categories'))
+
 
 @app.route('/delete_cuisine/<cuisine_id>')
 def delete_cuisine(cuisine_id):
     mongo.db.Cuisines.remove({"_id":ObjectId(cuisine_id)})
     return redirect(url_for('manage_categories'))
 
+
 # function to redirect to the page where the user can add a new category
 @app.route('/add_category')
 def add_category():
     return render_template('add_category.html')
 
+
 # function to redirect to the page where the user can add a new cuisine
 @app.route('/add_cuisine')
 def add_cuisine():
     return render_template('add_cuisine.html')
+
 
 # function to insert a new category into the database
 @app.route('/insert_category', methods=['GET', 'POST'])
@@ -323,6 +338,7 @@ def insert_category():
             'category':request.form['category'].capitalize()
         })
     return redirect(url_for('manage_categories'))
+
 
 # function to insert a new cuisine into the database
 @app.route('/insert_cuisine', methods=['GET', 'POST'])
@@ -343,13 +359,15 @@ def data():
 
     for recipe in recipes:
         json_recipes.append(recipe)
-    json_recipes = json.dumps(json_recipes, default=json_util.default)
-
+    json_recipes = json.dumps(json_recipes, default=json_util.default, indent= 4, sort_keys=True)
+         
     return json_recipes
+    
 
 @app.route("/statistics")
 def statistics():
     return render_template('statistics.html')
+
 
 # funtion to log out / clear cookie
 # https://www.tutorialspoint.com/flask/flask_sessions.htm
@@ -358,6 +376,48 @@ def logout():
  # remove the username from the session if it is there
     session.pop('username', None)
     return redirect(url_for('index'))
+
+
+
+'''
+This code below has been used in order to create a backup of my database
+'''
+
+'''
+def back_up_collection(collection, path):
+    json_array = []
+
+    for document in collection:
+        json_array.append(document)
+    json_array = json.dumps(json_array, default=json_util.default, indent= 4, sort_keys=True)
+
+    f = open(path,"w")
+    f.write(json_array)
+    f.close()
+
+@app.route("/data_backup")
+def data_backup():
+    recipes = mongo.db.Recipes.find()
+    allergens = mongo.db.Allergens.find()
+    categories = mongo.db.Categories.find()
+    cuisines = mongo.db.Cuisines.find()
+    difficulty = mongo.db.Difficulty.find()
+    users = mongo.db.Users.find()
+    chucks = mongo.db.fs.chunks.find()
+    files = mongo.db.fs.files.find()
+   
+    back_up_collection(recipes, "static/collections_backup/json_recipes_bk.json")
+    back_up_collection(allergens, "static/collections_backup/json_allergens_bk.json")
+    back_up_collection(categories, "static/collections_backup/json_categories_bk.json")
+    back_up_collection(cuisines, "static/collections_backup/json_cuisines_bk.json")
+    back_up_collection(difficulty, "static/collections_backup/json_difficulty_bk.json")
+    back_up_collection(users, "static/collections_backup/json_users_bk.json")
+    back_up_collection(chucks, "static/collections_backup/json_chucks_bk.json")
+    back_up_collection(files, "static/collections_backup/json_files_bk.json")
+
+    return 'Done'
+'''
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), port=int(os.environ.get('PORT')))
