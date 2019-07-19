@@ -377,47 +377,5 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
-
-
-'''
-This code below has been used in order to create a backup of my database
-'''
-
-'''
-def back_up_collection(collection, path):
-    json_array = []
-
-    for document in collection:
-        json_array.append(document)
-    json_array = json.dumps(json_array, default=json_util.default, indent= 4, sort_keys=True)
-
-    f = open(path,"w")
-    f.write(json_array)
-    f.close()
-
-@app.route("/data_backup")
-def data_backup():
-    recipes = mongo.db.Recipes.find()
-    allergens = mongo.db.Allergens.find()
-    categories = mongo.db.Categories.find()
-    cuisines = mongo.db.Cuisines.find()
-    difficulty = mongo.db.Difficulty.find()
-    users = mongo.db.Users.find()
-    chucks = mongo.db.fs.chunks.find()
-    files = mongo.db.fs.files.find()
-   
-    back_up_collection(recipes, "static/collections_backup/json_recipes_bk.json")
-    back_up_collection(allergens, "static/collections_backup/json_allergens_bk.json")
-    back_up_collection(categories, "static/collections_backup/json_categories_bk.json")
-    back_up_collection(cuisines, "static/collections_backup/json_cuisines_bk.json")
-    back_up_collection(difficulty, "static/collections_backup/json_difficulty_bk.json")
-    back_up_collection(users, "static/collections_backup/json_users_bk.json")
-    back_up_collection(chucks, "static/collections_backup/json_chucks_bk.json")
-    back_up_collection(files, "static/collections_backup/json_files_bk.json")
-
-    return 'Done'
-'''
-
-
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), port=int(os.environ.get('PORT')))
