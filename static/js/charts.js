@@ -7,7 +7,7 @@ function createCharts(error, data) {
 
   var ndx = crossfilter(recipes);
 
-  // display number of recipes
+  // display total number of recipes
   var total = ndx.groupAll().reduce(
     //p keeps track of the changes, v will be input values from the dataset
     //function adder
@@ -56,8 +56,6 @@ function createCharts(error, data) {
     .xAxis()
     .ticks(3);
 
-  rowChartCuisine.rowsCap(20);
-
   // author ranking rowchart
   var dimauthor = ndx.dimension(dc.pluck("author"));
   var groupauthor = dimauthor.group().reduceSum(dc.pluck("upvotes"));
@@ -84,6 +82,7 @@ function createCharts(error, data) {
     .xAxis()
     .ticks(3);
 
+  // only show the top 10
   rowChartAuthor.rowsCap(10);
 
   // difficulty pie chart
@@ -199,17 +198,19 @@ function createCharts(error, data) {
       {
         label: "View recipe",
         format: function(d) {
-          // get the id value and remove the "
+          // get the id value and removes the "
           var keystring = JSON.stringify(d._id["$oid"]).replace(/"/g, "");
-          return `<a href="view_recipe/${keystring}">View</a>`;
+
+          return "<a href='view_recipe/" + keystring + "'>View</a>";
         }
       }
     ])
-    // .sortBy(d.upvotes)
     .showGroups(false) // this will remove the [object][object] at the top of the rows
     .sortBy(function(d) {
       return d.upvotes;
     })
     .order(d3.descending);
+
+  // render all the charts
   dc.renderAll();
 }

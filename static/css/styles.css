@@ -33,7 +33,7 @@ h5 {
 /* register.html & login.html */
 
 .bg-image-login {
-  background-image: url("../img/bkg3.png") !important;
+  background-image: url("../img/bkg.png") !important;
   background-size: cover;
   background-position: center;
 }
@@ -205,6 +205,7 @@ footer .container {
 }
 
 footer p {
+  font-size: 0.9em;
   padding-top: 10px;
   margin-bottom: 0px;
 }
@@ -275,7 +276,7 @@ hr {
   font-weight: 600;
 }
 
-.small {
+.views {
   color: grey;
 }
 
@@ -307,23 +308,25 @@ hr {
   box-shadow: 2px 2px 12px #3f1e09;
 }
 
-/* Display votes and "View" only for the active image in the carousel */
-
 .carousel .recipe-name, .carousel .bottom-carousel {
   visibility: hidden;
 }
+
+/* Display votes, views and "view" link only for the active image in the carousel */
 
 .carousel .active .recipe-name, .carousel .active .bottom-carousel {
   visibility: visible;
 }
 
-/* size image for screens wider than 600 */
+/* size image for screens wider than 600px */
 
 @media only screen and (min-width: 601px) {
   .img-carousel {
     width: 400px;
   }
 }
+
+/* carousel for screens under 601px */
 
 @media only screen and (max-width: 600px) {
   .carousel {
@@ -350,12 +353,12 @@ hr {
 
 /********* get_recipes filter section **********/
 
-/**** h5 margin-bottom is also used below for .ingredients and .allergens, try to remove all, or try margin-bottom:25 for all h5, or group the r of them *****/
-
 .wrapper-filter p {
   font-size: 0.8em;
   margin-bottom: 20px;
 }
+
+/* display checkboxes on three columns  */
 
 .checkbox {
   margin-bottom: 15px;
@@ -377,6 +380,8 @@ hr {
   font-size: 0.9rem;
 }
 
+/* checkboxes in screens under 401px */
+
 @media only screen and (max-width: 400px) {
   [type="checkbox"]+label {
     font-size: 0.8rem;
@@ -392,7 +397,7 @@ hr {
   margin-top: 25px;
 }
 
-/* update color for the checkboxes ticks */
+/* update color for the switch */
 
 .switch label input[type="checkbox"]:checked+.lever {
   background-color: #ffbf007d;
@@ -401,6 +406,8 @@ hr {
 .switch label input[type="checkbox"]:checked+.lever:after {
   background-color: #ffbf00;
 }
+
+/* update color for the checkboxes ticks */
 
 [type="checkbox"]:checked+label:before {
   border-right: 2px solid #ffbf00;
@@ -466,10 +473,6 @@ hr {
 
 /* instructions, ingredients and allergens section */
 
-.instructions h5 {
-  padding-top: 15px;
-}
-
 .instructions h5, .ingredients h5, .allergens h5 {
   padding-top: 15px;
 }
@@ -495,7 +498,7 @@ hr {
   font-size: 0.7em;
 }
 
-/* details items - screen with widths lower than 401 */
+/* details items - screens under 401px */
 
 @media only screen and (max-width: 400px) {
   .details-item .fa {
@@ -507,6 +510,8 @@ hr {
   }
 }
 
+/* details items - screens wider than 400px */
+
 @media only screen and (min-width: 401px) {
   .details-item .fa {
     padding-right: 18px;
@@ -516,6 +521,8 @@ hr {
     font-size: 0.9em;
   }
 }
+
+/* details items - screens wider than 992px */
 
 @media only screen and (min-width: 993px) {
   .details-item p {
@@ -529,7 +536,7 @@ hr {
   }
 }
 
-/* ingredients, votes star */
+/* ingredients, votes star - screens under 601px */
 
 @media only screen and (max-width: 600px) {
   .ingredients ul:not(.browser-default)>li {
@@ -561,7 +568,7 @@ hr {
   font-style: italic;
 }
 
-/* add, view and edit recipe */
+/* Recipe image in add, view and edit recipe - for screens under 993px*/
 
 @media only screen and (max-width: 992px) {
   .img-details img {
@@ -572,12 +579,14 @@ hr {
   }
 }
 
-/* modal */
+/* all modals */
 
 .modal {
   padding: 40px;
   text-align: left;
 }
+
+/* modal in add  and edit image */
 
 .img-details .modal-close {
   margin-left: 30px;
@@ -602,7 +611,7 @@ hr {
   margin-bottom: 80px;
 }
 
-/* CHARTS */
+/* Statistics.html */
 
 #category, #difficulty, #totalRecipes, #cuisine {
   width: 100%;
