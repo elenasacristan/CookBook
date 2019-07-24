@@ -36,7 +36,7 @@
                 <a href="{{url_for('get_recipes')}}" class=" brand-logo"> <img
                         src="{{url_for('static', filename='img/logo.png')}}" width="220" alt="time2eat logo"></a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-                <!-- hidden for tablets and mobiles -->
+                <!-- nav bar top - hidden for tablets and mobiles -->
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{url_for('tips')}}"><i class="material-icons">help_outline</i></a></li>
                     <li><a href="{{url_for('get_recipes')}}"><i class="material-icons">home</i></a></li>
@@ -49,7 +49,7 @@
                             href="{{url_for('add_recipe')}}"><i class="material-icons">add_box</i></a></li>
                     <li><a href="{{url_for('logout')}}"><i class="material-icons">exit_to_app</i></a></li>
                 </ul>
-                <!-- displayed on tablets and mobiles -->
+                <!-- side nav bar - displayed on tablets and mobiles -->
                 <ul class="side-nav" id="mobile-demo">
                     <li><a href="{{url_for('tips')}}">How it works</a></li>
                     <li><a href="{{url_for('get_recipes')}}">Home</a></li>

@@ -4,6 +4,8 @@
 <!-- "multipart/form-data" is needed in order to upload files -->
 <form id="form_add_recipe" action="{{url_for('insert_recipe')}}" method="POST" class="container"
     onsubmit="return checkForm()" enctype="multipart/form-data">
+
+    <!-- recipe name -->
     <div class="row">
         <div class="input-field col s12 m6">
             <h5><strong>Recipe name:</strong></h5>
@@ -13,17 +15,17 @@
     </div>
 
     <div class="row img-details">
+        <!-- recipe image -->
         <div class="col m12 l6">
             <!-- Modal Trigger -->
-
             <div class="row">
                 <a class="modal-trigger" href="#modal1"><span class="uploadText">Upload image</span></a>
             </div>
             <div class="row img-wrapper">
-                <a class="modal-trigger" href="#modal1"><img src="{{url_for('static', filename='img/default.jpg')}}">
+                <a class="modal-trigger" href="#modal1">
+                    <img src="{{url_for('static', filename='img/default.jpg')}}" alt="default_recipe_image">
                 </a>
             </div>
-
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
                 <div class="file-field input-field">
@@ -40,6 +42,7 @@
                 </div>
             </div>
         </div>
+        <!-- recipe details -->
         <div class="col m12 l6">
             <div class="row">
                 <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
@@ -131,30 +134,34 @@
                 </div>
             </div>
         </div>
-        <div class="row ingredients-instructions">
+    </div>
+
+    <div class="row ingredients-instructions">
+        <!-- instructions -->
+        <div class="row">
             <div class="col s12">
-                <div class="row">
-                    <div class="col s12">
-                        <h5>Cooking instructions:</h5>
-                        <p>* Enter each step on a new line</p>
-                        <textarea id="instructions" name="instructions" class="materialize-textarea validate"
-                            required=""></textarea>
-                    </div>
-                </div>
-
-                <div class="row add_ingredients">
-                    <div class="col s12">
-                        <h5>Ingredients:</h5>
-                        <p>* Enter each ingredient on a new line</p>
-                        <textarea id="ingredients" name="ingredients" class="materialize-textarea validate"
-                            required=""></textarea>
-                    </div>
-                </div>
-
+                <h5>Cooking instructions:</h5>
+                <p>* Enter each step on a new line</p>
+                <textarea id="instructions" name="instructions" class="materialize-textarea validate"
+                    required=""></textarea>
             </div>
+        </div>
+
+        <!-- ingredients -->
+        <div class="row add_ingredients">
+            <div class="col s12">
+                <h5>Ingredients:</h5>
+                <p>* Enter each ingredient on a new line</p>
+                <textarea id="ingredients" name="ingredients" class="materialize-textarea validate"
+                    required=""></textarea>
+            </div>
+        </div>
+
+        <!-- allergens -->
+        <div class="row">
             <div class=" col s12">
                 <h5>Allergens:</h5>
-                <div class="input-field col s12">
+                <div class="input-field">
                     <select id="allergens" name="allergens" class="validate" multiple>
                         <option class="na" value="" selected disabled>Select the allergens</option>
                         {% for allergen in allergens %}
@@ -164,13 +171,13 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col s12 right-align">
-                <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
-                        class="fa fa-insert"></i>Add recipe</button>
-
-            </div>
+    <div class="row">
+        <div class="col s12 right-align">
+            <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
+                    class="fa fa-insert"></i>Add recipe</button>
         </div>
+    </div>
 </form>
 {% endblock %}

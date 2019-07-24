@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- "multipart/form-data" is needed in order to upload files -->
 <form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" class="container"
     enctype="multipart/form-data">
     <div class="row">
@@ -12,14 +13,15 @@
     </div>
 
     <div class="row img-details">
+        <!-- recipe image -->
         <div class="col m12 l6">
             <!-- Modal Trigger -->
             <div class="row"><a class="modal-trigger" href="#modal1">Change image</a></div>
             <div class="row img-wrapper"> <a class="modal-trigger" href="#modal1">
                     {% if recipe.recipe_image %}
-                    <img src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}">
+                    <img src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}" alt="recipe_image">
                     {% else %}
-                    <img src="{{url_for('static', filename='img/default.jpg')}}">
+                    <img src="{{url_for('static', filename='img/default.jpg')}}" alt="default_recipe_image">
                     {% endif %}
                 </a></div>
 
@@ -39,6 +41,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- recipe details -->
         <div class="col m12 l6">
             <div class="row">
                 <div class="col offset-s1 s5 offset-m1 m4 offset-m1 l6">
@@ -75,7 +79,6 @@
                         <div class="col s9 m6 input-field">
                             <h6><strong>Difficulty:</strong></h6>
                             <select id="difficulty" name="difficulty">
-                                <option value="" disabled selected>Select one</option>
                                 {% for level in difficulty%}
                                 {% if level.difficulty == recipe.difficulty %}
                                 <option value="{{level.difficulty}}" selected>{{level.difficulty}}</option>
@@ -95,7 +98,6 @@
                         <div class="col s9 m6 input-field">
                             <h6><strong>Category:</strong></h6>
                             <select id="category" name="category">
-                                <option value="" disabled selected>Select one</option>
                                 {% for category in categories%}
                                 {% if category.category == recipe.category %}
                                 <option value="{{category.category}}" selected>{{category.category}}</option>
@@ -117,7 +119,6 @@
                         <div class="col s9 m6 input-field">
                             <h6><strong>Cuisine:</strong></h6>
                             <select id="cuisine" name="cuisine">
-                                <option value="" disabled selected>Select one</option>
                                 {% for cuisine in cuisines %}
                                 {% if cuisine.cuisine == recipe.cuisine %}
                                 <option value="{{cuisine.cuisine}}" selected>{{cuisine.cuisine}}</option>
@@ -147,29 +148,26 @@
 
 
     <div class="row ingredients-instructions">
+        <!-- instructions -->
         <div class="col s12">
-            <div class="row">
-                <div class="col s12">
-                    <h5>Cooking instructions:</h5>
-                    <p>* Enter each step on a new line</p>
-                    <textarea id="instructions" name="instructions" class="materialize-textarea validate"
-                        required="">{{list_instructions}}</textarea>
-                </div>
-            </div>
-
-            <div class="row add_ingredients">
-                <div class="col s12">
-                    <h5>Ingredients:</h5>
-                    <p>* Enter each ingredient on a new line</p>
-                    <textarea id="ingredients" name="ingredients" class="materialize-textarea validate"
-                        required="">{{list_ingredients}}</textarea>
-                </div>
-            </div>
-
+            <h5>Cooking instructions:</h5>
+            <p>* Enter each step on a new line</p>
+            <textarea id="instructions" name="instructions" class="materialize-textarea validate"
+                required="">{{list_instructions}}</textarea>
         </div>
+
+        <!-- ingredient -->
+        <div class="col s12">
+            <h5>Ingredients:</h5>
+            <p>* Enter each ingredient on a new line</p>
+            <textarea id="ingredients" name="ingredients" class="materialize-textarea validate"
+                required="">{{list_ingredients}}</textarea>
+        </div>
+
+        <!-- allergens -->
         <div class=" col s12">
             <h5>Allergens:</h5>
-            <div class="input-field col s12">
+            <div class="input-field">
                 <select id="allergens" name="allergens" class="validate" multiple>
                     {% for allergen in allergens %}
                     {% if allergen.allergen in recipe.allergens %}
