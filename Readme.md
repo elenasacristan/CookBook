@@ -77,7 +77,7 @@ Below you can see the mock-ups that I drew using Pencil:
 
 ## Database Schema
 
-![database](/static/img/database schema.jpg)
+![database](/static/img/schema.jpg)
 
 ## Features
 
