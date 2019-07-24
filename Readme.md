@@ -42,7 +42,7 @@ Below you can see the mock-ups that I drew using Pencil:
 
 ##### Edit recipe
 
-![edit_recipe](/static/mockups/edit_recipe.png)
+![edit_recipe](/static/mockups/edit_recipe.jpg)
 
 ##### Manage Type of meal / cuisines
 
