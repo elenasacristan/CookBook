@@ -37,16 +37,17 @@ def string_to_array(string):
 # landing page for the website for new users. I learn how to create the login/register functionality by watchin this tutorial https://www.youtube.com/watch?v=vVx1737auSE
 @app.route('/')
 def index():
-   
+    title = "Login"
     # if the cookie for the user already exist the login page is skipped
     if "username" in session:
         return redirect(url_for('get_recipes'))
     
-    return render_template('login.html')
+    return render_template('login.html', title=title)
 
 
 @app.route('/login', methods=['POST'])
 def login():
+    title = "Login"
     users = mongo.db.Users
     user_login = users.find_one({'author':request.form['username'].capitalize()})
 
@@ -56,11 +57,12 @@ def login():
             return redirect(url_for('get_recipes'))
     
     message = 'The login details are not correct'
-    return render_template('login.html', message=message)
+    return render_template('login.html', message=message, title=title)
 
 
 @app.route('/register', methods=['POST','GET'])
 def register():
+    title = "Register"
     if request.method == 'POST':
         users = mongo.db.Users
         user_exists = users.find_one({'author':request.form['username'].capitalize()})
@@ -72,9 +74,9 @@ def register():
             return redirect(url_for('get_recipes'))
 
         message = "That username already exists, please choose a different one."
-        return render_template('register.html', message=message)
+        return render_template('register.html', message=message, title=title)
 
-    return render_template('register.html')
+    return render_template('register.html', title=title)
 
 
 #home page, the recipes are sorted by votes and views. The most voted will be on the top one of the carousel and the it will be in descending order if you move to the right
@@ -167,7 +169,8 @@ def filter_recipes():
 #route to the tips page
 @app.route('/tips')
 def tips():
-    return render_template('tips.html')
+    title = "Tips"
+    return render_template('tips.html', title=title)
 
 
 # function to add new recipe
@@ -184,7 +187,7 @@ def add_recipe():
 # function to see and insert new categories or cuisines
 @app.route('/manage_categories')
 def manage_categories():
-    title = "Manage categories / cuisines"
+    title = "Type of meals / cuisines"
     recipes = mongo.db.Recipes.find()
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
@@ -366,7 +369,8 @@ def data():
 
 @app.route("/statistics")
 def statistics():
-    return render_template('statistics.html')
+    title = "Dashboard"
+    return render_template('statistics.html', title=title)
 
 
 # funtion to log out / clear cookie
