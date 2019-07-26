@@ -677,7 +677,7 @@ hr {
 /* summary-table */
 
 .summary-table {
-  font-size: 0.8em;
+  font-size: 0.7em;
   height: 400px;
   overflow: auto;
 }
@@ -706,4 +706,8 @@ hr {
 
 div.dc-chart {
   float: none;
+}
+
+.dc-table-row td, .dc-table-row th {
+  padding: 15px 10px;
 }

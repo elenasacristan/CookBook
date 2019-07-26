@@ -178,6 +178,12 @@ function createCharts(error, data) {
         }
       },
       {
+        label: "Views",
+        format: function(d) {
+          return d.views;
+        }
+      },
+      {
         label: "Cuisine",
         format: function(d) {
           return d.cuisine;
@@ -187,6 +193,12 @@ function createCharts(error, data) {
         label: "Type of meal",
         format: function(d) {
           return d.category;
+        }
+      },
+      {
+        label: "Cooking time",
+        format: function(d) {
+          return d.cooking_time;
         }
       },
       {
