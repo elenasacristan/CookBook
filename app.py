@@ -1,6 +1,6 @@
 import os
 # env is where I have my environmental variables and it is only used for to run my code locally
-import env
+#import env
 import json
 from flask import Flask, render_template, request, url_for, redirect, session, flash
 from flask_pymongo import PyMongo, DESCENDING
