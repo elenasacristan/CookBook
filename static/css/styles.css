@@ -99,6 +99,10 @@ h5 {
 .error_message {
   margin-top: 20px;
   color: red;
+  background-color: #ffbf0029;
+  padding: 10px;
+  font-size: 0.8em;
+  font-weight: bolder;
 }
 
 /* rest of the pages */

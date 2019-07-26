@@ -2,7 +2,7 @@ import os
 # env is where I have my environmental variables and it is only used for to run my code locally
 import env
 import json
-from flask import Flask, render_template, request, url_for, redirect, session
+from flask import Flask, render_template, request, url_for, redirect, session, flash
 from flask_pymongo import PyMongo, DESCENDING
 from bson.objectid import ObjectId
 from bson import json_util
@@ -56,8 +56,8 @@ def login():
             session["username"] = request.form["username"].capitalize()
             return redirect(url_for('get_recipes'))
     
-    message = 'The login details are not correct'
-    return render_template('login.html', message=message, title=title)
+    flash('The login details are not correct')
+    return render_template('login.html', title=title)
 
 
 @app.route('/register', methods=['POST','GET'])
@@ -73,8 +73,8 @@ def register():
             session['username'] = request.form['username'].capitalize()
             return redirect(url_for('get_recipes'))
 
-        message = "That username already exists, please choose a different one."
-        return render_template('register.html', message=message, title=title)
+        flash('That username already exists, please choose a different one.')
+        return render_template('register.html', title=title)
 
     return render_template('register.html', title=title)
 
@@ -203,7 +203,7 @@ def manage_categories():
 	    cuisine_object.append({"cuisine_id" : cuisine['_id'], "cuisine" : cuisine['cuisine'], "count_recipes_cuisine" : count_recipes_cuisine} )
 
     return render_template('manage_categories.html', title=title, categories = category_object, cuisines = cuisine_object)
-
+    
 
 # funtion to insert into the database the new recipe
 @app.route('/insert_recipe', methods=['GET', 'POST'])
@@ -321,37 +321,41 @@ def delete_cuisine(cuisine_id):
     return redirect(url_for('manage_categories'))
 
 
-# function to redirect to the page where the user can add a new category
-@app.route('/add_category')
-def add_category():
-    return render_template('add_category.html')
-
-
-# function to redirect to the page where the user can add a new cuisine
-@app.route('/add_cuisine')
-def add_cuisine():
-    return render_template('add_cuisine.html')
-
-
 # function to insert a new category into the database
 @app.route('/insert_category', methods=['GET', 'POST'])
 def insert_category():
-    categories = mongo.db.Categories  
-    categories.insert_one({
-            'category':request.form['category'].capitalize()
-        })
-    return redirect(url_for('manage_categories'))
+    if request.method == 'POST':
+        categories = mongo.db.Categories 
+        category_form = request.form['category'].capitalize()
+        category_exists = categories.find_one({'category':category_form})
+
+        if category_exists is None:    
+            categories.insert_one({
+                'category':request.form['category'].capitalize()
+                })
+            return redirect(url_for('manage_categories'))
+        else:
+            flash('That type of meal already exists')
+            return redirect(url_for('manage_categories'))
 
 
 # function to insert a new cuisine into the database
 @app.route('/insert_cuisine', methods=['GET', 'POST'])
 def insert_cuisine():
-    cuisines = mongo.db.Cuisines  
-    cuisines.insert_one({
-            'cuisine':request.form['cuisine'].capitalize()
-        })
-    return redirect(url_for('manage_categories'))
+    if request.method == 'POST':
+        cuisines = mongo.db.Cuisines  
+        cuisine_form = request.form['cuisine'].capitalize()
+        cuisine_exists = cuisines.find_one({'cuisine':cuisine_form})
 
+        if cuisine_exists is None:    
+            cuisines.insert_one({
+                'cuisine':request.form['cuisine'].capitalize()
+                })
+            return redirect(url_for('manage_categories'))
+        else:
+            flash('That cuisine already exists')
+            return redirect(url_for('manage_categories'))
+   
 
 # http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-python-mongodb/
 # we use this route to retrieve all the recipes from the database in json format

@@ -17,6 +17,10 @@
 </form>
 
 <!-- if the user name is already in use we will display an error message below -->
-<p class="error_message text-center">{{message}}</p>
+{% with messages = get_flashed_messages() %} {% if messages %}
+{% for message in messages %}
+<p class="error_message">{{ message }}</p>
+{% endfor %}
+{% endif %} {% endwith %}
 
 {% endblock %}
