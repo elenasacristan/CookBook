@@ -15,7 +15,9 @@ import bcrypt
 app = Flask(__name__)
 
 
-# before deploying convert to enviroment variable
+'''in development the environmental variables are saved on the env.py and in production 
+the environmental variables are saved on the Config Var in Heroku'''
+
 app.config["MONGO_DBNAME"] = 'CookBook'
 app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 
@@ -28,13 +30,14 @@ mongo = PyMongo(app)
 app.secret_key = os.environ.get('SECRET_KEY')
 
 
-#function use to convert strings separated by commas to arrays
+#function used to convert strings separated by '\n' to arrays
 def string_to_array(string):
     array = string.split("\n")
     return array
     
 
-# landing page for the website for new users. I learn how to create the login/register functionality by watchin this tutorial https://www.youtube.com/watch?v=vVx1737auSE
+'''landing page for the website for new users. I learn how to create the login/register functionality
+ by watching this tutorial https://www.youtube.com/watch?v=vVx1737auSE'''
 @app.route('/')
 def index():
     title = "Login"
@@ -79,7 +82,9 @@ def register():
     return render_template('register.html', title=title)
 
 
-#home page, the recipes are sorted by votes and views. The most voted will be on the top one of the carousel and the it will be in descending order if you move to the right
+'''home page, the recipes are sorted by votes and after by views. The most voted will 
+be on the top one of the carousel and the it will be in descending order if you move to the right'''
+
 @app.route('/get_recipes')
 def get_recipes():
     title = "View recipes"
@@ -92,7 +97,7 @@ def get_recipes():
     difficulty = mongo.db.Difficulty.find()
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
 
-
+#search functionality in the home page
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     title = "View recipes"
@@ -103,20 +108,31 @@ def search():
     difficulty = mongo.db.Difficulty.find()
     recipes = mongo.db.Recipes.find()
 
-    '''GET THE WORD/SENTENCE FROM THE SEARCH BOX'''    
+    #we get the word to find from the search box    
     text_to_find = request.form["text_to_find"]
 
-    '''CREATE TEXT INDEX FOR ALL TEXT FIELDS'''    
+    #we create a text index for all the text fields   
     mongo.db.Recipes.create_index( [("$**", 'text')] )
 
-    '''Search result sorted by upvotes and after sorted by number of views'''    
+    #Search result sorted by upvotes descending and after by number of views descending    
     recipes = mongo.db.Recipes.find({ "$text": { "$search": text_to_find } }).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
     recipes_count = recipes.count()
         
     # send recipes to page
     return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
     
-    
+
+'''create different query depending on if a cuisine, difficulty or category has been selected or not in the 
+dropdown menu or checkboxes. I nothing has been selected will will display all the options available, 
+if some options have been selected then we will filter by the options selected'''
+def query_needed(recipes, field):
+    if request.form.getlist(field) != []:
+        return {field:{ "$in": request.form.getlist(field)}}
+    else:
+        return {field:{ "$in": recipes.distinct(field)}}
+
+
+#filter section in home page
 @app.route('/filter_recipes', methods = ['GET', 'POST'])
 def filter_recipes():
     title = "View recipes"
@@ -127,39 +143,24 @@ def filter_recipes():
     difficulty = mongo.db.Difficulty.find()
     recipes = mongo.db.Recipes.find()
     
-    #create different query depending on if a cuisine has been selected or not in the dropdown menu
-    if request.form.getlist('cuisine') != []:
-        query_cuisine = {"cuisine":{ "$in": request.form.getlist('cuisine')}}
-    else:
-        query_cuisine = {"cuisine":{ "$in": recipes.distinct('cuisine')}}
-    
-    #create different query depending on if a difficulty has been selected or not in the dropdown menu
-    if request.form.getlist('difficulty') != []:
-        query_difficulty = {"difficulty":{ "$in": request.form.getlist('difficulty')}}
-    else:
-        query_difficulty = {"difficulty":{ "$in": recipes.distinct('difficulty')}}
-
-    # from the checkboxes in the filter section get the list of allergens to exclude 
-    allergens_to_remove = request.form.getlist('allergens')
-    
-    #show all the recipes that DON'T contain the allergens selected
-    query_allergens = {"allergens": { "$nin": allergens_to_remove } }
-
-    # from the checkboxes in the filter section get the list of categories to display 
-    categories_to_display = request.form.getlist('categories')
-    
-    # create different query depending on if there categories are checked or not
-    if categories_to_display == []:
-        query_categories = {"category": { "$in": recipes.distinct('category') } }
-    else:
-        query_categories = {"category": { "$in": request.form.getlist('categories') } }
-    
     # create different query depending is the user selects "only_mine" or not"
     if request.form.get('only_mine') == 'only_mine':
         query_author = {"author": username }
     else:
         query_author = {"author": { "$in": recipes.distinct('author') } }
-        
+    
+    # get the right query depending on if any options have been selected or nothing has been selected
+    query_cuisine = query_needed(recipes,'cuisine');
+    query_difficulty = query_needed(recipes,'difficulty');
+    query_categories = query_needed(recipes,'category');
+
+    # from the checkboxes in the filter section get the list of allergens to exclude 
+    allergens_to_remove = request.form.getlist('allergens')
+    
+    #query to show all the recipes that DON'T contain the allergens selected
+    query_allergens = {"allergens": { "$nin": allergens_to_remove } }
+   
+    #query to find the recipes with the filters used - ordered by views and then by votes descending
     recipes = mongo.db.Recipes.find({"$and":[query_author,query_difficulty,query_cuisine,query_allergens, query_categories]}).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
     recipes_count = recipes.count()
 
@@ -184,27 +185,6 @@ def add_recipe():
     return render_template('add_recipe.html', title=title, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens)
 
 
-# function to see and insert new categories or cuisines
-@app.route('/manage_categories')
-def manage_categories():
-    title = "Type of meals / cuisines"
-    recipes = mongo.db.Recipes.find()
-    categories = mongo.db.Categories.find()
-    cuisines = mongo.db.Cuisines.find()
-    category_object=[]
-    cuisine_object=[]
-
-    for category in categories:
-	    count_recipes_category = mongo.db.Recipes.find({'category':category['category']}).count()
-	    category_object.append({"category_id" : category['_id'] ,"category" : category['category'], "count_recipes_category" : count_recipes_category})
-        
-    for cuisine in cuisines:
-	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine['cuisine']}).count()
-	    cuisine_object.append({"cuisine_id" : cuisine['_id'], "cuisine" : cuisine['cuisine'], "count_recipes_cuisine" : count_recipes_cuisine} )
-
-    return render_template('manage_categories.html', title=title, categories = category_object, cuisines = cuisine_object)
-    
-
 # funtion to insert into the database the new recipe
 @app.route('/insert_recipe', methods=['GET', 'POST'])
 def insert_recipe():
@@ -213,6 +193,7 @@ def insert_recipe():
         recipe_image = request.files['recipe_image']
         if recipe_image != "":
             mongo.save_file(recipe_image.filename, recipe_image)
+        
         if request.form['calories']:
             calories = request.form['calories']
         else:
@@ -235,11 +216,6 @@ def insert_recipe():
                 'category':request.form['category']
             })
     return redirect(url_for('get_recipes'))
-
-
-@app.route('/img_uploads/<filename>')
-def img_uploads(filename):
-    return mongo.send_file(filename)
 
 
 # function to see a recipe after clicking on its image or "view" link
@@ -280,12 +256,17 @@ def update_recipe(recipe_id):
             recipe_image = request.files['recipe_image']
             mongo.save_file(recipe_image.filename, recipe_image)
 
+            if request.form['calories']:
+                calories = request.form['calories']
+            else:
+                calories = "Not specified"
+
             recipes.update({"_id":ObjectId(recipe_id)},{ "$set":
                 {
                     'recipe_name':request.form['recipe_name'].capitalize(),
                     'instructions':string_to_array(request.form['instructions']),
                     'serves':request.form['serves'],
-                    'calories':request.form['calories'],
+                    'calories':calories,
                     'difficulty':request.form['difficulty'],
                     'cooking_time':request.form['cooking_time'],
                     'cuisine':request.form['cuisine'],
@@ -299,7 +280,13 @@ def update_recipe(recipe_id):
                 {
                     'recipe_image':recipe_image.filename,
                 }})       
+    
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
+
+
+@app.route('/img_uploads/<filename>')
+def img_uploads(filename):
+    return mongo.send_file(filename)
 
 
 # function to remove a recipe (only the author can remove a recipe)
@@ -309,17 +296,26 @@ def delete_recipe(recipe_id):
     return redirect(url_for('get_recipes'))
 
 
-@app.route('/delete_category/<category_id>')
-def delete_category(category_id):
-    mongo.db.Categories.remove({"_id":ObjectId(category_id)})
-    return redirect(url_for('manage_categories'))
+# function to see and insert new categories or cuisines
+@app.route('/manage_categories')
+def manage_categories():
+    title = "Type of meals / cuisines"
+    recipes = mongo.db.Recipes.find()
+    categories = mongo.db.Categories.find()
+    cuisines = mongo.db.Cuisines.find()
+    category_object=[]
+    cuisine_object=[]
 
+    for category in categories:
+	    count_recipes_category = mongo.db.Recipes.find({'category':category['category']}).count()
+	    category_object.append({"category_id" : category['_id'] ,"category" : category['category'], "count_recipes_category" : count_recipes_category})
+        
+    for cuisine in cuisines:
+	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine['cuisine']}).count()
+	    cuisine_object.append({"cuisine_id" : cuisine['_id'], "cuisine" : cuisine['cuisine'], "count_recipes_cuisine" : count_recipes_cuisine} )
 
-@app.route('/delete_cuisine/<cuisine_id>')
-def delete_cuisine(cuisine_id):
-    mongo.db.Cuisines.remove({"_id":ObjectId(cuisine_id)})
-    return redirect(url_for('manage_categories'))
-
+    return render_template('manage_categories.html', title=title, categories = category_object, cuisines = cuisine_object)
+    
 
 # function to insert a new category into the database
 @app.route('/insert_category', methods=['GET', 'POST'])
@@ -355,6 +351,17 @@ def insert_cuisine():
         else:
             flash('That cuisine already exists')
             return redirect(url_for('manage_categories'))
+
+@app.route('/delete_category/<category_id>')
+def delete_category(category_id):
+    mongo.db.Categories.remove({"_id":ObjectId(category_id)})
+    return redirect(url_for('manage_categories'))
+
+
+@app.route('/delete_cuisine/<cuisine_id>')
+def delete_cuisine(cuisine_id):
+    mongo.db.Cuisines.remove({"_id":ObjectId(cuisine_id)})
+    return redirect(url_for('manage_categories'))
    
 
 # http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-python-mongodb/
