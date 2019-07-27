@@ -1,6 +1,6 @@
 import os
 # env is where I have my environmental variables and it is only used for to run my code locally
-# import env
+import env
 import json
 from flask import Flask, render_template, request, url_for, redirect, session, flash
 from flask_pymongo import PyMongo, DESCENDING
@@ -40,17 +40,15 @@ def string_to_array(string):
  by watching this tutorial https://www.youtube.com/watch?v=vVx1737auSE'''
 @app.route('/')
 def index():
-    title = "Login"
     # if the cookie for the user already exist the login page is skipped
     if "username" in session:
         return redirect(url_for('get_recipes'))
     
-    return render_template('login.html', title=title)
+    return render_template('login.html', title="Login")
 
 
 @app.route('/login', methods=['POST'])
 def login():
-    title = "Login"
     users = mongo.db.Users
     user_login = users.find_one({'author':request.form['username'].capitalize()})
 
@@ -60,12 +58,11 @@ def login():
             return redirect(url_for('get_recipes'))
     
     flash('The login details are not correct')
-    return render_template('login.html', title=title)
+    return render_template('login.html',  title="Login")
 
 
 @app.route('/register', methods=['POST','GET'])
 def register():
-    title = "Register"
     if request.method == 'POST':
         users = mongo.db.Users
         user_exists = users.find_one({'author':request.form['username'].capitalize()})
@@ -77,9 +74,9 @@ def register():
             return redirect(url_for('get_recipes'))
 
         flash('That username already exists, please choose a different one.')
-        return render_template('register.html', title=title)
+        return render_template('register.html', title="Register")
 
-    return render_template('register.html', title=title)
+    return render_template('register.html', title="Register")
 
 
 '''home page, the recipes are sorted by votes and after by views. The most voted will 
@@ -87,40 +84,26 @@ be on the top one of the carousel and the it will be in descending order if you 
 
 @app.route('/get_recipes')
 def get_recipes():
-    title = "View recipes"
-    username = session['username']
     recipes = mongo.db.Recipes.find().sort([("upvotes",DESCENDING), ("views",DESCENDING)])
-    recipes_count = recipes.count()
-    allergens = mongo.db.Allergens.find()
-    categories = mongo.db.Categories.find()
-    cuisines = mongo.db.Cuisines.find()
-    difficulty = mongo.db.Difficulty.find()
-    return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
+    return render_template('get_recipes.html',title="View recipes", username=session['username'], recipes = recipes, categories = mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), allergens=mongo.db.Allergens.find(), recipes_count=recipes.count())
+  
 
 #search functionality in the home page
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    title = "View recipes"
-    username = session['username']
-    allergens = mongo.db.Allergens.find()
-    categories = mongo.db.Categories.find()
-    cuisines = mongo.db.Cuisines.find()
-    difficulty = mongo.db.Difficulty.find()
-    recipes = mongo.db.Recipes.find()
-
+   
     #we get the word to find from the search box    
     text_to_find = request.form["text_to_find"]
-
+    
     #we create a text index for all the text fields   
     mongo.db.Recipes.create_index( [("$**", 'text')] )
 
     #Search result sorted by upvotes descending and after by number of views descending    
     recipes = mongo.db.Recipes.find({ "$text": { "$search": text_to_find } }).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
-    recipes_count = recipes.count()
         
     # send recipes to page
-    return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
-    
+    return render_template('get_recipes.html', title="View recipes", username=session['username'], recipes = recipes, categories = mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), allergens=mongo.db.Allergens.find(), recipes_count=recipes.count())
+         
 
 '''create different query depending on if a cuisine, difficulty or category has been selected or not in the 
 dropdown menu or checkboxes. I nothing has been selected will will display all the options available, 
@@ -135,12 +118,7 @@ def query_needed(recipes, field):
 #filter section in home page
 @app.route('/filter_recipes', methods = ['GET', 'POST'])
 def filter_recipes():
-    title = "View recipes"
-    username = session['username']
-    allergens = mongo.db.Allergens.find()
-    categories = mongo.db.Categories.find()
-    cuisines = mongo.db.Cuisines.find()
-    difficulty = mongo.db.Difficulty.find()
+    
     recipes = mongo.db.Recipes.find()
     
     # create different query depending is the user selects "only_mine" or not"
@@ -164,25 +142,19 @@ def filter_recipes():
     recipes = mongo.db.Recipes.find({"$and":[query_author,query_difficulty,query_cuisine,query_allergens, query_categories]}).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
     recipes_count = recipes.count()
 
-    return render_template('get_recipes.html', title=title, username=username, recipes = recipes, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens, recipes_count=recipes_count)
-
+    return render_template('get_recipes.html', title="View recipes", username=session['username'], recipes = recipes, categories = mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), allergens=mongo.db.Allergens.find(), recipes_count=recipes_count)
+   
 
 #route to the tips page
 @app.route('/tips')
 def tips():
-    title = "Tips"
-    return render_template('tips.html', title=title)
+    return render_template('tips.html', title="Tips")
 
 
 # function to add new recipe
 @app.route('/add_recipe')
 def add_recipe():
-    title = "Add recipe"
-    allergens = mongo.db.Allergens.find()
-    categories = mongo.db.Categories.find()
-    cuisines = mongo.db.Cuisines.find()
-    difficulty = mongo.db.Difficulty.find()
-    return render_template('add_recipe.html', title=title, categories = categories, cuisines=cuisines, difficulty=difficulty, allergens=allergens)
+    return render_template('add_recipe.html', title="Add recipe", categories = mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), allergens=mongo.db.Allergens.find())
 
 
 # funtion to insert into the database the new recipe
@@ -222,9 +194,8 @@ def insert_recipe():
 @app.route('/view_recipe/<recipe_id>')
 def view_recipe(recipe_id):
     mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'views': 1}})
-    recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
-
-    return render_template('view_recipe.html', recipe = recipe, username = session['username'])
+    
+    return render_template('view_recipe.html', recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)}), username = session['username'])
 
 
 # function to vote the recipes (the recipe author is not allowed to vote)
@@ -237,17 +208,14 @@ def vote(recipe_id):
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
-    allergens = mongo.db.Allergens.find()
-    categories = mongo.db.Categories.find()
-    cuisines = mongo.db.Cuisines.find()
-    difficulty = mongo.db.Difficulty.find()
     list_ingredients = '\n'.join(recipe['ingredients'])
     list_allergens = '\n'.join(recipe['allergens'])
     list_instructions = '\n'.join(recipe['instructions'])
 
-    return render_template('edit_recipe.html', recipe=recipe, categories=categories, cuisines=cuisines, difficulty=difficulty, list_ingredients=list_ingredients, list_allergens=list_allergens,list_instructions=list_instructions, allergens=allergens)
+    return render_template('edit_recipe.html', recipe=recipe, categories=mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), list_ingredients=list_ingredients, list_allergens=list_allergens,list_instructions=list_instructions, allergens=mongo.db.Allergens.find())
 
 
+'''https://www.youtube.com/watch?v=DsgAuceHha4 In this video I learned how to upload images into MongoDB'''
 @app.route('/update_recipe/<recipe_id>' , methods=['GET', 'POST'])
 def update_recipe(recipe_id):
     recipes = mongo.db.Recipes
@@ -255,7 +223,7 @@ def update_recipe(recipe_id):
     if 'recipe_image' in request.files:
             recipe_image = request.files['recipe_image']
             mongo.save_file(recipe_image.filename, recipe_image)
-
+            
             if request.form['calories']:
                 calories = request.form['calories']
             else:
@@ -299,7 +267,6 @@ def delete_recipe(recipe_id):
 # function to see and insert new categories or cuisines
 @app.route('/manage_categories')
 def manage_categories():
-    title = "Type of meals / cuisines"
     recipes = mongo.db.Recipes.find()
     categories = mongo.db.Categories.find()
     cuisines = mongo.db.Cuisines.find()
@@ -314,7 +281,7 @@ def manage_categories():
 	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine['cuisine']}).count()
 	    cuisine_object.append({"cuisine_id" : cuisine['_id'], "cuisine" : cuisine['cuisine'], "count_recipes_cuisine" : count_recipes_cuisine} )
 
-    return render_template('manage_categories.html', title=title, categories = category_object, cuisines = cuisine_object)
+    return render_template('manage_categories.html', title="Type of meals / cuisines", categories = category_object, cuisines = cuisine_object)
     
 
 # function to insert a new category into the database
@@ -352,6 +319,7 @@ def insert_cuisine():
             flash('That cuisine already exists')
             return redirect(url_for('manage_categories'))
 
+
 @app.route('/delete_category/<category_id>')
 def delete_category(category_id):
     mongo.db.Categories.remove({"_id":ObjectId(category_id)})
@@ -381,8 +349,7 @@ def data():
 
 @app.route("/statistics")
 def statistics():
-    title = "Dashboard"
-    return render_template('statistics.html', title=title)
+    return render_template('statistics.html', title="Dashboard")
 
 
 # funtion to log out / clear cookie
