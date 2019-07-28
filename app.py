@@ -1,6 +1,6 @@
 import os
 # env is where I have my environmental variables and it is only used for to run my code locally
-# import env
+import env
 import json
 from flask import Flask, render_template, request, url_for, redirect, session, flash
 from flask_pymongo import PyMongo, DESCENDING
@@ -18,7 +18,7 @@ app = Flask(__name__)
 '''in development the environmental variables are saved on the env.py and in production 
 the environmental variables are saved on the Config Var in Heroku'''
 
-app.config["MONGO_DBNAME"] = 'CookBook'
+app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
 app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 
 

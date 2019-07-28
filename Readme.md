@@ -336,45 +336,49 @@ I have also used development tools in Google Chrome to check how the website wou
 
     `python -m venv .venv`
 
-2.  I've Installed flask
+2)  I've Installed flask
 
     `python -m pip install flask`
 
 3.  I've created the database in MongoDB Atlas
 
-4.  Then I've installed flask-pymongo for flask to comunicate with mongo:
+4)  Then I've installed flask-pymongo for flask to comunicate with mongo:
 
     `python -m pip install flask-pymongo`
 
 5.  Also in order to be able to use the latest style connection string I've installed dnspython:
 
-        	`python -m pip install dnspython`
+    `python -m pip install dnspython`
 
-6.  Then I've created a env.py file that contains my environmental variables as shown below:
+6)  Then I've created a env.py file that contains my environmental variables as shown below:
     _where `PASSWORD` and `DATABASE` will contain my password and the name of my database_
 
-        	`import os`
+    ```python
+    import os
 
-        	`os.environ.setdefault("MONGODB_URI", "mongodb+srv://elenauser:PASSWORD@myfirstcluster-tnijd.mongodb.net/DATABASE?retryWrites=true&w=majority")`
-
-        	`os.environ.setdefault("SECRET_KEY", "RandomString123")`
+    os.environ.setdefault("MONGODB_URI", "mongodb+srv://elenauser:PASSWORD@myfirstcluster-tnijd.mongodb.net/DATABASE?retryWrites=true&w=majority")
+    os.environ.setdefault("SECRET_KEY", "RandomString123")
+    ```
 
 7.  Then in the app.py I've added `import env` to get the environmental variables that will be needed in the following code:
 
-    `app.config["MONGO_DBNAME"] = 'CookBook'`
+    ```python
+    app.config["MONGO_DBNAME"] = 'CookBook'
 
-    `app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')`
+    app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
+    ```
 
-8.  I've have also set the Debug=True ("FLASK_DEBUG": "1") in the vs code settings as shown below:
+8)  I've have also set the Debug=True ("FLASK_DEBUG": "1") in the vs code settings as shown below:
 
-        `{
-
-    "python.pythonPath": ".venv\\Scripts\\python.exe",
-    "python.terminal.activateEnvironment": true,
-    "terminal.integrated.env.windows": {
-    "FLASK_DEBUG": "1"
+    ```json
+    {
+      "python.pythonPath": ".venv\\Scripts\\python.exe",
+      "python.terminal.activateEnvironment": true,
+      "terminal.integrated.env.windows": {
+        "FLASK_DEBUG": "1"
+      }
     }
-    }`
+    ```
 
 9.  After this I've run the code using the following command:
 
@@ -385,18 +389,27 @@ I have also used development tools in Google Chrome to check how the website wou
 I have used Heroku to deploy the website. In order to do that I have followed the steps below:
 
 1. I've changed the settings to Debug=False ("FLASK_DEBUG": "0")
-2. I've added the env.py file to the gitignore file.
+
+2) I've added the env.py file to the gitignore file.
+
 3. I've removed `import env` from the app.py
-4. I've created an app in Heroku
+
+4) I've created an app in Heroku
+
 5. In the settings (Config Vars) I've added my environmental variables for the IP, PORT, MONGODB_URI and SECRET_KEY
-6. From the command line in vs code I have created a requirements.txt file with the following command:
+
+6) From the command line in vs code I have created a requirements.txt file with the following command:
    `python -m pip freeze > requirements.txt`
+
 7. From the command line in vs code I have created the Procfile with the following command:
    `echo web: python app.py > Procfile`
 
-8. Then I have pushed all the code to my GitHub repository
+8) Then I have pushed all the code to my GitHub repository
+
 9. After this **I have linked my Heroku app with my GitHub repository** in order to be able to do "Continous delivery". I've learned how to link Heroku and GitHub with the following tutorial ([https://www.youtube.com/watch?v=\_tiecDrW6yY](https://www.youtube.com/watch?v=_tiecDrW6yY)).
-10. Then I have created another app with the same Config Vars and I have created a pipeline where the first app will be the staging app and the second app will be the production app. When I push changes to GitHub I'll be able to see the changes on the Staging App but not in the Production app.
+
+10) Then I have created another app with the same Config Vars and I have created a pipeline where the first app will be the staging app and the second app will be the production app. When I push changes to GitHub I'll be able to see the changes on the Staging App but not in the Production app.
+
 11. Once the website is fully tested and is working correctly the changes done to the statging app will be promoted to the Production app:
     [https://time2eat-cookbook.herokuapp.com/](https://time2eat-cookbook.herokuapp.com/)
 
@@ -420,37 +433,37 @@ http://time2eat-cookbook.herokuapp.com
 
 - The image used for the background image in the intro page was obtained from Google images using the Advance Search and selecting “free to use, share or modify, even commercially”. See link below:
 
-      	[https://www.maxpixel.net/Frying-Pan-Cooking-Food-Cook-Figure-Fried-3125716](https://www.maxpixel.net/Frying-Pan-Cooking-Food-Cook-Figure-Fried-3125716)
+[https://www.maxpixel.net/Frying-Pan-Cooking-Food-Cook-Figure-Fried-3125716](https://www.maxpixel.net/Frying-Pan-Cooking-Food-Cook-Figure-Fried-3125716)
 
 ##### recipes images
 
 - The recipes images have been obtained from Google images using the Advance Search and selecting “free to use, share or modify, even commercially”. See links below:
 
-      	[https://www.seriouseats.com/2015/05/pancakes-around-the-world.html](https://www.seriouseats.com/2015/05/pancakes-around-the-world.html)
+[https://www.seriouseats.com/2015/05/pancakes-around-the-world.html](https://www.seriouseats.com/2015/05/pancakes-around-the-world.html)
 
-      	[https://pixabay.com/photos/food-fish-chips-fish-and-chips-3687804/](https://pixabay.com/photos/food-fish-chips-fish-and-chips-3687804/)
+[https://pixabay.com/photos/food-fish-chips-fish-and-chips-3687804/](https://pixabay.com/photos/food-fish-chips-fish-and-chips-3687804/)
 
-      	[https://pixabay.com/images/search/burger/](https://pixabay.com/images/search/burger/)
+[https://pixabay.com/images/search/burger/](https://pixabay.com/images/search/burger/)
 
-      	[https://commons.wikimedia.org/wiki/File:Bolo_de_Mel.JPG](https://commons.wikimedia.org/wiki/File:Bolo_de_Mel.JPG)
+[https://commons.wikimedia.org/wiki/File:Bolo_de_Mel.JPG](https://commons.wikimedia.org/wiki/File:Bolo_de_Mel.JPG)
 
-      	[https://www.flickr.com/photos/30478819@N08/35961379924](https://www.flickr.com/photos/30478819@N08/35961379924)
+[https://www.flickr.com/photos/30478819@N08/35961379924](https://www.flickr.com/photos/30478819@N08/35961379924)
 
-      	[https://www.flickr.com/photos/146966953@N02/28879437404](https://www.flickr.com/photos/146966953@N02/28879437404)
+[https://www.flickr.com/photos/146966953@N02/28879437404](https://www.flickr.com/photos/146966953@N02/28879437404)
 
-      	[https://www.flickr.com/photos/39908901@N06/8406293769](https://www.flickr.com/photos/39908901@N06/8406293769)
+[https://www.flickr.com/photos/39908901@N06/8406293769](https://www.flickr.com/photos/39908901@N06/8406293769)
 
-      	[https://www.flickr.com/photos/jeffreyww/5063817774](https://www.flickr.com/photos/jeffreyww/5063817774)
+[https://www.flickr.com/photos/jeffreyww/5063817774](https://www.flickr.com/photos/jeffreyww/5063817774)
 
-      	[https://www.flickr.com/photos/ellaolsson/30863436677](https://www.flickr.com/photos/ellaolsson/30863436677)
+[https://www.flickr.com/photos/ellaolsson/30863436677](https://www.flickr.com/photos/ellaolsson/30863436677)
 
-      	[https://pxhere.com/en/photo/619505](https://pxhere.com/en/photo/619505)
+[https://pxhere.com/en/photo/619505](https://pxhere.com/en/photo/619505)
 
-      	[https://pixabay.com/photos/iced-coffee-coffee-drink-2710815/](https://pixabay.com/photos/iced-coffee-coffee-drink-2710815/)
+[https://pixabay.com/photos/iced-coffee-coffee-drink-2710815/](https://pixabay.com/photos/iced-coffee-coffee-drink-2710815/)
 
-      	[https://www.flickr.com/photos/30478819@N08/43801037610](https://www.flickr.com/photos/30478819@N08/43801037610)
+[https://www.flickr.com/photos/30478819@N08/43801037610](https://www.flickr.com/photos/30478819@N08/43801037610)
 
-      	[https://pixabay.com/photos/salad-tuna-salad-article-nafut-1088411/](https://pixabay.com/photos/salad-tuna-salad-article-nafut-1088411/)
+[https://pixabay.com/photos/salad-tuna-salad-article-nafut-1088411/](https://pixabay.com/photos/salad-tuna-salad-article-nafut-1088411/)
 
 ## Acknowledgements
 
@@ -466,7 +479,7 @@ http://time2eat-cookbook.herokuapp.com
   I watch the following tutorial to understand how to create the login/register functions.
   [https://www.youtube.com/watch?v=vVx1737auSE](https://www.youtube.com/watch?v=vVx1737auSE)
 
-- **Upload image**
+* **Upload image**
   I found information about how to upload images into mongodb using flask on the following video tutorial:
   [https://www.youtube.com/watch?v=DsgAuceHha4](https://www.youtube.com/watch?v=DsgAuceHha4)
 
@@ -474,13 +487,15 @@ http://time2eat-cookbook.herokuapp.com
   The following post help me to create the code in order to display the image as soon as it is selected using the input file.
   [https://gist.github.com/zulhfreelancer/1a1b68062da349d6268f0aaa43991b99](https://gist.github.com/zulhfreelancer/1a1b68062da349d6268f0aaa43991b99)
 
-- **Create interactive visualization using DC/JS Crossfilter**
+* **Create interactive visualization using DC/JS Crossfilter**
   I learn how to set up the connection between mongodb and DC/JS Crossfilter by following the tutorial in the link below:
   http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-python-mongodb/
 
 - **Log out / clear cookies**
   In the link below I learnt about how to remove the cookies when the user logs out. https://www.tutorialspoint.com/flask/flask_sessions.htm
-- As always the slack community has been very helpful when I had any question.
+
+* As always the slack community has been very helpful when I had any question.
+
 - I'm also really thankful to the Tutors who help me understanding how to set up environmental variables in vscode.
   <!--stackedit_data:
   eyJoaXN0b3J5IjpbOTAyMjA3MDAsLTg5MzA0MzMxMiwxNTgzMD
