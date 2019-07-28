@@ -21,7 +21,12 @@ main {
   flex: 1 0 auto;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Fredericka the Great", cursive;
   font-weight: 300;
 }
@@ -48,7 +53,8 @@ h5 {
   }
 }
 
-.form-label-group>input, .form-label-group>label {
+.form-label-group > input,
+.form-label-group > label {
   height: 2.5em;
   padding-left: 1em;
   padding-top: 0.4em;
@@ -71,18 +77,26 @@ h5 {
   border-color: #ff9907;
 }
 
-.btn-block:hover, .btn-block:active {
+.btn-block:hover,
+.btn-block:active {
   background-color: #e68f16;
   border-color: #e68f16;
 }
 
-.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
   color: #fff;
   background-color: #e68f16;
   border-color: #e68f16;
 }
 
-.form-control:focus, .btn-primary.focus, .btn-primary:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+.form-control:focus,
+.btn-primary.focus,
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
   border-color: #ff9907;
   box-shadow: 0 0 0 0.2rem rgba(255, 204, 65, 0.603);
 }
@@ -151,7 +165,8 @@ nav .brand-logo {
   }
 }
 
-nav i, nav i.material-icons {
+nav i,
+nav i.material-icons {
   font-size: 30px;
 }
 
@@ -313,13 +328,15 @@ hr {
   box-shadow: 2px 2px 12px #3f1e09;
 }
 
-.carousel .recipe-name, .carousel .bottom-carousel {
+.carousel .recipe-name,
+.carousel .bottom-carousel {
   visibility: hidden;
 }
 
 /* Display votes, views and "view" link only for the active image in the carousel */
 
-.carousel .active .recipe-name, .carousel .active .bottom-carousel {
+.carousel .active .recipe-name,
+.carousel .active .bottom-carousel {
   visibility: visible;
 }
 
@@ -349,7 +366,8 @@ hr {
 
 /* get_recipes & view_recipe */
 
-.wrapper-filter, .instructions {
+.wrapper-filter,
+.instructions {
   background-color: #ffffff;
   padding: 20px 30px 20px 30px;
   box-shadow: 2px 2px 5px #777777;
@@ -381,14 +399,14 @@ hr {
   margin-top: 30px;
 }
 
-[type="checkbox"]+label {
+[type="checkbox"] + label {
   font-size: 0.9rem;
 }
 
 /* checkboxes in screens under 401px */
 
 @media only screen and (max-width: 400px) {
-  [type="checkbox"]+label {
+  [type="checkbox"] + label {
     font-size: 0.8rem;
     padding-left: 22px;
   }
@@ -404,17 +422,17 @@ hr {
 
 /* update color for the switch */
 
-.switch label input[type="checkbox"]:checked+.lever {
+.switch label input[type="checkbox"]:checked + .lever {
   background-color: #ffbf007d;
 }
 
-.switch label input[type="checkbox"]:checked+.lever:after {
+.switch label input[type="checkbox"]:checked + .lever:after {
   background-color: #ffbf00;
 }
 
 /* update color for the checkboxes ticks */
 
-[type="checkbox"]:checked+label:before {
+[type="checkbox"]:checked + label:before {
   border-right: 2px solid #ffbf00;
   border-bottom: 2px solid #ffbf00;
 }
@@ -478,11 +496,13 @@ hr {
 
 /* instructions, ingredients and allergens section */
 
-.instructions h5, .ingredients h5, .allergens h5 {
+.instructions h5,
+.ingredients h5,
+.allergens h5 {
   padding-top: 15px;
 }
 
-.ingredients ul:not(.browser-default)>li {
+.ingredients ul:not(.browser-default) > li {
   list-style-type: circle;
   margin-left: 10px;
 }
@@ -510,7 +530,9 @@ hr {
     padding-right: 12px;
     font-size: 1.4em;
   }
-  .ingredients li, .instructions ol, .instructions p {
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
     font-size: 0.8em;
   }
 }
@@ -522,7 +544,9 @@ hr {
     padding-right: 18px;
     font-size: 1.8em;
   }
-  .ingredients li, .instructions ol, .instructions p {
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
     font-size: 0.9em;
   }
 }
@@ -533,10 +557,13 @@ hr {
   .details-item p {
     font-size: 0.9em;
   }
-  .ingredients li, .instructions ol, .instructions p {
+  .ingredients li,
+  .instructions ol,
+  .instructions p {
     font-size: 1em;
   }
-  .details-item h6, input[type="text"]:not(.browser-default) {
+  .details-item h6,
+  input[type="text"]:not(.browser-default) {
     margin: 0px;
   }
 }
@@ -544,7 +571,7 @@ hr {
 /* ingredients, votes star - screens under 601px */
 
 @media only screen and (max-width: 600px) {
-  .ingredients ul:not(.browser-default)>li {
+  .ingredients ul:not(.browser-default) > li {
     list-style-type: circle;
     margin-left: 65px;
   }
@@ -618,7 +645,10 @@ hr {
 
 /* Statistics.html */
 
-#category, #difficulty, #totalRecipes, #cuisine {
+#category,
+#difficulty,
+#totalRecipes,
+#cuisine {
   width: 100%;
 }
 
@@ -709,6 +739,7 @@ div.dc-chart {
   float: none;
 }
 
-.dc-table-row td, .dc-table-row th {
+.dc-table-row td,
+.dc-table-row th {
   padding: 15px 10px;
 }
