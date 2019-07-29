@@ -23,9 +23,9 @@
         <!-- recipe image -->
         <div class="col s12 m12 l6 img-wrapper">
             {% if recipe.recipe_image %}
-            <img src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}" alt="recipe_image">
+                <img src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}" alt="recipe_image">
             {% else %}
-            <img src="{{url_for('static', filename='img/default.jpg')}}" alt="default_recipe_image">
+                <img src="{{url_for('static', filename='img/default.jpg')}}" alt="default_recipe_image">
             {% endif %}
         </div>
 
@@ -114,25 +114,25 @@
                     <h5>Ingredients</h5>
                     <ul>
                         {% for ingredient in recipe.ingredients %}
-                        <li>
-                            {{ingredient}}
-                        </li>
+                            <li>
+                                {{ingredient}}
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
                 <!-- allergens -->
                 <!-- if length of the allergens array is > 0 then display the allergens -->
                 {% if recipe.allergens is defined and recipe.allergens|length >0 %}
-                <div class="col s12 ingredients">
-                    <h5>Allergens</h5>
-                    <ul>
-                        {% for allergen in recipe.allergens %}
-                        <li>
-                            {{allergen}}
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                    <div class="col s12 ingredients">
+                        <h5>Allergens</h5>
+                        <ul>
+                            {% for allergen in recipe.allergens %}
+                            <li>
+                                {{allergen}}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 {% endif %}
 
             </div>
@@ -144,9 +144,9 @@
                     <h5 class="center-align">Cooking instructions</h5>
                     <ol>
                         {% for instruction in recipe.instructions %}
-                        <li>
-                            {{instruction}}
-                        </li>
+                            <li>
+                                {{instruction}}
+                            </li>
                         {% endfor %}
                     </ol>
                     <p class="center-align author-date">Recipe by <b><em>{{recipe.author}}</em></b> - {{recipe.date}}
@@ -158,17 +158,20 @@
     {% if recipe.author == username %}
     <div class="row">
         <div class="col s12 right-align btn-view">
-            <a href="#modal_delete_recipe" class="btn waves-effect waves-light red modal-trigger"><i
-                    class="fa fa-trash"></i></a>
-            <a href="{{url_for('edit_recipe', recipe_id=recipe._id)}}" class="btn waves-effect waves-light blue"><i
-                    class="fa fa-edit"></i></a>
+            <a href="#modal_delete_recipe" class="btn waves-effect waves-light red modal-trigger">
+                <i class="fa fa-trash"></i>
+            </a>
+            <a href="{{url_for('edit_recipe', recipe_id=recipe._id)}}" class="btn waves-effect waves-light blue">
+                <i class="fa fa-edit"></i>
+            </a>
         </div>
     </div>
     {% else %}
     <div class="row">
         <div class="col s12 right-align btn-view">
-            <a href="{{url_for('vote', recipe_id=recipe._id)}}" class="btn waves-effect waves-light"><i
-                    class="fa fa-thumbs-up"></i></a>
+            <a href="{{url_for('vote', recipe_id=recipe._id)}}" class="btn waves-effect waves-light">
+                <i class="fa fa-thumbs-up"></i>
+            </a>
         </div>
     </div>
     {% endif %}

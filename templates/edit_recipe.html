@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<!-- In this page I have used the Materialize grid, Materialize form, Materialize inputs and Materialize modal -->
+
 <!-- "multipart/form-data" is needed in order to upload files -->
 <form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" class="container"
     enctype="multipart/form-data">
     <div class="row">
         <div class="input-field col s12 m6">
             <h5><strong>Recipe name:</strong></h5>
-            <input id="recipe_name" name="recipe_name" type="text" class="validate" value="{{recipe.recipe_name}}"
-                required="">
+            <input id="recipe_name" name="recipe_name" type="text" class="validate" value="{{recipe.recipe_name}}" required="">
         </div>
     </div>
 
@@ -17,15 +19,17 @@
         <div class="col m12 l6">
             <!-- Modal Trigger -->
             <div class="row"><a class="modal-trigger" href="#modal1">Change image</a></div>
-            <div class="row img-wrapper"> <a class="modal-trigger" href="#modal1">
+            <div class="row img-wrapper">
+                <a class="modal-trigger" href="#modal1">
                     {% if recipe.recipe_image %}
-                    <img src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}" alt="recipe_image">
+                        <img src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}" alt="recipe_image">
                     {% else %}
-                    <img src="{{url_for('static', filename='img/default.jpg')}}" alt="default_recipe_image">
+                        <img src="{{url_for('static', filename='img/default.jpg')}}" alt="default_recipe_image">
                     {% endif %}
-                </a></div>
+                </a>
+            </div>
 
-            <!-- Modal Structure -->
+            <!-- Modal Structure from Materialize-->
             <div id="modal1" class="modal">
                 <div class="file-field input-field">
                     <div class="btn">
@@ -52,8 +56,7 @@
                         </div>
                         <div class="col s9 m6 input-field">
                             <h6><strong>Cooking time:</strong></h6>
-                            <input id="cooking_time" name="cooking_time" type="text" class="validate"
-                                value="{{recipe.cooking_time}}" required="">
+                            <input id="cooking_time" name="cooking_time" type="text" class="validate" value="{{recipe.cooking_time}}" required="">
                         </div>
                     </div>
                 </div>
@@ -64,8 +67,7 @@
                         </div>
                         <div class="col s9 m6 input-field">
                             <h6><strong>Calories</strong></h6>
-                            <input id="calories" name="calories" type="text" class="validate"
-                                value="{{recipe.calories}}">
+                            <input id="calories" name="calories" type="text" class="validate" value="{{recipe.calories}}">
                         </div>
                     </div>
                 </div>
@@ -80,11 +82,11 @@
                             <h6><strong>Difficulty:</strong></h6>
                             <select id="difficulty" name="difficulty">
                                 {% for level in difficulty%}
-                                {% if level.difficulty == recipe.difficulty %}
-                                <option value="{{level.difficulty}}" selected>{{level.difficulty}}</option>
-                                {% else %}
-                                <option value="{{level.difficulty}}">{{level.difficulty}}</option>
-                                {% endif %}
+                                    {% if level.difficulty == recipe.difficulty %}
+                                        <option value="{{level.difficulty}}" selected>{{level.difficulty}}</option>
+                                    {% else %}
+                                        <option value="{{level.difficulty}}">{{level.difficulty}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -99,11 +101,11 @@
                             <h6><strong>Category:</strong></h6>
                             <select id="category" name="category">
                                 {% for category in categories%}
-                                {% if category.category == recipe.category %}
-                                <option value="{{category.category}}" selected>{{category.category}}</option>
-                                {% else %}
-                                <option value="{{category.category}}">{{category.category}}</option>
-                                {% endif %}
+                                    {% if category.category == recipe.category %}
+                                        <option value="{{category.category}}" selected>{{category.category}}</option>
+                                    {% else %}
+                                        <option value="{{category.category}}">{{category.category}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -120,11 +122,11 @@
                             <h6><strong>Cuisine:</strong></h6>
                             <select id="cuisine" name="cuisine">
                                 {% for cuisine in cuisines %}
-                                {% if cuisine.cuisine == recipe.cuisine %}
-                                <option value="{{cuisine.cuisine}}" selected>{{cuisine.cuisine}}</option>
-                                {% else %}
-                                <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
-                                {% endif %}
+                                    {% if cuisine.cuisine == recipe.cuisine %}
+                                        <option value="{{cuisine.cuisine}}" selected>{{cuisine.cuisine}}</option>
+                                    {% else %}
+                                        <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -137,8 +139,7 @@
                         </div>
                         <div class="col s9 m6 input-field">
                             <h6><strong>Serves:</strong></h6>
-                            <input placeholder="Serves" id="serves" name="serves" type="number" class="validate"
-                                value="{{recipe.serves}}" required="">
+                            <input placeholder="Serves" id="serves" name="serves" type="number" class="validate" value="{{recipe.serves}}" required="">
                         </div>
                     </div>
                 </div>
@@ -152,16 +153,18 @@
         <div class="col s12">
             <h5>Cooking instructions:</h5>
             <p>* Enter each step on a new line</p>
-            <textarea id="instructions" name="instructions" class="materialize-textarea validate"
-                required="">{{list_instructions}}</textarea>
+            <textarea id="instructions" name="instructions" class="materialize-textarea validate" required="">
+                {{list_instructions}}
+            </textarea>
         </div>
 
         <!-- ingredient -->
         <div class="col s12">
             <h5>Ingredients:</h5>
             <p>* Enter each ingredient on a new line</p>
-            <textarea id="ingredients" name="ingredients" class="materialize-textarea validate"
-                required="">{{list_ingredients}}</textarea>
+            <textarea id="ingredients" name="ingredients" class="materialize-textarea validate" required="">
+                {{list_ingredients}}
+            </textarea>
         </div>
 
         <!-- allergens -->
@@ -170,11 +173,11 @@
             <div class="input-field">
                 <select id="allergens" name="allergens" class="validate" multiple>
                     {% for allergen in allergens %}
-                    {% if allergen.allergen in recipe.allergens %}
-                    <option value="{{allergen.allergen}}" selected>{{allergen.allergen}}</option>
-                    {% else %}
-                    <option value="{{allergen.allergen}}">{{allergen.allergen}}</option>
-                    {% endif %}
+                        {% if allergen.allergen in recipe.allergens %}
+                            <option value="{{allergen.allergen}}" selected>{{allergen.allergen}}</option>
+                        {% else %}
+                            <option value="{{allergen.allergen}}">{{allergen.allergen}}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
@@ -183,10 +186,11 @@
 
     <div class="row">
         <div class="col s12 right-align">
-            <button class="btn waves-effect waves-light blue" type="submit" name="action"><i
-                    class="fa fa-insert"></i>Save changes</button>
-
+            <button class="btn waves-effect waves-light blue" type="submit" name="action">
+                <i class="fa fa-insert"></i>Save changes
+            </button>
         </div>
     </div>
 </form>
+
 {% endblock %}

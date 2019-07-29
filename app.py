@@ -123,7 +123,7 @@ def filter_recipes():
     
     # create different query depending is the user selects "only_mine" or not"
     if request.form.get('only_mine') == 'only_mine':
-        query_author = {"author": username }
+        query_author = {"author": session['username'] }
     else:
         query_author = {"author": { "$in": recipes.distinct('author') } }
     

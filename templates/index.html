@@ -10,10 +10,8 @@
     <!-- google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Coming+Soon&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap" rel="stylesheet">
-
     <!-- styles that were part of the template used for the login/register pages  https://startbootstrap.com/snippets/sign-in-split/ -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" type="text/css" />
-
     <!-- my styles -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" type="text/css" />
 
@@ -22,12 +20,14 @@
 
 <body>
     <header>
+        <!-- Bootstrap nav bar -->
         <nav class="navbar navbar-default fixed-top bg-navbar">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <a href="{{url_for('index')}}" class="navbar-brand">
-                        <img src="{{url_for('static', filename='img/logo.png')}}" width="220" alt="Time2Eat logo"></a>
+                        <img src="{{url_for('static', filename='img/logo.png')}}" width="220" alt="Time2Eat logo">
+                    </a>
                 </div>
             </div>
         </nav>
@@ -53,6 +53,7 @@
             </div>
         </div>
     </div>
+    
     <!-- jquery and bootstrap files that were part of the template used for the login/register pages  https://startbootstrap.com/snippets/sign-in-split/ -->
     <script src="{{url_for('static', filename='js/jquery.slim.js')}}"></script>
     <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
