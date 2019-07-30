@@ -1,5 +1,5 @@
 import os
-# env is where I have my environmental variables and it is only used for to run my code locally
+# env is where I have my environmental variables and it is only used to run my code locally, in production in commented out
 # import env
 import json
 from flask import Flask, render_template, request, url_for, redirect, session, flash
@@ -10,34 +10,32 @@ from bson.json_util import dumps
 from datetime import datetime
 import bcrypt
 
-
 # create an instance of Flask
 app = Flask(__name__)
 
-
-'''in development the environmental variables are saved on the env.py and in production 
-the environmental variables are saved on the Config Var in Heroku'''
+'''
+In development the environmental variables are saved on the env.py and in production 
+the environmental variables are saved on the Config Var in Heroku
+'''
 
 app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
 app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 
-
 # we create an instance of Mongo
 mongo = PyMongo(app)
 
-
 # secret key needed to create session cookies
 app.secret_key = os.environ.get('SECRET_KEY')
-
 
 #function used to convert strings separated by '\n' to arrays
 def string_to_array(string):
     array = string.split("\n")
     return array
     
-
-'''landing page for the website for new users. I learn how to create the login/register functionality
- by watching this tutorial https://www.youtube.com/watch?v=vVx1737auSE'''
+'''
+Landing page for the website for new users. I learn how to create the login/register functionality
+ by watching this tutorial https://www.youtube.com/watch?v=vVx1737auSE
+ '''
 @app.route('/')
 def index():
     # if the cookie for the user already exist the login page is skipped
@@ -79,9 +77,10 @@ def register():
     return render_template('register.html', title="Register")
 
 
-'''home page, the recipes are sorted by votes and after by views. The most voted will 
-be on the top one of the carousel and the it will be in descending order if you move to the right'''
-
+'''
+Home page, the recipes are sorted by votes and after by views. The most voted will 
+be on the top one of the carousel and the it will be in descending order if you move to the right
+'''
 @app.route('/get_recipes')
 def get_recipes():
     recipes = mongo.db.Recipes.find().sort([("upvotes",DESCENDING), ("views",DESCENDING)])
@@ -105,9 +104,11 @@ def search():
     return render_template('get_recipes.html', title="View recipes", username=session['username'], recipes = recipes, categories = mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), allergens=mongo.db.Allergens.find(), recipes_count=recipes.count())
          
 
-'''create different query depending on if a cuisine, difficulty or category has been selected or not in the 
-dropdown menu or checkboxes. I nothing has been selected will will display all the options available, 
-if some options have been selected then we will filter by the options selected'''
+'''
+Create different query depending on if a cuisine, difficulty or category has been selected or not in the 
+dropdown menu or checkboxes. I nothing has been selected we will display all the options available, 
+if some options have been selected then we will filter by the options selected
+'''
 def query_needed(recipes, field):
     if request.form.getlist(field) != []:
         return {field:{ "$in": request.form.getlist(field)}}
@@ -151,16 +152,20 @@ def tips():
     return render_template('tips.html', title="Tips")
 
 
-# function to add new recipe
+# add new recipe
 @app.route('/add_recipe')
 def add_recipe():
     return render_template('add_recipe.html', title="Add recipe", categories = mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), allergens=mongo.db.Allergens.find())
 
 
-# funtion to insert into the database the new recipe
+''' 
+funtion to insert into the database the new recipe
+I also learn how to save and retrieve files in MongoDB by watching
+the following tutorial:
+https://www.youtube.com/watch?v=DsgAuceHha4
+'''
 @app.route('/insert_recipe', methods=['GET', 'POST'])
 def insert_recipe():
-    '''https://www.youtube.com/watch?v=DsgAuceHha4'''
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
         if recipe_image != "":
@@ -193,12 +198,16 @@ def insert_recipe():
 # function to see a recipe after clicking on its image or "view" link
 @app.route('/view_recipe/<recipe_id>')
 def view_recipe(recipe_id):
+    #we increment the number of views everytime a recipe is seen
     mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'views': 1}})
     
     return render_template('view_recipe.html', recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)}), username = session['username'])
 
 
-# function to vote the recipes (the recipe author is not allowed to vote)
+'''
+function to vote the recipes.
+The recipe author is not allowed to vote for his recipes. Each user is only allowed to vote once for each recipe
+'''
 @app.route('/view_recipe/vote/<recipe_id>')
 def vote(recipe_id):
     users = mongo.db.Users
@@ -212,7 +221,7 @@ def vote(recipe_id):
     
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
-
+# Edit recipe view
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
     recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
@@ -223,7 +232,11 @@ def edit_recipe(recipe_id):
     return render_template('edit_recipe.html', recipe=recipe, categories=mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), list_ingredients=list_ingredients, list_allergens=list_allergens,list_instructions=list_instructions, allergens=mongo.db.Allergens.find())
 
 
-'''https://www.youtube.com/watch?v=DsgAuceHha4 In this video I learned how to upload images into MongoDB'''
+'''
+Funcion to update recipes.
+In the video below I learned how to upload images into MongoDB:
+https://www.youtube.com/watch?v=DsgAuceHha4 
+'''
 @app.route('/update_recipe/<recipe_id>' , methods=['GET', 'POST'])
 def update_recipe(recipe_id):
     recipes = mongo.db.Recipes
@@ -339,12 +352,13 @@ def delete_cuisine(cuisine_id):
     mongo.db.Cuisines.remove({"_id":ObjectId(cuisine_id)})
     return redirect(url_for('manage_categories'))
    
-
-# http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-python-mongodb/
-# we use this route to retrieve all the recipes from the database in json format
+'''
+we use this route to retrieve all the recipes from the database in json format. 
+The following tutorial help me to create this function:
+http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-python-mongodb/
+'''
 @app.route("/data_recipes")
 def data():
-    # recipes = mongo.db.Recipes.find(projection = {'_id':True ,'recipe_name': True, 'upvotes': True,'category': True, 'difficulty': True, 'cuisine': True, 'author':True})
     recipes = mongo.db.Recipes.find()
     json_recipes = []
 
@@ -354,14 +368,17 @@ def data():
          
     return json_recipes
     
-
+# Statistics view
 @app.route("/statistics")
 def statistics():
     return render_template('statistics.html', title="Dashboard")
 
 
-# funtion to log out / clear cookie
+'''
+funtion to log out / clear cookie
+I understood how to log out a user by watching the following tutorial: 
 # https://www.tutorialspoint.com/flask/flask_sessions.htm
+'''
 @app.route('/logout')
 def logout():
  # remove the username from the session if it is there
