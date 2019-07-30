@@ -201,7 +201,15 @@ def view_recipe(recipe_id):
 # function to vote the recipes (the recipe author is not allowed to vote)
 @app.route('/view_recipe/vote/<recipe_id>')
 def vote(recipe_id):
-    mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'upvotes': 1}})
+    users = mongo.db.Users
+    already_voted = users.find_one({"$and":[{"author":session['username']},{'votes':recipe_id}]})
+
+    if already_voted is None:
+        mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'upvotes': 1}})
+        users.update_one({"author":session['username']},{"$push":{"votes":recipe_id}})
+    else:
+         flash("You have already voted for this recipe")
+    
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
 

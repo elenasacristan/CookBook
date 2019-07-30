@@ -686,7 +686,8 @@ hr {
   margin-bottom: 50px;
 }
 
-/* this is needed in order to display the validation messages in the materialize selects */
+/* by default the select item from materialize is hidden so the validation message didn't appear. 
+After changing display to block the validation messages appeared*/
 
 .input-field select {
   display: block;
@@ -696,12 +697,10 @@ hr {
   height: 0;
   top: 0;
   left: 0;
-  opacity: 0;
+  opacity: 0; 
 }
 
-.select-label {
-  position: absolute;
-}
+
 
 /* *************** */
 

@@ -8,13 +8,20 @@
             <h4>{{recipe.recipe_name}}</h4>
         </div>
         <div class="col offset-s6 s6 m3 right-align">
+            <!-- if the same recipe is votes twice we will display an error message below using a flash message-->      
+            {% with messages = get_flashed_messages() %} 
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="error_message">{{ message }}</p>
+                    {% endfor %}
+                {% endif %} 
+            {% endwith %}
             <div class="row">
                 <div class="col s12 right-align">
                     <div class="votes">
                         <h5>{{recipe.upvotes}} votes <i class="fa fa-star"></i></h5>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
