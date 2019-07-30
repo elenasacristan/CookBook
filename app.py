@@ -17,7 +17,6 @@ app = Flask(__name__)
 In development the environmental variables are saved on the env.py and in production 
 the environmental variables are saved on the Config Var in Heroku
 '''
-
 app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
 app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 
@@ -221,6 +220,7 @@ def vote(recipe_id):
     
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
+
 # Edit recipe view
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
@@ -384,6 +384,7 @@ def logout():
  # remove the username from the session if it is there
     session.pop('username', None)
     return redirect(url_for('index'))
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'), port=int(os.environ.get('PORT')))
