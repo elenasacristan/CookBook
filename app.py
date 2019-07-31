@@ -296,13 +296,17 @@ def manage_categories():
 
     for category in categories:
 	    count_recipes_category = mongo.db.Recipes.find({'category':category['category']}).count()
-	    category_object.append({"category_id" : category['_id'] ,"category" : category['category'], "count_recipes_category" : count_recipes_category})
-        
+	    category_object.append({"category_id" : category['_id'] ,"category" : category['category'], "count_recipes_category" : count_recipes_category})   
+    #sort categories by number of recipes in descending order
+    category_object_sorted = sorted(category_object, key=lambda x: x['count_recipes_category'], reverse=True)
+
     for cuisine in cuisines:
 	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine['cuisine']}).count()
 	    cuisine_object.append({"cuisine_id" : cuisine['_id'], "cuisine" : cuisine['cuisine'], "count_recipes_cuisine" : count_recipes_cuisine} )
+    #sort cuisines by number of recipes in descending order
+    cuisine_object_sorted = sorted(cuisine_object, key=lambda x: x['count_recipes_cuisine'], reverse=True)
 
-    return render_template('manage_categories.html', title="Type of meals / cuisines", categories = category_object, cuisines = cuisine_object)
+    return render_template('manage_categories.html', title="Type of meals / cuisines", categories = category_object_sorted, cuisines = cuisine_object_sorted)
     
 
 # function to insert a new category into the database
