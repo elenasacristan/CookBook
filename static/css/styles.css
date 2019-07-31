@@ -374,7 +374,7 @@ hr {
   margin-bottom: 25px;
 }
 
-/********* get_recipes filter section **********/
+/* get_recipes filter section */
 
 .wrapper-filter p {
   font-size: 0.8em;
@@ -435,6 +435,20 @@ hr {
 [type="checkbox"]:checked + label:before {
   border-right: 2px solid #ffbf00;
   border-bottom: 2px solid #ffbf00;
+}
+
+/* by default the select item from materialize is hidden so the validation message didn't appear. 
+After changing display to block the validation messages appeared*/
+
+.input-field select {
+  display: block;
+  position: absolute;
+  width: 0;
+  pointer-events: none;
+  height: 0;
+  top: 0;
+  left: 0;
+  opacity: 0; 
 }
 
 /* add recipe */
@@ -618,7 +632,7 @@ hr {
   text-align: left;
 }
 
-/* modal in add  and edit image */
+/* modal in add and edit image */
 
 .img-details .modal-close {
   margin-left: 30px;
@@ -641,23 +655,6 @@ hr {
 
 .manage-categories table {
   margin-bottom: 80px;
-}
-
-/* Statistics.html */
-
-#category,
-#difficulty,
-#totalRecipes,
-#cuisine {
-  width: 100%;
-}
-
-/* to center the pie charts when the width is between 601 and 992*/
-
-@media only screen and (max-width: 992px) and (min-width: 601px) {
-  .pie-charts {
-    text-align: center;
-  }
 }
 
 /* tips */
@@ -686,25 +683,18 @@ hr {
   margin-bottom: 50px;
 }
 
-/* by default the select item from materialize is hidden so the validation message didn't appear. 
-After changing display to block the validation messages appeared*/
+/* Statistics.html */
 
-.input-field select {
-  display: block;
-  position: absolute;
-  width: 0;
-  pointer-events: none;
-  height: 0;
-  top: 0;
-  left: 0;
-  opacity: 0; 
+.charts {
+  text-align: center;
 }
 
-
-
-/* *************** */
-
-/* summary-table */
+#category,
+#difficulty,
+#totalRecipes,
+#cuisine {
+  width: 100%;
+}
 
 .summary-table {
   font-size: 0.7em;
@@ -728,10 +718,6 @@ After changing display to block the validation messages appeared*/
 .dc-chart g.row text {
   fill: #000000;
   font-weight: 900;
-}
-
-.charts {
-  text-align: center;
 }
 
 div.dc-chart {
