@@ -94,7 +94,7 @@ Below you can see the mock-ups that I drew using [Pencil](https://pencil.evolus.
 
   
 
-- The final website differs from the original wire-frames because when working on the design sometimes I found nicer ways to display the different sections.
+- The final website differs from the original wire-frames because when working on the design sometimes I found more appropriate way to display the different sections.
 
   
 
@@ -247,7 +247,8 @@ Before the recipe gets removed a confirmation message will appear so the user ca
 
 - **Edit button:** This button will only be visible if the recipe belongs to the user and will allow the user to edit the recipe by redirecting the user to the "edit recipe" page.
 
-- **Vote button:** This button will only be visible if the recipe doesn't belong to the user and by clicking on it the number of votes displayed at the right top of the screen will be incremented by one. A user can only vote for the same recipe once and if he tries more than once an error message will be displayed.
+- **Vote button:** This button will only be visible if the recipe doesn't belong to the user and by clicking on it the number of votes displayed at the right top of the screen will be incremented by one. 
+A user can only vote for the same recipe once and if he tries to vote more than once an error message will be displayed.
 
 - **Modal:** When the user clicks on "delete button" the confirmation message will be displayed on a modal window and the recipe will only be removed if "YES" is selected. This modal has been taken from [Materialize](<[https://materializecss.com/](https://materializecss.com/)>).
 
@@ -309,6 +310,8 @@ In the second column of the table the users can see how many recipes there are f
 
 - **Remove Type of meal / Cuisine** If a type of meal or cuisine doesn't have any recipes associated with it, then the user will have the option to remove that type of meal / cuisine.
 
+- **Modal:** When the user clicks on "delete type of meal / cuisine" the confirmation message will be displayed on a modal window and the type of meal / cuisine will only be removed if "YES" is selected. This modal has been taken from [Materialize](<[https://materializecss.com/](https://materializecss.com/)>).
+
   
 
 ### Tips page
@@ -352,9 +355,7 @@ This page will give the user an idea of how many and what kind of recipes can be
 
   
 
-- **Favourites:** I would like to save for each user their favourites recipes so they could save them and access them quicker.
-
-- **Limit the Number of votes:** At the moment the users can vote a recipe more than once but in future I would like to make sure that a user can only vote the same recipe once.
+- **Favourites:** Add an additional filter to display only the favourites recipes. I thought of this feature once the website was finished and I couldn't spend much more time working on this project as I needed to get going with the rest of the course.
 
 - **Persistence of the filter when searching for recipes** After selecting some filter options and clicking on the filter button I would like to make sure that the options selected on the filters stay selected.
 
@@ -370,7 +371,7 @@ This page will give the user an idea of how many and what kind of recipes can be
 
 - **[MongoDB](<[https://www.mongodb.com/](https://www.mongodb.com/)>)**
 
-See below the satabase schema:
+See below the database schema:
 
   
 
@@ -392,7 +393,8 @@ See below the satabase schema:
 
 - **[Adobe Fireworks:](https://www.adobe.com/products/fireworks.html)** I have used Adobe Fireworks to edit the background images, to create the logo and to do some edits on the mock-ups.
 
-  
+ #### Markdown editor
+ - **[stackedit:](https://stackedit.io/app#)** I have used stackedit in order to create the Readme file because it is an online editor so I could edit my Readme.md file from any computer and also I was able to work offline if I needed to.
 
 #### Languages:
 
@@ -430,17 +432,17 @@ In order to be able to run my code I had to install the following dependencies:
 
   
 
-- **render_template** - Used to render html files (they need to be saved on the templates folder)
+**render_template** - Used to render html files (they need to be saved on the templates folder)
 
-- **request** - Used to access the **form** inputs
+**request** - Used to access the **form** inputs
 
-- **url_for** - Provides a easy way to add urls where needed.
+**url_for** - Provides a easy way to add urls where needed.
 
-- **redirect** - Used to redirect between views.
+**redirect** - Used to redirect between views.
 
-- **session** - Needed in order to create a session cookie for the user. That cookie will be removed when the browser is closed or when the user logs out.
+**session** - Needed in order to create a session cookie for the user. That cookie will be removed when the browser is closed or when the user logs out.
 
-- **flash** - Used to send feedback messages to the user.
+**flash** - Used to send feedback messages to the user.
 
   
 
@@ -448,9 +450,9 @@ In order to be able to run my code I had to install the following dependencies:
 
   
 
-- **PyMongo** is needed in order to interact with MongoDB
+**PyMongo** is needed in order to interact with MongoDB
 
-- **DESCENDING** is needed in order to sort the results of the queries in descending order.
+**DESCENDING** is needed in order to sort the results of the queries in descending order.
 
   
 
@@ -466,7 +468,7 @@ In order to be able to run my code I had to install the following dependencies:
 
   
 
-- **bson** (Binary JSON) - MongoDB uses bson so we will need to used the dependency bson in order to convert between BSON and JSON.
+**bson** (Binary JSON) - MongoDB uses bson so we will need to used the dependency bson in order to convert between BSON and JSON.
 
   
 
@@ -474,7 +476,7 @@ In order to be able to run my code I had to install the following dependencies:
 
   
 
-- **datetime** this dependency will be needed to format the date when a new recipe is added.
+**datetime** this dependency will be needed to format the date when a new recipe is added.
 
   
 
@@ -482,7 +484,7 @@ In order to be able to run my code I had to install the following dependencies:
 
   
 
-- **bcrypt** This dependency will be needed in order to provide a secure login system by hashing the password.
+**bcrypt** This dependency will be needed in order to provide a secure login system by hashing the password.
 
   
 
@@ -558,7 +560,7 @@ I have used Heroku in order to deploy the website.
 
   
 
-Click [here](https://github.com/elenasacristan/HolidaysYa/tree/master/assets/Documents/checkList.pdf) to see the checklist that I have used to test all the features in all the screen sizes.
+Click [here](https://github.com/elenasacristan/Cookbook/tree/master/static/Documents/checkList.pdf) to see the checklist that I have used to test all the features in all the screen sizes.
 
   
 
@@ -569,7 +571,7 @@ Click [here](https://github.com/elenasacristan/HolidaysYa/tree/master/assets/Doc
 #### unittest
 
   
-I have used unittest in order to test the **CRUD** operations, the search function, the different filter options and the **string_to_array** functions.
+I have used unittest in order to test the **CRUD** operations, the **search function**, the different **filter** options and the **string_to_array** functions.
 
 My mentor Guido help me setting up unittest for the project and together we created the first two tests (test_string_to_array and test_insert_recipe).
 
@@ -586,34 +588,14 @@ I have also used development tools in Google Chrome to check how the website wou
 
 ### Problems and bugs:
 
-  
-
-- **Materialize Select Inputs flicker on some versions of Chrome** 
+**Materialize Select Inputs flicker on some versions of Chrome** 
 There is a bug with the select inputs in Materialize and the drop down flickers when it is clicked for the first time.
 
-- **Materialize Select Inputs - validation message not displayed**
-The validation message wasn't displaying if the selected inputs were not answered and I found the solution in the following link:
+**Materialize Select Inputs - validation message not displayed**
+The validation message wasn't displaying if the selected inputs were not answered and I found in the link below that the reason why it doesn't appear is because the select item is hidden but after changing it to block the validation message appeared:
+[https://github.com/Dogfalo/materialize/issues/3440](https://github.com/Dogfalo/materialize/issues/3440)
 
-```css
-/* this is needed in order to display the validation messages in the materialize selects */
-
-.input-field select {
-display: block;
-position: absolute;
-width: 0;
-pointer-events: none;
-height: 0;
-top: 0;
-left: 0;
-opacity: 0;
-}
-
-.select-label {
-position: absolute;
-}
-```
-
-- **materialize carrousel links didn't work on mobile devices:** 
+**materialize carrousel links didn't work on mobile devices:** 
 I found the solution in this post:
 [https://stackoverflow.com/questions/49419766/materialize-carousel-arrows-not-working-on-mobile](https://stackoverflow.com/questions/49419766/materialize-carousel-arrows-not-working-on-mobile)
 So I replaced the materialize.min.js with materialize.js and I replaced the code as shown below:
@@ -666,7 +648,7 @@ function setupEvents() {
 
   
 
-3. I have created a .gitignore file and I have added the files and folder that don't need to be commited (i.e. '.venv' folder)
+3. I have created a .gitignore file and I have added the files and folder that don't need to be commited (i.e. '.venv' folder, env.py, etc)
 
 4. I've added the files that I was working on to the Staging area by using:
 
@@ -698,10 +680,10 @@ function setupEvents() {
 
 7. After this has been done I've run regular commits after every important update to the code, and I pushed the changes to GitHub.
 
+8. Once the website was nearly finished I have linked Heroky and GitHub so everytime the code was pushed to GitHub it was also deployed to Heroku (more details in the Deployment section).
+
   
-
 ## Deployment
-
   
 
 ### Running my code locally
@@ -815,7 +797,7 @@ I have used Heroku to deploy the website. In order to do that I have followed th
 
   
 
-2) I've added the env.py file to the gitignore file.
+2) I've made sure that the env.py file is included in the gitignore file.
 
   
 
@@ -981,7 +963,7 @@ http://time2eat-cookbook.herokuapp.com
 
   
 
-**Tutorials**
+**Tutorials and posts**
 
   
 
@@ -1007,15 +989,21 @@ The following post help me to create the code in order to display the image as s
 I learn how to set up the connection between mongodb and DC/JS Crossfilter by following the tutorial in the link below:
 http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-python-mongodb/
 
-  
+- **Materialize Select Inputs**
+I learn by reading the following post why the Materialize select validation messages were not displayed.
+[https://github.com/Dogfalo/materialize/issues/3440](https://github.com/Dogfalo/materialize/issues/3440)
+
+- **Materialize Carousel issue on Mobile:** 
+I found in the following post the solution to the issue with the carousel on mobile devices.
+[https://stackoverflow.com/questions/49419766/materialize-carousel-arrows-not-working-on-mobile](https://stackoverflow.com/questions/49419766/materialize-carousel-arrows-not-working-on-mobile)
 
 - **Log out / clear cookies**
 In the link below I learnt about how to remove the cookies when the user logs out. https://www.tutorialspoint.com/flask/flask_sessions.htm
 
   
+**Upload image**
 
 * As always the slack community has been very helpful when I had any question.
 
-  
-
 - I'm also really thankful to the Tutors who help me understanding how to set up environmental variables in vscode.
+- And thanks to my mentor for helping me with the unittest set up.
