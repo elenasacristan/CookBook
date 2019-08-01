@@ -82,7 +82,7 @@ Below you can see the mock-ups that I drew using [Pencil](https://pencil.evolus.
 
 - As a user who wants to cook a low, medium or high difficulty meal I want to be able to filter the recipes by difficulty.
 
-  - As a user who wants to cook a meal from a specific cuisine I want to be able to filter the recipes by cuisines available. 
+ - As a user who wants to cook a meal from a specific cuisine I want to be able to filter the recipes by cuisines available. 
 
 - As a user who wants to make sure the recipes displayed don't contain certain allergens I want to be able to exclude those allergens from the recipes displayed.
 
@@ -151,7 +151,7 @@ At the bottom of the carousel the user can see how many votes and views each rec
 
 - **Select drop-down menu to filter by difficulty:** It will allow the user to filter by difficulty. This filter can be used on its own or as a combination with more filters in the filter section. More than one level of difficulty can be selected.
 
-- **Select dropdown menu to filter by cuisine:** It will allow the user filter by cuisine. This filter can be used on its own or as a combination with more filters in the filter section. More than one cuisine can be selected.
+- **Select dropdown menu to filter by cuisine:** It will allow the user to filter by cuisine. This filter can be used on its own or as a combination with more filters in the filter section. More than one cuisine can be selected.
 
 - **Filter by recipes that don't contain certain allergens:** I have added check boxes with the main allergens so the user can select which allergens should be removed from the results.
 
@@ -196,7 +196,7 @@ The user needs to enter every ingredient/instruction in a different line to make
 After adding the recipe the user gets redirected to the home page.
 
 - **Button 'Save changes':** By clicking this button the form will be submitted and the recipe will be updated in the database.
-After editing a recipe the user gets redirected to the recipe that he/she has just created.
+After editing a recipe the user gets redirected to the recipe that he/she has just edited.
 
 
 ### Manage categories
@@ -217,7 +217,7 @@ The types of meals and cuisines will be sorted by number of recipes associated w
 
 This page is used to explain to the user how to use the app in order to get the most out of it.
 
-- **Material Icons:** I have used material icons matching with the material icons in the nav bar in order to explain the functionality of each part of the website.
+- **[Material Icons:](https://material.io/resources/icons/?style=baseline)** I have used material icons matching with the material icons in the nav bar in order to explain the functionality of each part of the website.
 For mobile devices I have hidden the icons for the descriptions of each section.
 
 ### Statistics page
@@ -334,21 +334,15 @@ In order to be able to run my code I had to install the following dependencies:
 
 #### Development environment:
 
-- **[VisualStudio:](https://visualstudio.microsoft.com/)**
-
-I have used Visual Studio to develop the app.
+**[VisualStudio:](https://visualstudio.microsoft.com/)** I have used Visual Studio to develop the app.
 
 #### Version control system:
 
-- **[Git:](https://git-scm.com/ "https://git-scm.com/")**
-
-I have used the version control system Git from the "Git Bash" terminal in order to track changes in the website and push them to GitHub.
+**[Git:](https://git-scm.com/ "https://git-scm.com/")** I have used the version control system Git from the "Git Bash" terminal in order to track changes in the website and push them to GitHub.
 
 #### Hosting service:
 
-- **[Heroku:](<[https://www.heroku.com/](https://www.heroku.com/)>)**
-
-I have used Heroku in order to deploy the website.
+**[Heroku:](https://www.heroku.com/)** I have used Heroku in order to deploy the website.
 
 ## Testing
 
@@ -362,7 +356,7 @@ I have used Heroku in order to deploy the website.
 
 ### Features and responsiveness testing
 
-Click [here](https://github.com/elenasacristan/Cookbook/tree/master/static/Documents/checkList.pdf) to see the checklist that I have used to test all the features in all the screen sizes.
+Click [here](https://github.com/elenasacristan/Cookbook/tree/master/static/Documents/checkList.pdf) to see the checklist that I have used to test all the features in different screen sizes and browsers.
 
 ### Additional testing
 
@@ -386,7 +380,7 @@ I have also used development tools in Google Chrome to check how the website wou
 
 **Materialize Select Inputs flicker on some versions of Chrome**
 
-There was a bug with the select inputs in Materialize and the drop-down were flickering when they were clicked for the first time. This problem only affected the app if the latest versions of Chrome were used (update 73). 
+There was a bug with the select inputs in Materialize and the drop-down inputs were flickering when they were clicked for the first time. This problem only affected the app if the latest versions of Chrome were used (update 73). 
 In order to fix this issue I updated the timeout function in the materialize.js code replacing the 0 with 500. I post below I read that I should update the timeout function  to 100 instead of 0 but when I tried that I was still experiencing the issue so I decided to used a longer timeout (500) and then that fixed the issue.
 
 https://stackoverflow.com/questions/55147819/chrome-update-73-materialize-css-js-trigger-error
@@ -470,7 +464,7 @@ view[0].addEventListener('click', click);
 
 7. After this has been done I've run regular commits after every important update to the code, and I pushed the changes to GitHub.
 
-8. Once the website was nearly finished I have linked Heroky and GitHub so everytime the code was pushed to GitHub it was also deployed to Heroku (more details in the Deployment section).
+8. Once the website was nearly finished I have linked Heroku and GitHub so everytime the code was pushed to GitHub it was also deployed to Heroku (more details in the Deployment section).
 
 ## Deployment
 
@@ -569,7 +563,7 @@ I have used Heroku to deploy the website. In order to do that I have followed th
 
 ### My repository
 
-https://github.comelenasacristan/CookBook/
+https://github.com/elenasacristan/CookBook
 
 ### My deployed app
 
@@ -583,10 +577,10 @@ http://time2eat-cookbook.herokuapp.com
 
 #### Media
 
-##### background image login / register page
+##### background image login/register page
 
 - The image used for the background image in the intro page was obtained from Google images using the Advance Search and selecting “free to use, share or modify, even commercially”. See link below:
-[https://www.maxpixel.net/Frying-Pan-Cooking-Food-Cook-Figure-Fried-3125716](https://www.maxpixel.net/Frying-Pan-Cooking-Food-Cook-Figure-Fried-3125716)
+https://www.maxpixel.net/Frying-Pan-Cooking-Food-Cook-Figure-Fried-3125716](https://www.maxpixel.net/Frying-Pan-Cooking-Food-Cook-Figure-Fried-3125716)
 
 
 ##### recipes images
@@ -605,7 +599,7 @@ http://time2eat-cookbook.herokuapp.com
 [https://pixabay.com/photos/iced-coffee-coffee-drink-2710815/](https://pixabay.com/photos/iced-coffee-coffee-drink-2710815/)
 [https://www.flickr.com/photos/30478819@N08/43801037610](https://www.flickr.com/photos/30478819@N08/43801037610)
 [https://pixabay.com/photos/salad-tuna-salad-article-nafut-1088411/](https://pixabay.com/photos/salad-tuna-salad-article-nafut-1088411/)
-
+[https://www.flickr.com/photos/yvonsita/3234177543](https://www.flickr.com/photos/yvonsita/3234177543)
   
 
   
@@ -622,7 +616,7 @@ http://time2eat-cookbook.herokuapp.com
 
   
 
-I have used the following bootstrap login design to help me creating the login/register pages and then I have modified the colours and image.
+I have used the following bootstrap login design to help me creating the login/register pages and then I have customise it by changing the colours, image and the bootstrap grid.
 
   
 
@@ -642,7 +636,7 @@ I have used the following bootstrap login design to help me creating the login/r
 
 **Login / Register**:
 
-I watch the following tutorial to understand how to create the login/register functions.
+I watched the following tutorial to understand how to create the login/register functions.
 
 [https://www.youtube.com/watch?v=vVx1737auSE](https://www.youtube.com/watch?v=vVx1737auSE)
 
@@ -672,7 +666,7 @@ The following post help me to create the code in order to display the image as s
 
 **Create interactive visualization using DC/JS Crossfilter**
 
-I learn how to set up the connection between mongodb and DC/JS Crossfilter by following the tutorial in the link below:
+I learnt how to set up the connection between mongodb and DC/JS Crossfilter by watching the following the tutorial in the link below:
 
 http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-python-mongodb/
 
@@ -683,7 +677,7 @@ http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-pytho
 
 **Materialize Select Inputs**
 
-I learn by reading the following post why the Materialize select validation messages were not displayed.
+I learnt by reading the following post why the Materialize select validation messages were not displayed.
 
 [https://github.com/Dogfalo/materialize/issues/3440](https://github.com/Dogfalo/materialize/issues/3440)
 
@@ -710,7 +704,10 @@ I found in the following post the solution to the issue with the carousel on mob
 
 In the link below I learnt about how to remove the cookies when the user logs out. https://www.tutorialspoint.com/flask/flask_sessions.htm
 
-  
+  **GitHub - Heroku - Continous delivery**
+  I learnt how to link GitHub with Heroku in order to do continuous delivery by watching the following tutorial:
+  [https://www.youtube.com/watch?v=\_tiecDrW6yY](https://www.youtube.com/watch?v=_tiecDrW6yY).
+
   
 
   
