@@ -705,6 +705,7 @@ I found in the following post the solution to the issue with the carousel on mob
 In the link below I learnt about how to remove the cookies when the user logs out. https://www.tutorialspoint.com/flask/flask_sessions.htm
 
   **GitHub - Heroku - Continous delivery**
+  
   I learnt how to link GitHub with Heroku in order to do continuous delivery by watching the following tutorial:
   [https://www.youtube.com/watch?v=\_tiecDrW6yY](https://www.youtube.com/watch?v=_tiecDrW6yY).
 
