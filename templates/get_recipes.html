@@ -25,11 +25,11 @@
         <div class="col s12 title center-align">
             <h4>Hi <span class="highlight">{{ username }}</span>! What are we cooking today?</h4>
             {% if recipes_count < 1 %}
-                <p class="error_message"> We haven't found any match </p>
+            <p class="error_message"> We haven't found any matches </p>
             {% elif recipes_count > 1%}
-                <p> Get inspired by these <strong>{{recipes_count}}</strong> recipes</p>
+            <p> Get inspired by these <strong>{{recipes_count}}</strong> recipes</p>
             {% else %}
-                <p> Only 1 recipe match your search</p>
+            <p> Only 1 recipe match your search</p>
             {% endif %}
         </div>
     </div>
@@ -51,16 +51,18 @@
                         <div class="col s12">
                             <a href="{{url_for('view_recipe', recipe_id=recipe._id)}}">
                                 {% if recipe.recipe_image %}
-                                    <img class="img-carousel" src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}">
+                                <img class="img-carousel"
+                                    src="{{url_for('img_uploads', filename=recipe['recipe_image'])}}">
                                 {% else %}
-                                    <img class=" img-carousel" src="{{url_for('static', filename='img/default.jpg')}}">
+                                <img class=" img-carousel" src="{{url_for('static', filename='img/default.jpg')}}">
                                 {% endif %}
                             </a>
                         </div>
                     </div>
                     <div class=" row bottom-carousel">
                         <div class=" col s6">
-                            <p><strong>Votes: {{recipe.upvotes}} - <span class="views"> {{recipe.views}} views</span></strong></p>
+                            <p><strong>Votes: {{recipe.upvotes}} - <span class="views"> {{recipe.views}}
+                                        views</span></strong></p>
                         </div>
                         <div class="col s6 right-align">
                             <a href="{{url_for('view_recipe', recipe_id=recipe._id)}}">
@@ -96,7 +98,7 @@
                         <select id="cuisine" name="cuisine" multiple>
                             <option value="" selected disabled>Select one</option>
                             {% for cuisine in cuisines %}
-                                <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
+                            <option value="{{cuisine.cuisine}}">{{cuisine.cuisine}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -105,7 +107,7 @@
                         <select id="difficulty" name="difficulty" multiple>
                             <option value="" selected disabled>Select one</option>
                             {% for level in difficulty %}
-                                <option value="{{level.difficulty}}">{{level.difficulty}}</option>
+                            <option value="{{level.difficulty}}">{{level.difficulty}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -115,23 +117,25 @@
                         <h5><strong>Allergens:</strong></h5>
                         <p>Select what allergens you want to exclude from the results</p>
                         {% for allergen in allergens %}
-                            {% if allergen.allergen != "Not specified" %}
-                                <p class="checkbox">
-                                    <input type="checkbox" id="{{allergen.allergen}}" name="allergens" value="{{allergen.allergen}}" />
-                                    <label for="{{allergen.allergen}}">{{allergen.allergen}}</label>
-                                </p>
-                            {% endif %}
+                        {% if allergen.allergen != "Not specified" %}
+                        <p class="checkbox">
+                            <input type="checkbox" id="{{allergen.allergen}}" name="allergens"
+                                value="{{allergen.allergen}}" />
+                            <label for="{{allergen.allergen}}">{{allergen.allergen}}</label>
+                        </p>
+                        {% endif %}
                         {% endfor %}
                     </div>
                     <div class="row">
                         <h5><strong>Meal type:</strong></h5>
                         {% for category in categories %}
-                            {% if category.category != "Not specified" %}
-                                <p class="checkbox">
-                                    <input type="checkbox" id="{{category.category}}" name="category" value="{{category.category}}" />
-                                    <label for="{{category.category}}">{{category.category}}</label>
-                                </p>
-                            {% endif %}
+                        {% if category.category != "Not specified" %}
+                        <p class="checkbox">
+                            <input type="checkbox" id="{{category.category}}" name="category"
+                                value="{{category.category}}" />
+                            <label for="{{category.category}}">{{category.category}}</label>
+                        </p>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>
