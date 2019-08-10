@@ -1,5 +1,8 @@
 import os
-# env is where I have my environmental variables and it is only used to run my code locally, in production in commented out
+'''
+env is where I have my environmental variables and it is only used to run my code locally, in production is 
+commented out
+'''
 # import env
 import json
 from flask import Flask, render_template, request, url_for, redirect, session, flash
@@ -14,8 +17,8 @@ import bcrypt
 app = Flask(__name__)
 
 '''
-In development the environmental variables are saved on the env.py and in production 
-the environmental variables are saved on the Config Var in Heroku
+In development the environmental variables are saved on the env.py and in production the environmental variables are 
+saved on the Config Var in Heroku
 '''
 app.config["MONGO_DBNAME"] = os.environ.get('MONGO_DBNAME')
 app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
@@ -32,8 +35,8 @@ def string_to_array(string):
     return array
     
 '''
-Landing page for the website for new users. I learn how to create the login/register functionality
- by watching this tutorial https://www.youtube.com/watch?v=vVx1737auSE
+Landing page for the website for new users. I learn how to create the login/register functionality by watching this 
+tutorial https://www.youtube.com/watch?v=vVx1737auSE
  '''
 @app.route('/')
 def index():
@@ -83,7 +86,15 @@ be on the top one of the carousel and the it will be in descending order if you 
 @app.route('/get_recipes')
 def get_recipes():
     recipes = mongo.db.Recipes.find().sort([("upvotes",DESCENDING), ("views",DESCENDING)])
-    return render_template('get_recipes.html',title="View recipes", username=session['username'], recipes = recipes, categories = mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), allergens=mongo.db.Allergens.find(), recipes_count=recipes.count())
+    return render_template('get_recipes.html',
+                            title="View recipes", 
+                            username=session['username'], 
+                            recipes = recipes, 
+                            categories = mongo.db.Categories.find(), 
+                            cuisines=mongo.db.Cuisines.find(), 
+                            difficulty=mongo.db.Difficulty.find(), 
+                            allergens=mongo.db.Allergens.find(), 
+                            recipes_count=recipes.count())
   
 
 #search functionality in the home page
@@ -97,10 +108,18 @@ def search():
     mongo.db.Recipes.create_index( [("$**", 'text')] )
 
     #Search result sorted by upvotes descending and after by number of views descending    
-    recipes = mongo.db.Recipes.find({ "$text": { "$search": text_to_find } }).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
+    recipes = mongo.db.Recipes.find({"$text":{"$search": text_to_find}}).sort([("upvotes",DESCENDING),("views",DESCENDING)])
         
     # send recipes to page
-    return render_template('get_recipes.html', title="View recipes", username=session['username'], recipes = recipes, categories = mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), allergens=mongo.db.Allergens.find(), recipes_count=recipes.count())
+    return render_template('get_recipes.html',
+                            title="View recipes", 
+                            username=session['username'], 
+                            recipes = recipes, 
+                            categories = mongo.db.Categories.find(), 
+                            cuisines=mongo.db.Cuisines.find(), 
+                            difficulty=mongo.db.Difficulty.find(), 
+                            allergens=mongo.db.Allergens.find(), 
+                            recipes_count=recipes.count())
          
 
 '''
@@ -139,10 +158,23 @@ def filter_recipes():
     query_allergens = {"allergens": { "$nin": allergens_to_remove } }
    
     #query to find the recipes with the filters used - ordered by views and then by votes descending
-    recipes = mongo.db.Recipes.find({"$and":[query_author,query_difficulty,query_cuisine,query_allergens, query_categories]}).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
+    recipes = mongo.db.Recipes.find({"$and":
+                                    [query_author,
+                                    query_difficulty,
+                                    query_cuisine,
+                                    query_allergens, 
+                                    query_categories]}).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
     recipes_count = recipes.count()
 
-    return render_template('get_recipes.html', title="View recipes", username=session['username'], recipes = recipes, categories = mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), allergens=mongo.db.Allergens.find(), recipes_count=recipes_count)
+    return render_template('get_recipes.html', 
+                            title="View recipes", 
+                            username=session['username'], 
+                            recipes = recipes, 
+                            categories = mongo.db.Categories.find(), 
+                            cuisines=mongo.db.Cuisines.find(), 
+                            difficulty=mongo.db.Difficulty.find(), 
+                            allergens=mongo.db.Allergens.find(), 
+                            recipes_count=recipes_count)
    
 
 #route to the tips page
@@ -154,14 +186,17 @@ def tips():
 # add new recipe
 @app.route('/add_recipe')
 def add_recipe():
-    return render_template('add_recipe.html', title="Add recipe", categories = mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), allergens=mongo.db.Allergens.find())
+    return render_template('add_recipe.html', 
+                            title="Add recipe", 
+                            categories = mongo.db.Categories.find(), 
+                            cuisines=mongo.db.Cuisines.find(), 
+                            difficulty=mongo.db.Difficulty.find(), 
+                            allergens=mongo.db.Allergens.find())
 
 
 ''' 
-funtion to insert into the database the new recipe
-I also learn how to save and retrieve files in MongoDB by watching
-the following tutorial:
-https://www.youtube.com/watch?v=DsgAuceHha4
+funtion to insert into the database the new recipe I also learn how to save and retrieve files in MongoDB by watching
+the following tutorial: https://www.youtube.com/watch?v=DsgAuceHha4
 '''
 @app.route('/insert_recipe', methods=['GET', 'POST'])
 def insert_recipe():
@@ -200,7 +235,8 @@ def view_recipe(recipe_id):
     #we increment the number of views everytime a recipe is seen
     mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'views': 1}})
     
-    return render_template('view_recipe.html', recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)}), username = session['username'])
+    return render_template('view_recipe.html', 
+                            recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)}), username = session['username'])
 
 
 '''
@@ -229,12 +265,19 @@ def edit_recipe(recipe_id):
     list_allergens = '\n'.join(recipe['allergens'])
     list_instructions = '\n'.join(recipe['instructions'])
 
-    return render_template('edit_recipe.html', recipe=recipe, categories=mongo.db.Categories.find(), cuisines=mongo.db.Cuisines.find(), difficulty=mongo.db.Difficulty.find(), list_ingredients=list_ingredients, list_allergens=list_allergens,list_instructions=list_instructions, allergens=mongo.db.Allergens.find())
+    return render_template('edit_recipe.html', 
+                            recipe=recipe, 
+                            categories=mongo.db.Categories.find(), 
+                            cuisines=mongo.db.Cuisines.find(), 
+                            difficulty=mongo.db.Difficulty.find(), 
+                            list_ingredients=list_ingredients, 
+                            list_allergens=list_allergens,
+                            list_instructions=list_instructions, 
+                            allergens=mongo.db.Allergens.find())
 
 
 '''
-Funcion to update recipes.
-In the video below I learned how to upload images into MongoDB:
+Funcion to update recipes. In the video below I learned how to upload images into MongoDB:
 https://www.youtube.com/watch?v=DsgAuceHha4 
 '''
 @app.route('/update_recipe/<recipe_id>' , methods=['GET', 'POST'])
@@ -296,17 +339,26 @@ def manage_categories():
 
     for category in categories:
 	    count_recipes_category = mongo.db.Recipes.find({'category':category['category']}).count()
-	    category_object.append({"category_id" : category['_id'] ,"category" : category['category'], "count_recipes_category" : count_recipes_category})   
+	    category_object.append({"category_id" : category['_id'] ,
+                                "category" : category['category'], 
+                                "count_recipes_category" : count_recipes_category})   
+   
     #sort categories by number of recipes in descending order
     category_object_sorted = sorted(category_object, key=lambda x: x['count_recipes_category'], reverse=True)
 
     for cuisine in cuisines:
 	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine['cuisine']}).count()
-	    cuisine_object.append({"cuisine_id" : cuisine['_id'], "cuisine" : cuisine['cuisine'], "count_recipes_cuisine" : count_recipes_cuisine} )
+	    cuisine_object.append({"cuisine_id" : cuisine['_id'], 
+                                "cuisine" : cuisine['cuisine'], 
+                                "count_recipes_cuisine" : count_recipes_cuisine} )
+   
     #sort cuisines by number of recipes in descending order
     cuisine_object_sorted = sorted(cuisine_object, key=lambda x: x['count_recipes_cuisine'], reverse=True)
 
-    return render_template('manage_categories.html', title="Type of meals / cuisines", categories = category_object_sorted, cuisines = cuisine_object_sorted)
+    return render_template('manage_categories.html', 
+                            title="Type of meals / cuisines", 
+                            categories = category_object_sorted, 
+                            cuisines = cuisine_object_sorted)
     
 
 # function to insert a new category into the database
@@ -357,9 +409,8 @@ def delete_cuisine(cuisine_id):
     return redirect(url_for('manage_categories'))
    
 '''
-we use this route to retrieve all the recipes from the database in json format. 
-The following tutorial help me to create this function:
-http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-python-mongodb/
+we use this route to retrieve all the recipes from the database in json format. The following tutorial help me 
+to create this function: http://adilmoujahid.com/posts/2015/01/interactive-data-visualization-d3-dc-python-mongodb/
 '''
 @app.route("/data_recipes")
 def data():
