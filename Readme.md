@@ -177,7 +177,7 @@ These pages will be used by the user to enter a new recipe or to edit an existin
 
 - **Input (type file):** Allows the user to upload an image for the recipe. This field is optional. If the user doesn't upload an image then the default image will be used for the recipe.
 
-- **Input (type number):** I have used input type number for the "serves" field. This field will be compulsory and needs to be equal or higher than 1.
+- **Input (type number):** I have used input type number for the "serves" and "cooking time" fields. These fields will be compulsory and need to be equal or higher than 1.
 
 - **Select input:** I have used "single" select inputs for the fields "Difficulty", "Type of meal" and "Cuisine". All of them are compulsory as they will also be used in the dashboard section and in order to filter the recipes in the home page.
   I have also used "multiple" select input to select the allergens in the recipes. This field won't be required because the recipe may not contain any allergens.
@@ -269,43 +269,38 @@ See below the database schema:
 
 #### Dependencies:
 
-In order to be able to run my code I had to install the following dependencies:
 
-`from flask import Flask, render_template, request, url_for, redirect, session, flash`
+In order to run the app I had to install the following packages, these packages are listed in the requirements.txt file. Each of these packages had installed additional packages but the additional packages have been removed from the requirements.txt file because they will be automatically installed when installing the main packages on the list:
 
-**render_template** - Used to render html files (they need to be saved on the templates folder)
+**flask:**  Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. 
 
-**request** - Used to access the **form** inputs
+`python -m pip install flask`
 
-**url_for** - Provides an easy way to add urls where needed.
+` Flask==1.0.3 `
 
-**redirect** - Used to redirect between views.
+**dnspython:** dnspython is a DNS toolkit for Python. It supports almost all record types. It can be used for queries, zone transfers, and dynamic updates.
 
-**session** - Needed in order to create a session cookie for the user. That cookie will be removed when the browser is closed or when the user logs out.
+`python -m pip install dnspython`
 
-**flash** - Used to send feedback messages to the user.
+` dnspython==1.16.0`
 
-`from flask_pymongo import PyMongo, DESCENDING`
+**flask-pymongo:** MongoDB support for Flask applications.
 
-**PyMongo** is needed in order to interact with MongoDB
+`python -m pip install flask-pymongo`
 
-**DESCENDING** is needed in order to sort the results of the queries in descending order.
+` Flask-PyMongo==2.3.0`
 
-`from bson.objectid import ObjectId`
+**bcrypt:** In order to do the password hashing when user register.
 
-`from bson import json_util`
+`python -m pip install bcrypt`
 
-`from bson.json_util import dumps`
+`bcrypt==3.1.7  `
 
-**bson** (Binary JSON) - MongoDB uses bson so we will need to used the dependency bson in order to convert between BSON and JSON.
+**mockupdb** Mock server for testing MongoDB clients and creating MongoDB Wire Protocol servers.
 
-`from datetime import datetime`
+`python -m pip install mockupdb`
 
-**datetime** this dependency will be needed to format the date when a new recipe is added.
-
-`import bcrypt`
-
-**bcrypt** This dependency will be needed in order to provide a secure login system by hashing the password.
+`mockupdb==1.7.0 `
 
 #### Libraries:
 
