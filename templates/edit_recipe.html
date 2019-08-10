@@ -5,8 +5,7 @@
 <!-- In this page I have used the Materialize grid, Materialize form, Materialize inputs and Materialize modal -->
 
 <!-- "multipart/form-data" is needed in order to upload files -->
-<form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" class="container"
-    enctype="multipart/form-data">
+<form action="{{url_for('update_recipe', recipe_id=recipe._id)}}" method="POST" class="container" enctype="multipart/form-data">
     <div class="row">
         <div class="input-field col s12 m6">
             <h5><strong>Recipe name:</strong></h5>
