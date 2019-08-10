@@ -54,8 +54,8 @@
                             <i class="fa fa-clock-o"></i>
                         </div>
                         <div class="col s9 m6 input-field">
-                            <h6><strong>Cooking time:</strong></h6>
-                            <input id="cooking_time" name="cooking_time" type="text" class="validate" value="{{recipe.cooking_time}}" required="">
+                            <h6><strong>Cooking time<br><span class="units">(min)</span>:</strong></h6>
+                            <input placeholder="Cooking time" id="cooking_time" name="cooking_time" type="number" class="validate" min="1" value="{{recipe.cooking_time}}" required="">
                         </div>
                     </div>
                 </div>
@@ -65,8 +65,8 @@
                             <i class="fa fa-heart"></i>
                         </div>
                         <div class="col s9 m6 input-field">
-                            <h6><strong>Calories</strong></h6>
-                            <input id="calories" name="calories" type="text" class="validate" value="{{recipe.calories}}">
+                            <h6><strong>Calories<br><span class="units">(kcal/serving)</span>:</strong></h6>
+                            <input placeholder="Calories" id="calories" name="calories" type="text" class="validate" value="{{recipe.calories}}">
                         </div>
                     </div>
                 </div>

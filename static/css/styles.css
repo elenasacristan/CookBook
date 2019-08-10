@@ -533,7 +533,7 @@ After changing display to block the validation messages appeared*/
   margin-bottom: 20px;
 }
 
-.details-item p {
+.details-item p, .units {
   font-size: 0.7em;
 }
 
@@ -570,6 +570,9 @@ After changing display to block the validation messages appeared*/
 @media only screen and (min-width: 993px) {
   .details-item p {
     font-size: 0.9em;
+  }
+  .units{
+    font-size: 0.7em;
   }
   .ingredients li,
   .instructions ol,
