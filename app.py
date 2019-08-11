@@ -47,21 +47,24 @@ def index():
     return render_template('login.html', title="Login")
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/login',methods=['GET','POST'])
 def login():
-    users = mongo.db.Users
-    user_login = users.find_one({'author':request.form['username'].capitalize()})
+    if request.method == 'POST':
+        users = mongo.db.Users
+        user_login = users.find_one({'author':request.form['username'].capitalize()})
 
-    if user_login:
-        if bcrypt.hashpw(request.form['password'].encode('utf-8'), user_login['password']) == user_login['password']:
-            session["username"] = request.form["username"].capitalize()
-            return redirect(url_for('get_recipes'))
-    
-    flash('The login details are not correct')
+        if user_login:
+            if bcrypt.hashpw(request.form['password'].encode('utf-8'), user_login['password']) == user_login['password']:
+                session["username"] = request.form["username"].capitalize()
+                return redirect(url_for('get_recipes'))
+        
+        flash('The login details are not correct')
+        return render_template('login.html',  title="Login")
+
     return render_template('login.html',  title="Login")
 
 
-@app.route('/register', methods=['POST','GET'])
+@app.route('/register', methods=['GET','POST'])
 def register():
     if request.method == 'POST':
         users = mongo.db.Users
@@ -98,18 +101,17 @@ def get_recipes():
   
 
 #search functionality in the home page
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/search', methods=['POST'])
 def search():
-   
     #we get the word to find from the search box    
     text_to_find = request.form["text_to_find"]
-    
+        
     #we create a text index for all the text fields   
-    mongo.db.Recipes.create_index( [("$**", 'text')] )
+    mongo.db.Recipes.create_index([("$**", 'text')])
 
     #Search result sorted by upvotes descending and after by number of views descending    
     recipes = mongo.db.Recipes.find({"$text":{"$search": text_to_find}}).sort([("upvotes",DESCENDING),("views",DESCENDING)])
-        
+            
     # send recipes to page
     return render_template('get_recipes.html',
                             title="View recipes", 
@@ -119,7 +121,7 @@ def search():
                             cuisines=mongo.db.Cuisines.find(), 
                             difficulty=mongo.db.Difficulty.find(), 
                             allergens=mongo.db.Allergens.find(), 
-                            recipes_count=recipes.count())
+                            recipes_count=recipes.count()) 
          
 
 '''
@@ -198,7 +200,7 @@ def add_recipe():
 funtion to insert into the database the new recipe I also learn how to save and retrieve files in MongoDB by watching
 the following tutorial: https://www.youtube.com/watch?v=DsgAuceHha4
 '''
-@app.route('/insert_recipe', methods=['GET', 'POST'])
+@app.route('/insert_recipe', methods=['POST'])
 def insert_recipe():
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
@@ -246,14 +248,15 @@ The recipe author is not allowed to vote for his recipes. Each user is only allo
 @app.route('/view_recipe/vote/<recipe_id>')
 def vote(recipe_id):
     users = mongo.db.Users
+    
     already_voted = users.find_one({"$and":[{"author":session['username']},{'votes':recipe_id}]})
 
     if already_voted is None:
         mongo.db.Recipes.update_one({"_id":ObjectId(recipe_id)}, {'$inc': {'upvotes': 1}})
         users.update_one({"author":session['username']},{"$push":{"votes":recipe_id}})
     else:
-         flash("You have already voted for this recipe")
-    
+        flash("You have already voted for this recipe")
+        
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
 
@@ -308,10 +311,7 @@ def update_recipe(recipe_id):
                 }})
 
             if recipe_image.filename != "":   
-                recipes.update({"_id":ObjectId(recipe_id)},{ "$set":
-                {
-                    'recipe_image':recipe_image.filename,
-                }})       
+                recipes.update({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':recipe_image.filename,}})       
     
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
@@ -362,39 +362,37 @@ def manage_categories():
     
 
 # function to insert a new category into the database
-@app.route('/insert_category', methods=['GET', 'POST'])
+@app.route('/insert_category', methods=['POST'])
 def insert_category():
-    if request.method == 'POST':
-        categories = mongo.db.Categories 
-        category_form = request.form['category'].capitalize()
-        category_exists = categories.find_one({'category':category_form})
+    categories = mongo.db.Categories 
+    category_form = request.form['category'].capitalize()
+    category_exists = categories.find_one({'category':category_form})
 
-        if category_exists is None:    
-            categories.insert_one({
-                'category':request.form['category'].capitalize()
-                })
-            return redirect(url_for('manage_categories'))
-        else:
-            flash('That type of meal already exists')
-            return redirect(url_for('manage_categories'))
+    if category_exists is None:    
+        categories.insert_one({
+            'category':request.form['category'].capitalize()
+            })
+        return redirect(url_for('manage_categories'))
+    else:
+        flash('That type of meal already exists')
+        return redirect(url_for('manage_categories'))
 
 
 # function to insert a new cuisine into the database
-@app.route('/insert_cuisine', methods=['GET', 'POST'])
+@app.route('/insert_cuisine', methods=['POST'])
 def insert_cuisine():
-    if request.method == 'POST':
-        cuisines = mongo.db.Cuisines  
-        cuisine_form = request.form['cuisine'].capitalize()
-        cuisine_exists = cuisines.find_one({'cuisine':cuisine_form})
+    cuisines = mongo.db.Cuisines  
+    cuisine_form = request.form['cuisine'].capitalize()
+    cuisine_exists = cuisines.find_one({'cuisine':cuisine_form})
 
-        if cuisine_exists is None:    
-            cuisines.insert_one({
-                'cuisine':request.form['cuisine'].capitalize()
-                })
-            return redirect(url_for('manage_categories'))
-        else:
-            flash('That cuisine already exists')
-            return redirect(url_for('manage_categories'))
+    if cuisine_exists is None:    
+        cuisines.insert_one({
+            'cuisine':request.form['cuisine'].capitalize()
+            })
+        return redirect(url_for('manage_categories'))
+    else:
+        flash('That cuisine already exists')
+        return redirect(url_for('manage_categories'))
 
 
 @app.route('/delete_category/<category_id>')
@@ -430,7 +428,7 @@ def statistics():
 
 
 '''
-funtion to log out / clear cookie
+function to log out / clear cookie
 I understood how to log out a user by watching the following tutorial: 
 # https://www.tutorialspoint.com/flask/flask_sessions.htm
 '''

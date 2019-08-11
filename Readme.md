@@ -274,31 +274,21 @@ In order to run the app I had to install the following packages, these packages 
 
 **flask:**  Flask is a lightweight WSGI web application framework. It is designed to make getting started quick and easy, with the ability to scale up to complex applications. 
 
-`python -m pip install flask`
-
 ` Flask==1.0.3 `
 
 **dnspython:** dnspython is a DNS toolkit for Python. It supports almost all record types. It can be used for queries, zone transfers, and dynamic updates.
-
-`python -m pip install dnspython`
 
 ` dnspython==1.16.0`
 
 **flask-pymongo:** MongoDB support for Flask applications.
 
-`python -m pip install flask-pymongo`
-
 ` Flask-PyMongo==2.3.0`
 
 **bcrypt:** In order to do the password hashing when user register.
 
-`python -m pip install bcrypt`
-
 `bcrypt==3.1.7  `
 
 **mockupdb** Mock server for testing MongoDB clients and creating MongoDB Wire Protocol servers.
-
-`python -m pip install mockupdb`
 
 `mockupdb==1.7.0 `
 
@@ -456,24 +446,28 @@ function setupEvents() {
 ### Running my code locally
 
 1. First in vs code I've created a virtual environment:
-
    `python -m venv .venv`
 
-2) I've Installed flask
 
+2. I've Installed flask
    `python -m pip install flask`
+
 
 3. I've created the database in MongoDB Atlas
 
-4) Then I've installed flask-pymongo for flask to comunicate with mongo:
 
+4. Then I've installed flask-pymongo for flask to comunicate with mongo:
    `python -m pip install flask-pymongo`
 
+
 5. Also in order to be able to use the latest style connection string I've installed dnspython:
+`python -m pip install dnspython`
 
-   `python -m pip install dnspython`
 
-6. Then I've created a env.py file that contains my environmental variables as shown below:
+6. I installed bcrypt in order to be able to hash the password for the login functionality
+`python -m pip install bcrypt`
+
+7. Then I've created a env.py file that contains my environmental variables as shown below:
 
    where `PASSWORD` and `DATABASE` will contain my password and the name of my database\_
 
@@ -487,7 +481,7 @@ os.environ.setdefault("SECRET_KEY", "RandomString123")
 
 ```
 
-7. Then in the app.py I've added `import env` to get the environmental variables that will be needed in the following code:
+8. Then in the app.py I've added `import env` to get the environmental variables that will be needed in the following code:
 
 ```python
 
@@ -497,7 +491,7 @@ app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 
 ```
 
-8. I've have also set the Debug=True ("FLASK_DEBUG": "1") in the vs code settings as shown below:
+9. I've have also set the Debug=True ("FLASK_DEBUG": "1") in the vs code settings as shown below:
 
 ```json
 {
@@ -509,7 +503,7 @@ app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 }
 ```
 
-9. After this I've run the code using the following command:
+10. After this I've run the code using the following command:
 
    `python -m flask run`
 
