@@ -18,39 +18,39 @@ Below you can see the mock-ups that I drew using [Pencil](https://pencil.evolus.
 
 ##### Login page
 
-![login](/static/mockups/login_page.jpg)
+![login](/Documents/mockups/login_page.jpg)
 
 ##### Registration page
 
-![registration](/static/mockups/register_page.jpg)
+![registration](/Documents/mockups/register_page.jpg)
 
 ##### Tips page
 
-![tips](/static/mockups/tips.jpg)
+![tips](/Documents/mockups/tips.jpg)
 
 ##### Home page
 
-![get_recipes](/static/mockups/get_recipes.jpg)
+![get_recipes](/Documents/mockups/get_recipes.jpg)
 
 ##### View recipe
 
-![view_recipe](/static/mockups/view_recipe.jpg)
+![view_recipe](/Documents/mockups/view_recipe.jpg)
 
 ##### Add recipe
 
-![add_recipe](/static/mockups/add_recipe.jpg)
+![add_recipe](/Documents/mockups/add_recipe.jpg)
 
 ##### Edit recipe
 
-![edit_recipe](/static/mockups/edit_recipe.jpg)
+![edit_recipe](/Documents/mockups/edit_recipe.jpg)
 
 ##### Manage Type of meal / cuisines
 
-![manage_categories](/static/mockups/manage_categories.jpg)
+![manage_categories](/Documents/mockups/manage_categories.jpg)
 
 ##### Statistics
 
-![statistics](/static/mockups/statistics.jpg)
+![statistics](/Documents/mockups/statistics.jpg)
 
 - The final website differs from the original wire-frames because, when working on the design, I sometimes I found more appropriate ways to display the different sections.
 
@@ -334,7 +334,7 @@ In order to run the app I had to install the following packages, these packages 
 
 ### Features and responsiveness testing
 
-Click [here](https://github.com/elenasacristan/Cookbook/tree/master/static/Documents/checkList.pdf) to see the checklist that I have used to test all the features on different screen sizes and browsers.
+Click [here](https://github.com/elenasacristan/Cookbook/tree/master/Documents/checkList.pdf) to see the checklist that I have used to test all the features on different screen sizes and browsers.
 
 ### Additional testing
 
