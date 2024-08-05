@@ -8,7 +8,7 @@ from bson import ObjectId as mockup_oid
 from json import dumps
 from pymongo import MongoClient
 
-from app import string_to_array, app
+from main import string_to_array, app
 recipe = {
         "recipe_name": "Rice pudding",
         "allergens": ["Eggs", "Milk", "Tree nuts"],
