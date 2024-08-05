@@ -5,13 +5,20 @@ commented out
 '''
 # import env
 import json
-from flask import Flask, render_template, request, url_for, redirect, session, flash
+from flask import Flask, render_template, request, url_for, redirect, session, flash, send_file
 from flask_pymongo import PyMongo, DESCENDING
 from bson.objectid import ObjectId
 from bson import json_util
 from bson.json_util import dumps
 from datetime import datetime
 import bcrypt
+import io
+from bson.binary import Binary
+from hashlib import md5
+from pymongo import MongoClient
+import gridfs
+
+
 
 # create an instance of Flask
 app = Flask(__name__)
@@ -25,6 +32,9 @@ app.config['MONGO_URI'] = os.environ.get('MONGODB_URI')
 
 # we create an instance of Mongo
 mongo = PyMongo(app)
+
+# Initialize GridFS object
+fs = gridfs.GridFS(mongo.db)
 
 # secret key needed to create session cookies
 app.secret_key = os.environ.get('SECRET_KEY')
@@ -72,7 +82,7 @@ def register():
 
         if user_exists is None:
             hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
-            users.insert({'author':request.form['username'].capitalize(), 'password':hashpass})
+            users.insert_one({'author':request.form['username'].capitalize(), 'password':hashpass})
             session['username'] = request.form['username'].capitalize()
             return redirect(url_for('get_recipes'))
 
@@ -88,7 +98,14 @@ be on the top one of the carousel and the it will be in descending order if you 
 '''
 @app.route('/get_recipes')
 def get_recipes():
-    recipes = mongo.db.Recipes.find().sort([("upvotes",DESCENDING), ("views",DESCENDING)])
+
+    recipes_cursor = mongo.db.Recipes.find().sort([("upvotes", DESCENDING), ("views", DESCENDING)])
+    recipes = list(recipes_cursor)  # Convert cursor to list to pass to the template and count recipes
+ 
+    if 'username' not in session:
+        return redirect(url_for('login'))  # Redirect to login if user is not logged in
+
+    # recipes = mongo.db.Recipes.find().sort([("upvotes",DESCENDING), ("views",DESCENDING)])
     return render_template('get_recipes.html',
                             title="View recipes", 
                             username=session['username'], 
@@ -97,7 +114,7 @@ def get_recipes():
                             cuisines=mongo.db.Cuisines.find(), 
                             difficulty=mongo.db.Difficulty.find(), 
                             allergens=mongo.db.Allergens.find(), 
-                            recipes_count=recipes.count())
+                            recipes_count=len(recipes))
   
 
 #search functionality in the home page
@@ -111,17 +128,20 @@ def search():
 
     #Search result sorted by upvotes descending and after by number of views descending    
     recipes = mongo.db.Recipes.find({"$text":{"$search": text_to_find}}).sort([("upvotes",DESCENDING),("views",DESCENDING)])
-            
+
+    # Convert cursor to a list to count the recipes and pass it to the template
+    recipes_list = list(recipes)
+
     # send recipes to page
     return render_template('get_recipes.html',
                             title="View recipes", 
                             username=session['username'], 
-                            recipes = recipes, 
+                            recipes = recipes_list, 
                             categories = mongo.db.Categories.find(), 
                             cuisines=mongo.db.Cuisines.find(), 
                             difficulty=mongo.db.Difficulty.find(), 
                             allergens=mongo.db.Allergens.find(), 
-                            recipes_count=recipes.count()) 
+                            recipes_count=len(recipes_list)) 
          
 
 '''
@@ -166,17 +186,17 @@ def filter_recipes():
                                     query_cuisine,
                                     query_allergens, 
                                     query_categories]}).sort([("upvotes",DESCENDING), ("views",DESCENDING)])
-    recipes_count = recipes.count()
+    recipes_list = list(recipes)
 
     return render_template('get_recipes.html', 
                             title="View recipes", 
                             username=session['username'], 
-                            recipes = recipes, 
+                            recipes = recipes_list, 
                             categories = mongo.db.Categories.find(), 
                             cuisines=mongo.db.Cuisines.find(), 
                             difficulty=mongo.db.Difficulty.find(), 
                             allergens=mongo.db.Allergens.find(), 
-                            recipes_count=recipes_count)
+                            recipes_count=len(recipes_list))
    
 
 #route to the tips page
@@ -204,30 +224,48 @@ the following tutorial: https://www.youtube.com/watch?v=DsgAuceHha4
 def insert_recipe():
     if 'recipe_image' in request.files:
         recipe_image = request.files['recipe_image']
+        # if recipe_image != "":
+        #     mongo.save_file(recipe_image.filename, recipe_image)
+
         if recipe_image != "":
-            mongo.save_file(recipe_image.filename, recipe_image)
+            # Save the image data to GridFS
+            image_data = recipe_image.read()
+            filename = recipe_image.filename
+            fs.put(image_data, filename=filename)
+		
+            # Generate MD5 hash for the uploaded image
+            md5_hash = md5(recipe_image.read()).hexdigest()
         
         if request.form['calories']:
             calories = request.form['calories']
         else:
             calories = "Not specified"
 
-        mongo.db.Recipes.insert({
-                'recipe_name':request.form['recipe_name'].capitalize(),
-                'instructions':string_to_array(request.form['instructions']),
-                'serves':request.form['serves'],
-                'calories':calories,
-                'difficulty':request.form['difficulty'],
-                'cooking_time':request.form['cooking_time'],
-                'cuisine':request.form['cuisine'],
-                'allergens':request.form.getlist('allergens'),
-                'ingredients':string_to_array(request.form['ingredients']),
-                'recipe_image':recipe_image.filename,
-                'author':session['username'],
-                'upvotes':0,
-                'date':datetime.now().strftime("%d/%m/%Y"),
-                'category':request.form['category']
-            })
+    
+        recipe_data = {
+            'recipe_name': request.form['recipe_name'].capitalize(),
+            'instructions': string_to_array(request.form['instructions']),
+            'serves': request.form['serves'],
+            'calories': calories,
+            'difficulty': request.form['difficulty'],
+            'cooking_time': request.form['cooking_time'],
+            'cuisine': request.form['cuisine'],
+            'allergens': request.form.getlist('allergens'),
+            'ingredients': string_to_array(request.form['ingredients']),
+            'recipe_image': filename,
+            'author': session['username'],
+            'upvotes': 0,
+            'date': datetime.now().strftime("%d/%m/%Y"),
+            'category': request.form['category']
+        }
+
+        # Insert the recipe data into the database
+        mongo.db.Recipes.insert_one(recipe_data)
+            
+         
+        if md5_hash:
+            mongo.db.Recipes.update_one({'_id': recipe_data['_id']}, {'$set': {'md5': md5_hash}})
+
     return redirect(url_for('get_recipes'))
 
 
@@ -286,18 +324,23 @@ https://www.youtube.com/watch?v=DsgAuceHha4
 @app.route('/update_recipe/<recipe_id>' , methods=['GET', 'POST'])
 def update_recipe(recipe_id):
     recipes = mongo.db.Recipes
-    recipe = mongo.db.Recipes.find({"_id":ObjectId(recipe_id)})
+    recipe = mongo.db.Recipes.find_one({"_id":ObjectId(recipe_id)})
     if 'recipe_image' in request.files:
-            recipe_image = request.files['recipe_image']
-            mongo.save_file(recipe_image.filename, recipe_image)
-            
-            if request.form['calories']:
-                calories = request.form['calories']
-            else:
-                calories = "Not specified"
+        recipe_image = request.files['recipe_image']
+        # Save the image data to GridFS
+        image_data = recipe_image.read()
+        filename = recipe_image.filename
+        fs.put(image_data, filename=filename)
+        # Generate MD5 hash for the uploaded image
+        md5_hash = md5(recipe_image.read()).hexdigest()
+        recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'md5':md5_hash}})
 
-            recipes.update({"_id":ObjectId(recipe_id)},{ "$set":
-                {
+        if request.form['calories']:
+            calories = request.form['calories']
+        else:
+            calories = "Not specified"
+
+        recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set": {
                     'recipe_name':request.form['recipe_name'].capitalize(),
                     'instructions':string_to_array(request.form['instructions']),
                     'serves':request.form['serves'],
@@ -307,24 +350,23 @@ def update_recipe(recipe_id):
                     'cuisine':request.form['cuisine'],
                     'allergens':request.form.getlist('allergens'),
                     'ingredients':string_to_array(request.form['ingredients']),
-                    'category':request.form['category']      
-                }})
-
-            if recipe_image.filename != "":   
-                recipes.update({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':recipe_image.filename,}})       
+                    'category':request.form['category']
+                }})    
+        if recipe_image.filename != "":
+            recipes.update_one({"_id":ObjectId(recipe_id)},{ "$set":{'recipe_image':filename,}})  
     
     return redirect(url_for("view_recipe", recipe_id=recipe_id))
 
 
-@app.route('/img_uploads/<filename>')
+@app.route('/img_uploads/<path:filename>')
 def img_uploads(filename):
-    return mongo.send_file(filename)
-
+    image_data = fs.get_last_version(filename=filename).read()
+    return send_file(io.BytesIO(image_data), mimetype='image/jpeg')
 
 # function to remove a recipe (only the author can remove a recipe)
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):
-    mongo.db.Recipes.remove({"_id":ObjectId(recipe_id)})
+    mongo.db.Recipes.delete_one({"_id":ObjectId(recipe_id)})
     return redirect(url_for('get_recipes'))
 
 
@@ -338,8 +380,10 @@ def manage_categories():
     cuisine_object=[]
 
     for category in categories:
-	    count_recipes_category = mongo.db.Recipes.find({'category':category['category']}).count()
-	    category_object.append({"category_id" : category['_id'] ,
+	    # count_recipes_category = mongo.db.Recipes.find({'category':category['category']}).count()
+        count_recipes_category = mongo.db.Recipes.count_documents({'category': category['category']})
+
+        category_object.append({"category_id" : category['_id'] ,
                                 "category" : category['category'], 
                                 "count_recipes_category" : count_recipes_category})   
    
@@ -347,8 +391,9 @@ def manage_categories():
     category_object_sorted = sorted(category_object, key=lambda x: x['count_recipes_category'], reverse=True)
 
     for cuisine in cuisines:
-	    count_recipes_cuisine = mongo.db.Recipes.find({'cuisine':cuisine['cuisine']}).count()
-	    cuisine_object.append({"cuisine_id" : cuisine['_id'], 
+        count_recipes_cuisine = mongo.db.Recipes.count_documents({'cuisine': cuisine['cuisine']})
+        
+        cuisine_object.append({"cuisine_id" : cuisine['_id'], 
                                 "cuisine" : cuisine['cuisine'], 
                                 "count_recipes_cuisine" : count_recipes_cuisine} )
    
@@ -397,13 +442,13 @@ def insert_cuisine():
 
 @app.route('/delete_category/<category_id>')
 def delete_category(category_id):
-    mongo.db.Categories.remove({"_id":ObjectId(category_id)})
+    mongo.db.Categories.delete_one({"_id":ObjectId(category_id)})
     return redirect(url_for('manage_categories'))
 
 
 @app.route('/delete_cuisine/<cuisine_id>')
 def delete_cuisine(cuisine_id):
-    mongo.db.Cuisines.remove({"_id":ObjectId(cuisine_id)})
+    mongo.db.Cuisines.delete_one({"_id":ObjectId(cuisine_id)})
     return redirect(url_for('manage_categories'))
    
 '''
